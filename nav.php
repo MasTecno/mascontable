@@ -524,8 +524,8 @@
 </nav>
 
 <!-- Status Bar with Tailwind CSS -->
-<div class="bg-red-500 text-white py-2">
-    <div class="px-4 sm:px-6 lg:px-8">
+<div class="bg-red-500 text-white py-0.5">
+    <div class="px-4 sm:px-5 lg:px-6">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div class="text-xs mb-2 md:mb-0">
                 <?php
@@ -564,10 +564,10 @@
 
                 <?php 
                     if ($_SESSION['RAZONSOCIAL']!=""){ 
-                        echo "<span class='text-sm font-medium'>".strtoupper($_SESSION['NomServer'])." - Empresa: ".$_SESSION['RUTEMPRESA'].", ".$_SESSION['RAZONSOCIAL']." - Periodo: </span>"; 
+                        echo "<span class='text-xs font-medium'>".strtoupper($_SESSION['NomServer'])." - Empresa: ".$_SESSION['RUTEMPRESA'].", ".$_SESSION['RAZONSOCIAL']." - Periodo: </span>"; 
                 ?>
 
-                <select id="messelect" name="messelect" onchange="UpPeriodo()" class="bg-white text-gray-900 px-3 py-1 rounded border border-gray-300 text-sm">
+                <select id="messelect" name="messelect" onchange="UpPeriodo()" class="bg-white text-gray-900 px-3 py-0.5 rounded border border-gray-300 text-xs">
                 <?php 
                     $TPerio="01-".$_SESSION['PERIODO'];
                     $dia = substr($TPerio,0,2);
@@ -588,7 +588,7 @@
                 ?>
                 </select>
 
-                <select id="anoselect" name="anoselect" onchange="UpPeriodo()" class="bg-white text-gray-900 px-3 py-1 rounded border border-gray-300 text-sm">
+                <select id="anoselect" name="anoselect" onchange="UpPeriodo()" class="bg-white text-gray-900 px-3 py-0.5 rounded border border-gray-300 text-xs">
                     <?php 
                         $yoano=date('Y')+4;
                         $tano="2010";

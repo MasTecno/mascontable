@@ -249,7 +249,8 @@
 				url: url,
 				data: $('#form1').serialize(),
 				success:function(resp){
-					$('#TableCliPro').html(resp);
+					// $('#TableCliPro').html(resp);
+					$("#contenidoTablaModal").html(resp);
 				}
 				});				
 			}
@@ -320,9 +321,14 @@
 								<i class="fa fa-save mr-2"></i>Grabar
 							</button>
 						<?php endif; ?>
+						
 
 						<button type="button" onclick="GenLibro()" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
 							<i class="fa-solid fa-file-excel text-gray-600 mr-2"></i>Exportar Excel
+						</button>
+
+						<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
+							<i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
 						</button>
 
 						<button type="button" id="btnCancelar" 
@@ -345,7 +351,7 @@
 								<p class="text-sm text-gray-600">Ingresa los parametros del <?php echo strtolower($titulo); ?></p>     
 							</div>
 						</div>
-						<p>Pruebas</p>
+						
 						<div class="p-6 pt-1 space-y-6">
 
 							<!-- Hidden inputs -->
@@ -504,25 +510,6 @@
 						</div>
 					</div>
 
-					<!-- Barra de búsqueda -->
-					<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-						<div class="flex flex-col sm:flex-row gap-4 items-center">
-							<div class="flex-1">
-								<input type="text" 
-									   id="myInput" 
-									   placeholder="Buscar..." 
-									   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-							</div>
-							<div class="flex gap-2">
-								<button type="button" 
-										onclick="GenLibro()" 
-										class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-									<i class="fa fa-file-excel mr-2"></i>Exportar Excel
-								</button>
-							</div>
-						</div>
-					</div>
-
 					<!-- Tabla de resultados -->
 					<div id="TableCliPro" class="bg-white rounded-lg shadow-sm border border-gray-200">
 						<!-- La tabla se carga dinámicamente aquí -->
@@ -612,6 +599,49 @@
 			</div>
 		</div>
 
+		<div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+			<div class="relative p-4 w-full max-w-7xl max-h-full">
+				<!-- Modal content -->
+				<div class="relative bg-white rounded-lg shadow-sm">
+					<!-- Modal header -->
+					<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+						<div class="flex items-center">
+							<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+								<i class="fa fa-list text-lg text-primary-500"></i>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-gray-900 flex items-center">
+									Buscar <?php echo strtolower($titulo); ?>
+								</h3>	
+								<p class="text-sm text-gray-600"><?php echo $MsjEmpresa; ?></p>
+							</div>	
+						</div>
+						<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+							<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+							</svg>
+							<span class="sr-only">Close modal</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="p-4 md:p-5 space-y-4">
+						<div class="mb-4">
+						<input class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500" 
+							id="myInput" 
+							type="text" 
+							placeholder="Buscar cuentas...">
+						</div>
+						<div class="overflow-x-auto max-h-96">
+							<div id="contenidoTablaModal">
+								<!-- El contenido de la tabla se carga aquí dinámicamente -->
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
 		<!-- Script para búsqueda en tiempo real -->
 		<script>
 			$(document).ready(function(){
@@ -631,6 +661,33 @@
 					$("#myTable tr").filter(function() {
 						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 					});
+				});
+
+				// Búsqueda en el modal
+				$("#buscarTabla").on("keyup", function() {
+					var value = $(this).val().toLowerCase();
+					$("#contenidoTablaModal #myTable tr").filter(function() {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+
+				// Manejar el cierre del modal
+				$('[data-modal-hide="tablaModal"]').on('click', function() {
+					const modal = document.getElementById('tablaModal');
+					modal.classList.add('hidden');
+					
+					// Remover el overlay
+					const overlay = document.getElementById('tablaModalOverlay');
+					if (overlay) {
+						overlay.remove();
+					}
+				});
+
+				// Cerrar modal al hacer clic en el overlay
+				$(document).on('click', '#tablaModalOverlay', function() {
+					const modal = document.getElementById('tablaModal');
+					modal.classList.add('hidden');
+					$(this).remove();
 				});
 			});
 		</script>

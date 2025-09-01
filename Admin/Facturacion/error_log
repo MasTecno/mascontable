@@ -1,0 +1,3 @@
+[16-Nov-2019 16:49:52 UTC] PHP Parse error:  syntax error, unexpected '.=' (T_CONCAT_EQUAL), expecting ',' or ';' in /home/mastecno/public_html/mascontable/Nexus/Admin/Facturacion/index.php on line 249
+[21-Mar-2020 13:07:55 America/Santiago] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user ''@'localhost' (using password: NO) in /home/mastecno/public_html/mascontable/Nexus/Admin/conexion.php on line 13
+[21-Mar-2020 13:12:32 America/Santiago] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user ''@'localhost' (using password: NO) in /home/mastecno/public_html/mascontable/Nexus/Admin/conexion.php on line 13

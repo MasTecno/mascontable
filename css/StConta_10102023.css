@@ -1,0 +1,170 @@
+
+body{
+/* font-family: 'Source Sans Pro', sans-serif; */
+font-family: 'Saira', sans-serif;
+background-color: #697a8d21;
+font-size: 14px;
+}
+
+.panel-default>.panel-heading {
+	color: #FFF;
+	background-color: #E51C20;
+	border-color: #E51C20;
+}
+
+/* .btn {
+	border-radius: 15px !important;
+}
+
+.btn-Verde{
+	background-color: #8BC34A;
+	color: #fff;
+	border-color: #8BC34A;
+}
+
+.btn-Naranjo {
+    color: #fff;
+    background-color: #FF9800;
+    border-color: #FF9800;
+}
+
+.btn-Rojo {
+    color: #fff;
+    background-color: #e51c20;
+    border-color: #e51c20;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #626c76;
+    border-color: #626c76;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #626c76;
+    border-color: #626c76;
+} */
+
+.btn-grabar {
+    color: #fff;
+    background-color: #3a9123;
+    border-color: #3a9123;
+}
+
+.btn-grabar:hover {
+	color: #fff;
+	background-color: #3b91239f;
+	border-color: #3b91239f;
+}
+
+.btn-cancelar {
+    color: #fff;
+    background-color: #e51c20;
+    border-color: #e51c20;
+}
+
+.btn-cancelar:hover {
+	color: #fff;
+	background-color: #e51c1fa8;
+	border-color: #e51c20;
+}
+
+.btn-modificar {
+    color: #fff;
+    background-color: #3e74b5;
+    border-color: #3e74b5;
+}
+
+.btn-modificar:hover {
+	color: #fff;
+	background-color: #3e74b5bf;
+	border-color: #3e74b5bf;
+}
+
+.btn-exportar {
+    color: #fff;
+    background-color: #626c76;
+    border-color: #626c76;
+}
+
+.btn-exportar:hover {
+	color: #fff;
+	background-color: #626c76ce;
+	border-color: #626c76ce;
+}
+
+.btn-mastecno {
+    color: #fff;
+    background-color: #626c76;
+    border-color: #626c76;
+}
+
+.btn-mastecno:hover {
+	color: #fff;
+	background-color: #e51c20;
+	border-color: #e51c20;
+}
+
+
+
+
+/*.btn-default:hover {
+	color: #fff;
+	background-color: #e88d06;
+	border-color: #FF9800;
+}
+
+.btn-default:focus {
+	color: #fff;
+	background-color: #e88d06;
+	border-color: #FF9800;
+}
+
+.btn-default:active {
+	color: #fff;
+	background-color: #e88d06;
+	border-color: #FF9800;
+}*/
+
+
+.centrar-item{
+	float:none;
+	text-align:center;
+}
+
+			/* Remove the navbar's default margin-bottom and rounded borders */
+			.navbar {
+			margin-bottom: 0;
+			border-radius: 0;
+			}
+
+			/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+			.row.content {height: 450px}
+
+			/* Set gray background color and 100% height */
+			.sidenav {
+			padding-top: 20px;
+			background-color: #f1f1f1;
+			height: 100%;
+			}
+
+			/* Set black background color, white text and some padding */
+			footer {
+			background-color: #555;
+			color: white;
+			padding: 15px;
+			}
+
+			/* On small screens, set height to 'auto' for sidenav and grid */
+			@media screen and (max-width: 767px) {
+			.sidenav {
+			height: auto;
+			padding: 15px;
+			}
+			.row.content {height:auto;}
+			}
+
+			#msgerror {
+				font-size:1.4em;
+			}

@@ -1,0 +1,316 @@
+<?php 
+
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
+	
+	$RutEmpresa=$_SESSION['RUTEMPRESA'];
+	$xid=$_GET['id'];
+	$xper=$_GET['per'];
+
+    $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+    $SQL="SELECT * FROM CTParametros WHERE estado='A'";
+    $resultados = $mysqli->query($SQL);
+    while ($registro = $resultados->fetch_assoc()) {
+
+      if($registro['tipo']=="IVA"){
+        $DIVA=$registro['valor']; 
+      }
+
+      if($registro['tipo']=="SEPA_MILE"){
+        $DMILE=$registro['valor'];  
+      }
+
+      if($registro['tipo']=="SEPA_DECI"){
+        $DDECI=$registro['valor'];  
+      }
+
+      if($registro['tipo']=="SEPA_LIST"){
+        $DLIST=$registro['valor'];  
+      }
+
+      if($registro['tipo']=="TIPO_MONE"){
+        $DMONE=$registro['valor'];  
+      }
+
+      if($registro['tipo']=="NUME_DECI"){
+        $NDECI=$registro['valor'];  
+      } 
+    }
+
+	$SQL="SELECT * from CTCliPro WHERE id ='$xid'";
+	$resultados = $mysqli->query($SQL);
+    while ($registro = $resultados->fetch_assoc()) {
+		$xrut=$registro['rut'];
+		$xrazon=$registro['razonsocial'];
+	}
+
+	$SQL="SELECT certificado from CTHonoGeneDeta WHERE rut ='$xrut' AND rutempresa='$RutEmpresa' AND periodo LIKE '%$xper%' GROUP BY certificado";
+	$resultados = $mysqli->query($SQL);
+	while ($registro = $resultados->fetch_assoc()) {
+		$ncertif=$registro['certificado'];
+	}
+
+    $mysqli->close();
+
+?>
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>MasContable</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			/* Remove the navbar's default margin-bottom and rounded borders */
+			.navbar {
+				margin-bottom: 0;
+				border-radius: 0;
+			}
+
+			/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+			.row.content {height: 450px}
+
+			/* Set gray background color and 100% height */
+			.sidenav {
+				padding-top: 20px;
+				background-color: #f1f1f1;
+				height: 100%;
+			}
+
+			/* Set black background color, white text and some padding */
+			footer {
+				background-color: #555;
+				color: white;
+				padding: 15px;
+			}
+
+			/* On small screens, set height to 'auto' for sidenav and grid */
+			@media screen and (max-width: 767px) {
+				.sidenav {
+					height: auto;
+					padding: 15px;
+				}
+				.row.content {height:auto;}
+			}
+		.container-fluid {
+		    font-size: 10px;			
+		}
+		</style>
+
+	<script type="text/javascript">
+		function printDiv(nombreDiv) {
+			var contenido= document.getElementById(nombreDiv).innerHTML;
+			var contenidoOriginal= document.body.innerHTML;
+
+			document.body.innerHTML = contenido;
+
+			window.print();
+
+			document.body.innerHTML = contenidoOriginal;
+
+			
+		} 		
+	</script>
+
+	</head>
+
+<body>
+
+<div class="container-fluid">
+<!-- <div class="row content"> -->
+
+	<dir class="col-sm-12 text-center">
+		<input type="button" class="btn btn-default btn-sm" onclick="printDiv('DivImp')" value="Imprimir">
+	</dir>
+
+<div class="" id="DivImp">
+
+
+	<div class="col-sm-1">
+	</div>
+	<div class="col-sm-10">
+
+			<div class="form-group row">
+<?php
+			$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+		    $SQL="SELECT * FROM CTEmpresas WHERE rut='$RutEmpresa'";
+			$resultados = $mysqli->query($SQL);
+			while ($registro = $resultados->fetch_assoc()) {
+		    	$xNOM=$registro['razonsocial'];	
+		    	$xRUT=$registro['rut'];	
+		    	$xDIR=$registro['direccion'];	
+		    	$xCUI=$registro['cuidad'];	
+			   	$xGIR=$registro['giro'];	
+
+		    }
+		    $mysqli->close();
+
+			echo $xRUT." - ".$xNOM,"<br>";
+		    echo $xDIR.", ".$xCUI,"<br>";
+		    echo $xGIR,"<br>";
+?>
+
+
+			<br><br>
+			<h4 class="text-center">CERTIFICADO SOBRE HONORARIOS</h4>
+			<h5 class="text-center">Certificado <?php echo $ncertif."/".$xper;?></h5>
+			<br><br>
+			<p>La empresa <?PHP echo $xNOM; ?>, certifica que el Sr(a) <?php echo $xrazon; ?>, Rut Nro. <?php echo $xrut; ?>, durante el a&ntilde;o <?php echo $xper; ?>, se le han pagado las siguientes rentas por concepto de honorarios, y sobre las cuales se le practicaron las retenciones de impuesto que se se&ntilde;alan:
+			</p>
+
+
+				<div class="clearfix"> </div>
+			</div>
+
+		<div class="clearfix"> </div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th width="20%">Periodo</th>
+					<th>Cant. Documentos</th>
+					<th>Honorario Bruto</th>
+					<th>Retenci&oacute;n Impuesto</th>
+					<th>Retenci&oacute;n 3%</th>
+					<th>Factor Actual</th>
+					<th>Honorario Bruto</th>
+					<th>Retenci&oacute;n Impuesto</th>
+					<th>Retenci&oacute;n 3%</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+
+				$mes=array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+				$factores=array();
+
+				$SQL="SELECT * from CTHonoGene WHERE rutempresa ='$RutEmpresa' AND periodo='$xper'";
+				$resultados = $mysqli->query($SQL);
+        		while ($registro = $resultados->fetch_assoc()) {
+					$factores[]=$registro['mes1'];
+					$factores[]=$registro['mes2'];
+					$factores[]=$registro['mes3'];
+					$factores[]=$registro['mes4'];
+					$factores[]=$registro['mes5'];
+					$factores[]=$registro['mes6'];
+					$factores[]=$registro['mes7'];
+					$factores[]=$registro['mes8'];
+					$factores[]=$registro['mes9'];
+					$factores[]=$registro['mes10'];
+					$factores[]=$registro['mes11'];
+					$factores[]=$registro['mes12'];
+				}	
+
+
+
+				$SQL="SELECT * from CTCliPro WHERE id ='$xid'";
+				$resultados = $mysqli->query($SQL);
+        		while ($registro = $resultados->fetch_assoc()) {
+					$xrut=$registro['rut'];
+				}
+
+				$i=1;
+				$tsbruto=0;
+				$tsliquido=0;
+				while ( $i<= 12) {
+
+					if ($i<10) {
+						$peri="0".$i."-".$xper;
+					}else{
+						$peri=$i."-".$xper;
+					}
+
+					$cont=0;
+					$sbruto=0;
+					$rete=0;
+					$retec=0;
+					$sliquido=0;
+					$sprestamo=0;
+					$SQL="SELECT * from CTHonoGeneDeta WHERE rut ='$xrut' AND rutempresa='$RutEmpresa' AND periodo='$peri'";
+					$resultados = $mysqli->query($SQL);
+        			while ($registro = $resultados->fetch_assoc()) {
+						$cont++;
+						$sbruto=$sbruto+$registro['bruto'];
+						$rete=$rete+$registro['retencion'];
+						$sliquido=$sliquido+$registro['liquido'];
+						$sprestamo=$sprestamo+$registro['prestamo'];
+
+
+					}
+		
+
+						echo '
+						<tr>
+						<td>'.$mes[($i-1)].'</td>
+						<td align="right">'.$cont.'</td>
+						<td align="right">'.number_format($sbruto, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($rete, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($sprestamo, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.$factores[($i-1)].'</td>
+						<td align="right">'.number_format(($sbruto*$factores[($i-1)]), $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format(($rete*$factores[($i-1)]), $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format(($sprestamo*$factores[($i-1)]), $NDECI, $DDECI, $DMILE).'</td>
+						</tr>';
+
+
+					$tsbruto=$tsbruto+$sbruto;
+					$trete=$trete+$rete;
+					$tprestamo=$tprestamo+$sprestamo;
+					$tretec=$tretec+($sbruto*$factores[($i-1)]);
+					$tsliquido=$tsliquido+($rete*$factores[($i-1)]);
+					$tsprestamo=$tsprestamo+($sprestamo*$factores[($i-1)]);
+					$i++;
+				}
+
+
+						echo '
+						<tr>
+						<td></td>
+						<td>Totales</td>
+						<td align="right">'.number_format($tsbruto, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($trete, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($tprestamo, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right"></td>
+						<td align="right">'.number_format($tretec, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($tsliquido, $NDECI, $DDECI, $DMILE).'</td>
+						<td align="right">'.number_format($tsprestamo, $NDECI, $DDECI, $DMILE).'</td>
+						</tr>';
+
+				$mysqli->close();
+			?>
+			</tbody>
+		</table>		
+
+	
+
+		<div class="clearfix"> </div>
+
+		
+		<p>Se extiende el presente Certificado en cumplimiento de lo dispuesto en la Resoluci&oacute;n Ex Nro. 6509 del Servicio de Impuestos Internos, publicada en el Diarios Oficial de fecha 20 de Diciembre de 1993.</p>
+        <div class="clearfix"> </div>
+        <br><br><br>
+
+		<table width="80%" border="0" align="center">
+		<tr>
+		<td align="center"><div>
+			<div>Firma Contador(a)</div>
+		</div></td>
+		<td align="center"><div>
+			<div>Firma Representante Legal</div>
+		</div></td>
+		</tr>
+		</table>
+
+
+	</div>
+	<div class="col-sm-1">
+	</div>
+</div>
+</div>
+
+</body>
+</html>

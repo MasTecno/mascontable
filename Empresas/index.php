@@ -1,6 +1,4 @@
 <?php
-
-
 	include '../conexion/conexionmysqli.php';
 	include '../js/funciones.php';
 	include '../clases/clasesCss.php';
@@ -21,12 +19,27 @@
 			location.href ='../frmMain.php';
 		</script>
 		";
-		// header("location:frmMain.php");
 		exit;
 	}
 
 	$rut = "";
 	$dmes = "";
+	$sw = 0;
+	$rut = "";
+	$razonsocial = "";
+	$rutrep = "";
+	$representante = "";
+	$direccion = "";
+	$giro = "";
+	$ciudad = "";
+	$correo = "";
+	$pinicio = "";
+	$pcomprobante = "";
+	$pplancta = "";
+	$fechainicio = "";
+	$dmes = "";
+	$dano = "";
+
 	if(isset($_POST['idemp']) && $_POST['idemp']!=""){
 		$sw=1;
 		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
@@ -72,15 +85,28 @@
 		$mysqli->close();
 	}
 
-	if (isset($_POST['idempb']) && $_POST['idempb']!="") {
+	if (isset($_POST['txtCambioEstado']) && $_POST['txtCambioEstado']!="") {
 		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTEmpresas SET estado='B' WHERE id='".$_POST['idempb']."'");
-		$mysqli->close();
-	}
 
-	if (isset($_POST['idempa']) && $_POST['idempa']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTEmpresas SET estado='A' WHERE id='".$_POST['idempa']."'");
+		$strSql = "SELECT estado FROM CTEmpresas WHERE id = ?";
+		$stmt = $mysqli->prepare($strSql);
+		$stmt->bind_param("i", $_POST['txtCambioEstado']);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
+		if ($registro = $resultados->fetch_assoc()) {
+			$estado = $registro["estado"];
+		}
+
+		if($estado == "A"){
+			$strSql = "UPDATE CTEmpresas SET estado='B' WHERE id=?";
+		}else{
+			$strSql = "UPDATE CTEmpresas SET estado='A' WHERE id=?";
+		}
+
+		$stmt = $mysqli->prepare($strSql);
+		$stmt->bind_param("i", $_POST['txtCambioEstado']); 
+		$stmt->execute();
+		$stmt->close();
 		$mysqli->close();
 	}
 
@@ -171,7 +197,7 @@
 			$dano = "";
 			
 			$_POST['idemp'] = "";
-			$_POST['idempb'] = "";
+			$_POST['txtCambioEstado'] = "";
 			$_POST['idempa'] = "";
 			$_POST['eliemp'] = "";
 			$_POST['elirut'] = "";
@@ -194,7 +220,7 @@
 
 	$MsjEmpresa = $TotalEmpresa." de ".$_SESSION['PlanConta'];
 
-	// $BloqueBtn="";
+	$BloqueBtn="";
 	// if($TotalEmpresa>$_SESSION['PlanConta']){
 	// 	// 
 	// 	$MsjBloqueo="<strong>Alcanz&oacute; el l&iacute;mite de empresas en su plan, puede eliminar empresas para ganar cupos, de lo contrario contactar a su soporte para el aumento de plan.</strong> 
@@ -249,17 +275,17 @@
 				form1.submit();
 			}
 
-			function Baja(valor){
-				form1.idempb.value=valor;
+			function CambioEstado(valor){
+				form1.txtCambioEstado.value=valor;
 				form1.action="#";
 				form1.submit();
 			}
 
-			function Alta(valor){
-				form1.idempa.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
+			// function Alta(valor){
+			// 	form1.idempa.value=valor;
+			// 	form1.action="#";
+			// 	form1.submit();
+			// }
 
 			function Elim(c1,c2,c3){
 				var r = confirm("Desea eliminar la empresa Rut: "+c2+", Razón Social: "+c3+".");
@@ -394,7 +420,7 @@
 				document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
 				document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
 
-				document.getElementById("idempb").value = "";
+				document.getElementById("txtCambioEstado").value = "";
 				document.getElementById("idempa").value = "";
 				document.getElementById("eliemp").value = "";
 				document.getElementById("elirut").value = "";
@@ -514,8 +540,8 @@
 						<div class="p-6 pt-1 space-y-6">
 
 							<!-- Hidden inputs -->
-							<input type="hidden" name="idemp" id="idemp" value="<?php echo $_POST['idemp']; ?>">
-							<input type="hidden" name="idempb" id="idempb">
+							<input type="hidden" name="idemp" id="idemp" value="<?php if(isset($_POST['idemp'])){ echo $_POST['idemp']; }else{ echo ''; } ?>">
+							<input type="hidden" name="txtCambioEstado" id="txtCambioEstado">
 							<input type="hidden" name="idempa" id="idempa">
 							<input type="hidden" name="eliemp" id="eliemp">
 							<input type="hidden" name="elirut" id="elirut">
@@ -820,14 +846,14 @@
 								<thead class="bg-gray-50">
 									<tr>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RUT</th>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Razón Social</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Giro</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contabilización</th>
+										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th> -->
+										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Giro</th> -->
+										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th> -->
+										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contabilización</th> -->
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan Activo</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
 									</tr>
 								</thead>
 						<tbody id="myTable">
@@ -850,13 +876,7 @@
 									echo '
 									<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out">
 										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$cont.'</td>
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono">'.$registro["rut"].'</td>
-										<td class="px-6 py-4 text-sm text-gray-900">'.$registro["razonsocial"].'</td>
-										<td class="px-6 py-4 text-sm text-gray-900">'.$registro["direccion"].'</td>
-										<td class="px-6 py-4 text-sm text-gray-900">'.$registro["giro"].'</td>
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$registro["periodo"].'</td>
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xtipo.'</td>
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xplan.'</td>
+										
 										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
 											<div class="flex space-x-2">
 												<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-warning-700 bg-warning-100 hover:bg-warning-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning-500 transition duration-200" onclick="Modifi(\''.$registro["id"].'\',\''.$registro["rut"].'\',\''.$registro["razonsocial"].'\')">
@@ -865,20 +885,27 @@
 												<!-- <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger-500 transition duration-200" onclick="Elim(\''.$registro["id"].'\',\''.$registro["rut"].'\',\''.$registro["razonsocial"].'\')">
 													<i class="fa fa-trash mr-1"></i>Eliminar
 												</button> -->';
-	
-									if($registro["estado"]=="B"){
-										echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="Alta('.$registro["id"].')">
-													<i class="fa fa-check mr-1"></i>Alta
-												</button>';
-									}else{
-										echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="Baja('.$registro["id"].')">
-													<i class="fa fa-ban mr-1"></i>Baja
-												</button>';
-									}
+										if($registro["estado"]=="B"){
+											echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="CambioEstado('.$registro["id"].')">
+														<i class="fa fa-check mr-1"></i>Disponible
+													</button>';
+										}else{
+											echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="CambioEstado('.$registro["id"].')">
+														<i class="fa fa-ban mr-1"></i>Inactiva
+													</button>';
+										}
 
 									echo '
 											</div>
 										</td>
+
+										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono">'.$registro["rut"].'</td>
+										<td class="px-6 py-4 text-sm text-gray-900">'.$registro["razonsocial"].'</td>
+										<!-- <td class="px-6 py-4 text-sm text-gray-900">'.$registro["direccion"].'</td> -->
+										<!-- <td class="px-6 py-4 text-sm text-gray-900">'.$registro["giro"].'</td> -->
+										<!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$registro["periodo"].'</td> -->
+										<!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xtipo.'</td> -->
+										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xplan.'</td>
 									</tr>
 									';
 

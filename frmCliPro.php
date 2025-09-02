@@ -60,94 +60,94 @@
 
 
 	$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-	$SQL="SELECT * FROM CTCliPro WHERE tipo='P' ORDER BY id ASC;";
-	$resultados = $mysqli->query($SQL);
-	while ($registro = $resultados->fetch_assoc()) {
+	// $SQL="SELECT * FROM CTCliPro WHERE tipo='P' ORDER BY id ASC;";
+	// $resultados = $mysqli->query($SQL);
+	// while ($registro = $resultados->fetch_assoc()) {
 
-		$PRut=$registro['rut'];
+	// 	$PRut=$registro['rut'];
 
-		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='P'";
-		$Resul = $mysqli->query($SQL1);
-		$row_cnt = $Resul->num_rows;
-		if($row_cnt>1){
-			$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='P' ORDER BY id ASC LIMIT 1;";
-			$resultados1 = $mysqli->query($SQL1);
-			while ($registro1 = $resultados1->fetch_assoc()) {
-				$IdReg=$registro1['id'];
-			}			
-			$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='P'");
-			// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
-		}
+	// 	$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='P'";
+	// 	$Resul = $mysqli->query($SQL1);
+	// 	$row_cnt = $Resul->num_rows;
+	// 	if($row_cnt>1){
+	// 		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='P' ORDER BY id ASC LIMIT 1;";
+	// 		$resultados1 = $mysqli->query($SQL1);
+	// 		while ($registro1 = $resultados1->fetch_assoc()) {
+	// 			$IdReg=$registro1['id'];
+	// 		}			
+	// 		$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='P'");
+	// 		// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
+	// 	}
 
-	}
+	// }
 
-	$SQL="SELECT * FROM CTCliPro WHERE tipo='C' ORDER BY id ASC;";
-	$resultados = $mysqli->query($SQL);
-	while ($registro = $resultados->fetch_assoc()) {
+	// $SQL="SELECT * FROM CTCliPro WHERE tipo='C' ORDER BY id ASC;";
+	// $resultados = $mysqli->query($SQL);
+	// while ($registro = $resultados->fetch_assoc()) {
 
-		$PRut=$registro['rut'];
+	// 	$PRut=$registro['rut'];
 
-		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='C'";
-		$Resul = $mysqli->query($SQL1);
-		$row_cnt = $Resul->num_rows;
-		if($row_cnt>1){
-			$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='C' ORDER BY id ASC LIMIT 1;";
-			$resultados1 = $mysqli->query($SQL1);
-			while ($registro1 = $resultados1->fetch_assoc()) {
-				$IdReg=$registro1['id'];
-			}			
-			$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='C'");
-			// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
-		}
-	}
+	// 	$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='C'";
+	// 	$Resul = $mysqli->query($SQL1);
+	// 	$row_cnt = $Resul->num_rows;
+	// 	if($row_cnt>1){
+	// 		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='C' ORDER BY id ASC LIMIT 1;";
+	// 		$resultados1 = $mysqli->query($SQL1);
+	// 		while ($registro1 = $resultados1->fetch_assoc()) {
+	// 			$IdReg=$registro1['id'];
+	// 		}			
+	// 		$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='C'");
+	// 		// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
+	// 	}
+	// }
 
-	$SQL="SELECT * FROM CTCliPro WHERE tipo='2' ORDER BY id ASC;";
-	$resultados = $mysqli->query($SQL);
-	while ($registro = $resultados->fetch_assoc()) {
+	// $SQL="SELECT * FROM CTCliPro WHERE tipo='2' ORDER BY id ASC;";
+	// $resultados = $mysqli->query($SQL);
+	// while ($registro = $resultados->fetch_assoc()) {
 
-		$PRut=$registro['rut'];
+	// 	$PRut=$registro['rut'];
 
-		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='2'";
-		$Resul = $mysqli->query($SQL1);
-		$row_cnt = $Resul->num_rows;
-		if($row_cnt>1){
-			$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='2' ORDER BY id ASC LIMIT 1;";
-			$resultados1 = $mysqli->query($SQL1);
-			while ($registro1 = $resultados1->fetch_assoc()) {
-				$IdReg=$registro1['id'];
-			}			
-			$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='2'");
-			// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
-		}
-	}
+	// 	$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='2'";
+	// 	$Resul = $mysqli->query($SQL1);
+	// 	$row_cnt = $Resul->num_rows;
+	// 	if($row_cnt>1){
+	// 		$SQL1="SELECT * FROM CTCliPro WHERE rut LIKE '$PRut' AND tipo='2' ORDER BY id ASC LIMIT 1;";
+	// 		$resultados1 = $mysqli->query($SQL1);
+	// 		while ($registro1 = $resultados1->fetch_assoc()) {
+	// 			$IdReg=$registro1['id'];
+	// 		}			
+	// 		$mysqli->query("DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut' AND tipo='2'");
+	// 		// echo "DELETE FROM CTCliPro WHERE id> $IdReg AND rut='$PRut'";
+	// 	}
+	// }
 
-	$SQL="SELECT * FROM CTCliPro;";
-	$resultados = $mysqli->query($SQL);
-	while ($registro = $resultados->fetch_assoc()) {
-		$RSocial=$registro['razonsocial'];
-		$RSocial=str_replace("GONZ?LEZ", "GONZÁLEZ", $RSocial);
-		$RSocial=str_replace("G?MEZ", "GÓMEZ", $RSocial);
-		$RSocial=str_replace("VALD?S", "VALDÉS", $RSocial);
-		$RSocial=str_replace("AVIL?S", "AVILÉS", $RSocial);
+	// $SQL="SELECT * FROM CTCliPro;";
+	// $resultados = $mysqli->query($SQL);
+	// while ($registro = $resultados->fetch_assoc()) {
+	// 	$RSocial=$registro['razonsocial'];
+	// 	$RSocial=str_replace("GONZ?LEZ", "GONZÁLEZ", $RSocial);
+	// 	$RSocial=str_replace("G?MEZ", "GÓMEZ", $RSocial);
+	// 	$RSocial=str_replace("VALD?S", "VALDÉS", $RSocial);
+	// 	$RSocial=str_replace("AVIL?S", "AVILÉS", $RSocial);
 
-		$RSocial=str_replace("COMPA?IA", "COMPAÑIA", $RSocial); 
-		$RSocial=str_replace("?LVAREZ", "ÁLVAREZ", $RSocial); 
-		$RSocial=str_replace("ENSE?ANZAS", "ENSEÑANZAS", $RSocial); 
-		$RSocial=str_replace("INVESTIGACI?N", "INVESTIGACIÓN", $RSocial); 
-		$RSocial=str_replace("B?BLICA", "BÍBLICA", $RSocial); 
-		$RSocial=str_replace("A?REA", "ÁREA", $RSocial); 
-		$RSocial=str_replace("MAR?A", "MARÍA", $RSocial); 
-		$RSocial=str_replace("ASESOR?AS", "ASESORÍAS", $RSocial); 
-		$RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
+	// 	$RSocial=str_replace("COMPA?IA", "COMPAÑIA", $RSocial); 
+	// 	$RSocial=str_replace("?LVAREZ", "ÁLVAREZ", $RSocial); 
+	// 	$RSocial=str_replace("ENSE?ANZAS", "ENSEÑANZAS", $RSocial); 
+	// 	$RSocial=str_replace("INVESTIGACI?N", "INVESTIGACIÓN", $RSocial); 
+	// 	$RSocial=str_replace("B?BLICA", "BÍBLICA", $RSocial); 
+	// 	$RSocial=str_replace("A?REA", "ÁREA", $RSocial); 
+	// 	$RSocial=str_replace("MAR?A", "MARÍA", $RSocial); 
+	// 	$RSocial=str_replace("ASESOR?AS", "ASESORÍAS", $RSocial); 
+	// 	$RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
 
-		$RSocial=str_replace("GESTI?N", "GESTIÓN", $RSocial); 
-		$RSocial=str_replace("ZU?IGA", "ZUÑIGA", $RSocial); 
-		// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-		// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-		// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
+	// 	$RSocial=str_replace("GESTI?N", "GESTIÓN", $RSocial); 
+	// 	$RSocial=str_replace("ZU?IGA", "ZUÑIGA", $RSocial); 
+	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
+	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
+	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
 
-		$mysqli->query("UPDATE CTCliPro SET razonsocial='$RSocial' WHERE id='".$registro['id']."'");
-	}
+	// 	$mysqli->query("UPDATE CTCliPro SET razonsocial='$RSocial' WHERE id='".$registro['id']."'");
+	// }
 
 	// Determinar el título según el tipo de formulario
 	if ($_GET['nomfrm']=="C") {

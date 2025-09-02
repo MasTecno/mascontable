@@ -125,6 +125,7 @@
                             </div>
                             <form method="POST" name="fLogin" action="xvalidar.php">
                                 <?php 
+                                    $TitSis="";
                                     if($_SERVER['HTTP_HOST']=="server99.maserp.cl"){
                                         $TitSis="MasContable - Desarrollo";
                                     }
@@ -159,6 +160,9 @@
                                 </div>
                                 <div class="d-grid text-center" style="font-size: 11px;">
                                     <?php 
+                                        if(!isset($_GET['Msj'])) {
+                                            $_GET['Msj'] = '';
+                                        }
                                         if($_GET['Msj']==95){
                                             echo'<p>*Alguno de los datos ingresado es son válidos.</p>';
                                         }

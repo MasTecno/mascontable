@@ -526,7 +526,7 @@
 <!-- Status Bar with Tailwind CSS -->
 <div class="bg-red-500 text-white py-0.5">
     <div class="px-4 sm:px-5 lg:px-6">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+        <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="text-xs mb-2 md:mb-0">
                 <?php
                     $mysqli=ConCobranza();
@@ -546,7 +546,7 @@
                 ?>
             </div> 
             
-            <form action="#" method="POST" name="formperiodo" id="formperiodo" class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <form action="#" method="POST" name="formperiodo" id="formperiodo" class="flex flex-row gap-3 items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <script type="text/javascript">
                     function UpPeriodo(){
                         var url= "<?php echo $nivel; ?>MoviPeriodo.php";

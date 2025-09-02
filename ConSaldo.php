@@ -42,7 +42,7 @@
 	<div class="col-md-12">
 		<div class="input-group">
 		<span class="input-group-addon">N&uacute;mero</span>
-		<select class="form-control" id="seleccue" name="seleccue" onchange="ConsultaS()">
+		<select class="block w-full pl-3 pr-3 py-1 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500" id="seleccue" name="seleccue" onchange="ConsultaS()">
 		<option value="">Todas</option>
 			<?php 
 				$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
@@ -84,7 +84,7 @@
 	</div> 
 
 		<div class="col-md-12">
-		<div class="checkbox checkbox-success text-center">
+		<div class="checkbox checkbox-success text-center p-2 mt-1 mb-1 flex justify-center items-center gap-2">
 			<input id="checkbox2" type="checkbox" name="checkbox2" <?php if ($MonAcu=="S") { echo "checked"; } ?> onclick="Acu()">
 			<label for="checkbox2">
 				Monto Acumulado
@@ -96,13 +96,13 @@
 
 
 
-	<table class="table table-striped table-bordered TamGri" width="100%" style="font-size: 12px;">
-	<thead>
+	<table class="min-w-full divide-y divide-gray-200" width="100%" style="font-size: 12px;">
+	<thead class="bg-gray-50">
 		<tr>
-			<th width="">Periodo</th>
-			<th width="20%">Debe</th>
-			<th width="20%">Haber</th>
-			<th width="20%">Saldo</th>
+			<th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" width="">Periodo</th>
+			<th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" width="20%">Debe</th>
+			<th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" width="20%">Haber</th>
+			<th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" width="20%">Saldo</th>
 		</tr>
 	</thead>
 <?php
@@ -158,11 +158,11 @@
 				}
 
 				echo '
-					<tr '.$colo.'>
-						<td>'.$Lperiodo.'</td>
-						<td class="text-right">'.number_format($xsdebe, $NDECI, $DDECI, $DMILE).'</td>
-						<td class="text-right">'.number_format($xshaber, $NDECI, $DDECI, $DMILE).'</td>
-						<td class="text-right">'.number_format($Saldo, $NDECI, $DDECI, $DMILE).'</td>
+					<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out" '.$colo.'>
+						<td class="px-6 py-1.5 whitespace-nowrap text-sm font-medium text-gray-900">'.$Lperiodo.'</td>
+						<td class="px-6 py-1.5 text-right whitespace-nowrap text-sm text-gray-900">'.number_format($xsdebe, $NDECI, $DDECI, $DMILE).'</td>
+						<td class="px-6 py-1.5 text-right whitespace-nowrap text-sm text-gray-900">'.number_format($xshaber, $NDECI, $DDECI, $DMILE).'</td>
+						<td class="px-6 py-1.5 text-right whitespace-nowrap text-sm text-gray-900">'.number_format($Saldo, $NDECI, $DDECI, $DMILE).'</td>
 					</tr> 
 				';
 				$i++;

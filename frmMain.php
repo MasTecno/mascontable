@@ -209,8 +209,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
 		<link rel="stylesheet" type="text/css" href="css/StConta.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
+
 
 
 		<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
@@ -321,30 +324,42 @@
 					if($RazonSocial!=""){
 				?>
 				<br>
-				<div class="grid grid-cols-3 gap-3">
-					<div class="flex flex-col">
-						<div class="w-12/12">
+				<div class="grid grid-cols-1 md:grid-cols-12 gap-3 p-3 pt-0">
+					<!-- Primera columna: 25% (3/12) -->
+					<div class="flex flex-col w-full md:col-span-3">
+						<div class="w-12/12 p-3">
 							<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-								<div class="panel-heading text-center">Acceso Directo</div>
-								<div class="flex flex-col gap-2 p-1">
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RVoucher/";} ?>" class="btn btn-block btn-modificar" role="button" style="text-align: center;">
-										<span class="glyphicon glyphicon-book"></span> Registro de Voucher</a>						
+								<div class="panel-heading text-center p-2.5 border rounded-t-md">Acceso Directo</div>
+								<div class="flex flex-col gap-2 p-5 border-1 border-gray-600 bg-white/30">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RVoucher/";} ?>" class="inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" role="button" style="text-align: center;">
+										<span class="glyphicon glyphicon-book"></span> Registro de Voucher
+									</a>						
+
+									<!-- <div class="flex items-center">
+											<div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+												<i class="fas fa-book text-blue-600"></i>
+											</div>
+											<div class="ml-3">
+												<p class="text-sm font-medium text-gray-900">Registro de Voucher</p>
+												<p class="text-xs text-gray-500">Gestionar asientos contables</p>
+											</div>
+									</div> -->
 									<br>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "SincSII/";} ?>" class="btn btn-block btn-modificar" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "SincSII/";} ?>" class="inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-check"></span> Sincronizar SII</a>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RGestionDoc/";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RGestionDoc/";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-folder-open"></span> Gesti&oacute;n Documentos Electronicos</a>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "NCredito/";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "NCredito/";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-folder-open"></span> Gesti&oacute;n Nota de Cr&eacute;dito</a>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RComVen/index.php?Doc=1";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RComVen/index.php?Doc=1";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-import"></span> Registro de Compras</a>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RComVen/index.php?Doc=2";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "RComVen/index.php?Doc=2";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-export"></span> Registro de Ventas</a>
 
 									<?php
 										if($_SESSION['NomServer']=="Server48" || $_SESSION['NomServer']=="Server99"){
 									?>
-										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "F29/";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "F29/";} ?>" class="inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" role="button" style="text-align: center;">
 											<span class="glyphicon glyphicon-export"></span> F29</a>
 									<?php
 									}
@@ -352,148 +367,227 @@
 
 									<br>	
 
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "Honorarios/frmImportLibroHono.php";} ?>" class="btn btn-block btn-modificar" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "Honorarios/frmImportLibroHono.php";} ?>" class="inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-check"></span> Importar Honorarios CSV</a>
-										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "frmImportLibro.php";} ?>" class="btn btn-block btn-modificar" role="button" style="text-align: center;">
+										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "frmImportLibro.php";} ?>" class="inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-check"></span> Importar Compra/Ventas CSV</a>
-									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "Honorarios/";} ?>" class="btn btn-block btn-mastecno" role="button" style="text-align: center;">
+									<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "Honorarios/";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 										<span class="glyphicon glyphicon-header"></span> Registro de Honorarios</a>
 									<br>
 
 									<?php if ($_SESSION['COMPROBANTE']=="S" && $_SESSION['CCOSTO']=="S"): ?>
-										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "GVoucher/";} ?>" class="btn btn-modificar btn-block" role="button" style="text-align: center;">
+										<a href="<?php if ($_SESSION['ESTADOPERIODO']==1) { echo "#"; }else{ echo "GVoucher/";} ?>" class="w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" role="button" style="text-align: center;">
 											<span class="glyphicon glyphicon-usd"></span> Generador de Pagos</a>
 									<?php endif ?>
 
 								</div>
 							</div>
 						</div>
-						<div class="w-12/12">
+						<div class="w-12/12 p-3">
 							<div style="background-color: hsl(0, 0%, 0%, 0);">
-								<div class="bg-red-600 text-white text-center">Acceso Remoto</div>
-								<div class="text-center">
-									<a href="https://anydesk.com/es/downloads/windows?dv=win_exe" target="_blank">
-										<img src="images/AnyDesk.png" class="img-thumbnail img-responsive" width="200" height="100" alt="Cinque Terre">
+								<div class="bg-red-600 text-white text-center p-2.5 border rounded-t-md">Acceso Remoto</div>
+								<div class="flex justify-center items-center border-1 border-gray-600 bg-white/30">
+									<a class="border bg-white rounded-md shadow mt-3 mb-3" href="https://anydesk.com/es/downloads/windows?dv=win_exe" target="_blank">
+										<img src="images/AnyDesk.png" class="img-thumbnail img-responsive" width="180" height="100" alt="Cinque Terre">
 									</a>
 								</div>
 							</div>
-							<p class="text-center">Cierre Sesi&oacute;n:<?php echo date('H:i',$_SESSION['time_off']); ?></p>
+							<p class="text-center p-1">Cierre Sesi&oacute;n:<?php echo date('H:i',$_SESSION['time_off']); ?></p>
 						</div>
 
 
 					</div>
 				
+					<!-- Segunda columna: 58% (7/12) -->
+					<div class="flex flex-col w-full md:col-span-5">
+						<div class="w-12/12 p-3">
+							<div class="" style="background-color: hsl(0, 0%, 0%, 0);">
+								<div class="bg-red-600 text-white text-center p-2.5 border-1 rounded-t-md">Registros Compra/Venta</div>
+								<div class="bg-white/30 border-1 border-gray-600 p-5">
 
-					<div class="w-12/12">
-						<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-							<div class="panel-heading text-center">Registros Compra/Venta</div>
-							<div class="panel-body">
+								<table class="min-w-full divide-y divide-gray-200 mb-6">
+									<thead>
+										<tr>
+											<th class="text-left">Ventas</th>
+											<th class="text-right" width="20%">Cantidad</th>
+											<th class="text-right" width="20%">Neto</th>
+											<th class="text-right" width="20%">IVA</th>
+										</tr>
+									</thead>
+									<tbody class="divide-y divide-gray-500">
+										<?php 
+											$RutEmpresa=$_SESSION['RUTEMPRESA'];
+											$PeriodoX=$_SESSION['PERIODO'];
+											$SumNet=0;
+											$SumIva=0;
 
-							<table class="table table-condensed">
-								<thead>
-									<tr>
-										<th>Ventas</th>
-										<th style="text-align: right;" width="20%">Cantidad</th>
-										<th style="text-align: right;" width="20%">Neto</th>
-										<th style="text-align: right;" width="20%">IVA</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php 
-										$RutEmpresa=$_SESSION['RUTEMPRESA'];
-										$PeriodoX=$_SESSION['PERIODO'];
-										$SumNet=0;
-										$SumIva=0;
-
-										$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-										// $mysqli = xconectar("root", "", "mastecno_server08");
-										////Ventas
-										$SQL="SELECT * FROM CTTipoDocumento WHERE estado='A' ORDER BY id";
-										$resultados = $mysqli->query($SQL);
-										while ($registro = $resultados->fetch_assoc()) {
-											$IDDOC=$registro["id"];
-											$Cont=0;
-											$Sexento=0;
-											$Sneto=0;
-											$Siva=0;
+											$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+											// $mysqli = xconectar("root", "", "mastecno_server08");
+											////Ventas
+											$SQL="SELECT * FROM CTTipoDocumento WHERE estado='A' ORDER BY id";
+											$resultados = $mysqli->query($SQL);
+											while ($registro = $resultados->fetch_assoc()) {
+												$IDDOC=$registro["id"];
+												$Cont=0;
+												$Sexento=0;
+												$Sneto=0;
+												$Siva=0;
 
 
-											$SQL1="SELECT * FROM CTRegDocumentos WHERE estado='A' AND tipo='V' AND rutempresa='$RutEmpresa' AND periodo='$PeriodoX' and id_tipodocumento='$IDDOC' ORDER BY rut, fecha";
-											$resultados1 = $mysqli->query($SQL1);
-											while ($registro1 = $resultados1->fetch_assoc()) {
-												$SQL2="SELECT * FROM CTTipoDocumento WHERE id='".$registro1["id_tipodocumento"]."'";
-												$resultados2 = $mysqli->query($SQL2);
-												while ($registro2 = $resultados2->fetch_assoc()) {
-													$operador=$registro2["operador"];
+												$SQL1="SELECT * FROM CTRegDocumentos WHERE estado='A' AND tipo='V' AND rutempresa='$RutEmpresa' AND periodo='$PeriodoX' and id_tipodocumento='$IDDOC' ORDER BY rut, fecha";
+												$resultados1 = $mysqli->query($SQL1);
+												while ($registro1 = $resultados1->fetch_assoc()) {
+													$SQL2="SELECT * FROM CTTipoDocumento WHERE id='".$registro1["id_tipodocumento"]."'";
+													$resultados2 = $mysqli->query($SQL2);
+													while ($registro2 = $resultados2->fetch_assoc()) {
+														$operador=$registro2["operador"];
+													}
+
+													if($operador=="R"){
+														$operador=-1;
+													}else{
+														$operador=1;
+													}
+
+													$Cont=$Cont+1;
+													$Sexento=$Sexento+($registro1["exento"]);
+													$Sneto=$Sneto+($registro1["neto"]);
+													$Siva=$Siva+($registro1["iva"]);
 												}
 
-												if($operador=="R"){
-													$operador=-1;
-												}else{
-													$operador=1;
-												}
+												if ($Cont>0) {
 
-												$Cont=$Cont+1;
-												$Sexento=$Sexento+($registro1["exento"]);
-												$Sneto=$Sneto+($registro1["neto"]);
-												$Siva=$Siva+($registro1["iva"]);
+												echo '
+													<tr>
+														<td>'.strtoupper($registro["nombre"]).'</td>
+														<td style="text-align: right;">'.$Cont.'</td>
+														<td style="text-align: right;">'.number_format($Sneto+$Sexento, $NDECI, $DDECI, $DMILE).'</td>
+														<td style="text-align: right;">'.number_format($Siva, $NDECI, $DDECI, $DMILE).'</td>
+													</tr>
+												';            
+													$SumNet=$SumNet+(($Sneto+$Sexento)*$operador);
+													$SumIva=$SumIva+(($Siva)*$operador);
+												}
 											}
 
-											if ($Cont>0) {
+											$SQL="SELECT sum(Neto) as Snet, sum(IVA) as Siva, sum(Total) as Stot, Periodo, DTE, keyas FROM CTBoletasDTE WHERE RutEmpresa='$RutEmpresa' AND periodo='$PeriodoX' GROUP BY Periodo, DTE ";
+											$resultados = $mysqli->query($SQL);
+											while ($registro = $resultados->fetch_assoc()) {
 
-											echo '
+												$SQL1="SELECT * FROM CTTipoDocumento WHERE tiposii='".$registro["DTE"]."'";
+												$resultados1 = $mysqli->query($SQL1);
+												while ($registro1 = $resultados1->fetch_assoc()) {
+													$nomdoc=$registro1["nombre"];
+												}
+
+												$CantLote =0;
+												$SQL1="SELECT count(*) as T FROM CTBoletasDTE WHERE RutEmpresa='$RutEmpresa' AND DTE='".$registro["DTE"]."' AND periodo='$PeriodoX' GROUP BY Periodo, DTE ";
+												$resultados1 = $mysqli->query($SQL1);
+												while ($registro1= $resultados1->fetch_assoc()) {
+													$CantLote = $registro1['T'];
+												}
+
+												$LExento=0;
+												$LNeto=$registro["Snet"];
+												$LIva=$registro["Siva"];
+												$LRete=0;
+												$LTotal=$registro["Stot"];
+
+												if ($registro["DTE"]==38 || $registro["DTE"]==41) {
+													$LExento=$registro["Snet"];
+													$LNeto=0;
+												}
+
+												echo '
 												<tr>
-													<td>'.strtoupper($registro["nombre"]).'</td>
-													<td style="text-align: right;">'.$Cont.'</td>
-													<td style="text-align: right;">'.number_format($Sneto+$Sexento, $NDECI, $DDECI, $DMILE).'</td>
-													<td style="text-align: right;">'.number_format($Siva, $NDECI, $DDECI, $DMILE).'</td>
+													<td>'.$nomdoc.'</td>
+													<td style="text-align: right;">'.$CantLote.'</td>
+													<td style="text-align: right;">'.number_format($LNeto, $NDECI, $DDECI, $DMILE).'</td>
+													<td style="text-align: right;">'.number_format($LIva, $NDECI, $DDECI, $DMILE).'</td>
 												</tr>
-											';            
-												$SumNet=$SumNet+(($Sneto+$Sexento)*$operador);
-												$SumIva=$SumIva+(($Siva)*$operador);
+												';
+												$SumNet=$SumNet+($LNeto*$operador);
+												$SumIva=$SumIva+($LIva*$operador);
+
 											}
-										}
+												echo '
+												<tr>
+													<td><strong>Totales</strong></td>
+													<td style="text-align: right;"></td>
+													<td style="text-align: right;"><strong>'.number_format($SumNet, $NDECI, $DDECI, $DMILE).'</strong></td>
+													<td style="text-align: right;"><strong>'.number_format($SumIva, $NDECI, $DDECI, $DMILE).'</strong></td>
+												</tr>
+												';   
+										?>
 
-										$SQL="SELECT sum(Neto) as Snet, sum(IVA) as Siva, sum(Total) as Stot, Periodo, DTE, keyas FROM CTBoletasDTE WHERE RutEmpresa='$RutEmpresa' AND periodo='$PeriodoX' GROUP BY Periodo, DTE ";
-										$resultados = $mysqli->query($SQL);
-										while ($registro = $resultados->fetch_assoc()) {
+									</tbody>
+								</table>
 
-											$SQL1="SELECT * FROM CTTipoDocumento WHERE tiposii='".$registro["DTE"]."'";
-											$resultados1 = $mysqli->query($SQL1);
-											while ($registro1 = $resultados1->fetch_assoc()) {
-												$nomdoc=$registro1["nombre"];
+								<table class="min-w-full divide-y divide-gray-200 ">
+									<thead>
+										<tr>
+											<th class="text-left">Compras</th>
+											<th class="text-right" width="20%">Cantidad</th>
+											<th class="text-right" width="20%">Neto</th>
+											<th class="text-right" width="20%">IVA</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php 
+											$SumNet=0;
+											$SumIva=0;
+
+											$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+											// $mysqli = xconectar("root", "", "mastecno_server08");
+											////Compras
+											$SQL="SELECT * FROM CTTipoDocumento WHERE estado='A' ORDER BY id";
+											$resultados = $mysqli->query($SQL);
+											while ($registro = $resultados->fetch_assoc()) {
+												$IDDOC=$registro["id"];
+												$Cont=0;
+												$Sexento=0;
+												$Sneto=0;
+												$Siva=0;
+
+
+												$SQL1="SELECT * FROM CTRegDocumentos WHERE estado='A' AND tipo='C' AND rutempresa='$RutEmpresa' AND periodo='$PeriodoX' and id_tipodocumento='$IDDOC' ORDER BY rut, fecha";
+
+												$resultados1 = $mysqli->query($SQL1);
+												while ($registro1 = $resultados1->fetch_assoc()) {
+													$SQL2="SELECT * FROM CTTipoDocumento WHERE id='".$registro1["id_tipodocumento"]."'";
+													$resultados2 = $mysqli->query($SQL2);
+													while ($registro2 = $resultados2->fetch_assoc()) {
+														$operador=$registro2["operador"];
+													}
+
+													if($operador=="R"){
+														$operador=-1;
+													}else{
+														$operador=1;
+													}
+
+													$Cont=$Cont+1;
+													$Sexento=$Sexento+($registro1["exento"]);
+													$Sneto=$Sneto+($registro1["neto"]);
+													$Siva=$Siva+($registro1["iva"]);
+												}
+
+												if ($Cont>0) {
+
+												echo '
+													<tr>
+														<td>'.strtoupper($registro["nombre"]).'</td>
+														<td style="text-align: right;">'.$Cont.'</td>
+														<td style="text-align: right;">'.number_format($Sneto+$Sexento, $NDECI, $DDECI, $DMILE).'</td>
+														<td style="text-align: right;">'.number_format($Siva, $NDECI, $DDECI, $DMILE).'</td>
+													</tr>
+												';            
+													$SumNet=$SumNet+(($Sneto+$Sexento)*$operador);
+													$SumIva=$SumIva+(($Siva)*$operador);
+												}
+
 											}
 
-											$CantLote =0;
-											$SQL1="SELECT count(*) as T FROM CTBoletasDTE WHERE RutEmpresa='$RutEmpresa' AND DTE='".$registro["DTE"]."' AND periodo='$PeriodoX' GROUP BY Periodo, DTE ";
-											$resultados1 = $mysqli->query($SQL1);
-											while ($registro1= $resultados1->fetch_assoc()) {
-												$CantLote = $registro1['T'];
-											}
-
-											$LExento=0;
-											$LNeto=$registro["Snet"];
-											$LIva=$registro["Siva"];
-											$LRete=0;
-											$LTotal=$registro["Stot"];
-
-											if ($registro["DTE"]==38 || $registro["DTE"]==41) {
-												$LExento=$registro["Snet"];
-												$LNeto=0;
-											}
-
-											echo '
-											<tr>
-												<td>'.$nomdoc.'</td>
-												<td style="text-align: right;">'.$CantLote.'</td>
-												<td style="text-align: right;">'.number_format($LNeto, $NDECI, $DDECI, $DMILE).'</td>
-												<td style="text-align: right;">'.number_format($LIva, $NDECI, $DDECI, $DMILE).'</td>
-											</tr>
-											';
-											$SumNet=$SumNet+($LNeto*$operador);
-											$SumIva=$SumIva+($LIva*$operador);
-
-										}
 											echo '
 											<tr>
 												<td><strong>Totales</strong></td>
@@ -502,189 +596,116 @@
 												<td style="text-align: right;"><strong>'.number_format($SumIva, $NDECI, $DDECI, $DMILE).'</strong></td>
 											</tr>
 											';   
-									?>
 
-								</tbody>
-							</table>
-
-							<table class="table table-condensed">
-								<thead>
-									<tr>
-										<th>Compras</th>
-										<th style="text-align: right;" width="20%">Cantidad</th>
-										<th style="text-align: right;" width="20%">Neto</th>
-										<th style="text-align: right;" width="20%">IVA</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php 
-										$SumNet=0;
-										$SumIva=0;
-
-										$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-										// $mysqli = xconectar("root", "", "mastecno_server08");
-										////Compras
-										$SQL="SELECT * FROM CTTipoDocumento WHERE estado='A' ORDER BY id";
-										$resultados = $mysqli->query($SQL);
-										while ($registro = $resultados->fetch_assoc()) {
-											$IDDOC=$registro["id"];
-											$Cont=0;
-											$Sexento=0;
-											$Sneto=0;
-											$Siva=0;
-
-
-											$SQL1="SELECT * FROM CTRegDocumentos WHERE estado='A' AND tipo='C' AND rutempresa='$RutEmpresa' AND periodo='$PeriodoX' and id_tipodocumento='$IDDOC' ORDER BY rut, fecha";
-
-											$resultados1 = $mysqli->query($SQL1);
-											while ($registro1 = $resultados1->fetch_assoc()) {
-												$SQL2="SELECT * FROM CTTipoDocumento WHERE id='".$registro1["id_tipodocumento"]."'";
-												$resultados2 = $mysqli->query($SQL2);
-												while ($registro2 = $resultados2->fetch_assoc()) {
-													$operador=$registro2["operador"];
-												}
-
-												if($operador=="R"){
-													$operador=-1;
-												}else{
-													$operador=1;
-												}
-
-												$Cont=$Cont+1;
-												$Sexento=$Sexento+($registro1["exento"]);
-												$Sneto=$Sneto+($registro1["neto"]);
-												$Siva=$Siva+($registro1["iva"]);
-											}
-
-											if ($Cont>0) {
-
-											echo '
-												<tr>
-													<td>'.strtoupper($registro["nombre"]).'</td>
-													<td style="text-align: right;">'.$Cont.'</td>
-													<td style="text-align: right;">'.number_format($Sneto+$Sexento, $NDECI, $DDECI, $DMILE).'</td>
-													<td style="text-align: right;">'.number_format($Siva, $NDECI, $DDECI, $DMILE).'</td>
-												</tr>
-											';            
-												$SumNet=$SumNet+(($Sneto+$Sexento)*$operador);
-												$SumIva=$SumIva+(($Siva)*$operador);
-											}
-
-										}
-
-										echo '
-										<tr>
-											<td><strong>Totales</strong></td>
-											<td style="text-align: right;"></td>
-											<td style="text-align: right;"><strong>'.number_format($SumNet, $NDECI, $DDECI, $DMILE).'</strong></td>
-											<td style="text-align: right;"><strong>'.number_format($SumIva, $NDECI, $DDECI, $DMILE).'</strong></td>
-										</tr>
-										';   
-
-									?>
-								</tbody>
-							</table>
-
-							</div>
-						</div>
-						<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-							<div class="panel-heading text-center">Observaciones a revisar</div>
-							<div class="panel-body">
-								<script>
-									function RevContab(){
-										var url= "frmMainObservaciones.php";
-										$.ajax({
-											type: "POST",
-											url: url,
-											dataType: 'json',
-											data: $('#form1').serialize(),
-											success:function(resp){
-												// $("#UFecha").val(resp.dato1);
-												// $("#NFPago").val(resp.dato2);
-
-												document.getElementById("sw1_OK").style.display = 'none';
-												document.getElementById("sw1_ER").style.display = 'none';
-												document.getElementById("sw2_OK").style.display = 'none';
-												document.getElementById("sw2_ER").style.display = 'none';
-												
-							
-												if(resp.dato1==""){
-													document.getElementById("sw1_OK").style.display = 'inline';
-												}else{
-													document.getElementById("sw1_ER").style.display = 'inline';
-													$("#msw1").html(resp.dato1);
-												}
-
-												
-												if(resp.dato2==""){
-													document.getElementById("sw2_OK").style.display = 'inline';
-												}else{
-													document.getElementById("sw2_ER").style.display = 'inline';
-													$("#msw2").html(resp.dato2);
-												}
-											}
-										});	
-									}
-									
-									function MayorCta(valor){
-										form1.CtaMayor.value=valor;
-										form1.anual.value=1;
-										form1.method="POST";
-										form1.target="_blank";
-										form1.action="../Mayor/";
-										form1.submit();
-										form1.target="";
-										form1.action="#";
-									}
-
-
-								</script>
-
-
-								<table class="table table-condensed">
-									<thead>
-										<tr>
-											<th style="text-align: center;" width="1%">Estado</th>
-											<th>Detalle</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td style="text-align: center;">
-												<span id="sw1_OK" class="glyphicon glyphicon-ok-sign" style="color: #24bb09; display:none;" title=""></span>
-												
-												<span id="sw1_ER" class="glyphicon glyphicon-remove-sign" style="color: #bb0909; display:none;"></span>
-											</td>
-											<td>
-												Saldos de Ctas de Activo y Pasivos.<br>
-												<l id="msw1"></l>
-												<input type="hidden" name="CtaMayor" id="CtaMayor">
-												<input type="hidden" name="anual" id="anual">
-											</td>
-										</tr>
-										<tr>
-											<td style="text-align: center;">
-												<span id="sw2_OK" class="glyphicon glyphicon-ok-sign" style="color: #24bb09; display:none;"></span>
-												<span id="sw2_ER" class="glyphicon glyphicon-remove-sign" style="color: #bb0909; display:none;"></span>
-											</td>
-											<td>
-												Asientos a revisar.<br>
-												<l id="msw2"></l>
-											</td>
-										</tr>
+										?>
 									</tbody>
 								</table>
-								<button type="button" class="btn btn-sm btn-mastecno" onclick="RevContab()"><i class="fa fa-refresh"></i> Revisar Contabilidad</button>
+
+								</div>
 							</div>
+							<div class="panel panel-default mt-5" style="background-color: hsl(0, 0%, 0%, 0);">
+								<div class="panel-heading text-center p-2.5 border-1 rounded-t-md">Observaciones a revisar</div>
+								<div class="panel-body p-5 bg-white/30 border-1 border-gray-600">
+									<script>
+										function RevContab(){
+											var url= "frmMainObservaciones.php";
+											$.ajax({
+												type: "POST",
+												url: url,
+												dataType: 'json',
+												data: $('#form1').serialize(),
+												success:function(resp){
+													// $("#UFecha").val(resp.dato1);
+													// $("#NFPago").val(resp.dato2);
+
+													document.getElementById("sw1_OK").style.display = 'none';
+													document.getElementById("sw1_ER").style.display = 'none';
+													document.getElementById("sw2_OK").style.display = 'none';
+													document.getElementById("sw2_ER").style.display = 'none';
+													
+								
+													if(resp.dato1==""){
+														document.getElementById("sw1_OK").style.display = 'inline';
+													}else{
+														document.getElementById("sw1_ER").style.display = 'inline';
+														$("#msw1").html(resp.dato1);
+													}
+
+													
+													if(resp.dato2==""){
+														document.getElementById("sw2_OK").style.display = 'inline';
+													}else{
+														document.getElementById("sw2_ER").style.display = 'inline';
+														$("#msw2").html(resp.dato2);
+													}
+												}
+											});	
+										}
+										
+										function MayorCta(valor){
+											form1.CtaMayor.value=valor;
+											form1.anual.value=1;
+											form1.method="POST";
+											form1.target="_blank";
+											form1.action="../Mayor/";
+											form1.submit();
+											form1.target="";
+											form1.action="#";
+										}
+
+
+									</script>
+
+
+									<table class="min-w-full divide-y divide-gray-200">
+										<thead>
+											<tr>
+												<th class="text-center" width="1%">Estado</th>
+												<th class="text-left px-2">Detalle</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: center;">
+													<span id="sw1_OK" class="glyphicon glyphicon-ok-sign" style="color: #24bb09; display:none;" title=""></span>
+													
+													<span id="sw1_ER" class="glyphicon glyphicon-remove-sign" style="color: #bb0909; display:none;"></span>
+												</td>
+												<td class="px-2 py-0.5 whitespace-nowrap text-xs font-medium text-gray-900">
+													Saldos de Ctas de Activo y Pasivos.<br>
+													<l id="msw1"></l>
+													<input type="hidden" name="CtaMayor" id="CtaMayor">
+													<input type="hidden" name="anual" id="anual">
+												</td>
+											</tr>
+											<tr>
+												<td style="text-align: center;">
+													<span id="sw2_OK" class="glyphicon glyphicon-ok-sign" style="color: #24bb09; display:none;"></span>
+													<span id="sw2_ER" class="glyphicon glyphicon-remove-sign" style="color: #bb0909; display:none;"></span>
+												</td>
+												<td class="px-2 py-0.5 whitespace-nowrap text-xs font-medium text-gray-900">
+													Asientos a revisar.<br>
+													<l id="msw2"></l>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<button type="button" class="inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 mt-3" onclick="RevContab()"><i class="fa fa-refresh mr-1"></i> Revisar Contabilidad</button>
+								</div>
+							</div>
+
+
 						</div>
-
-
 					</div>
 
-					<div class="col-md-4">
-						<button type="button" class="btn btn-modificar btn-block responsive-width" onclick="CamEmpr()"><i class="fa fa-power-off"></i> Cambiar Empresa</button>
+					<!-- Tercera columna: 17% (2/12) -->
+					<div class="col-md-4 p-3 md:col-span-4">
+						<button type="button" class="w-full inline-flex border border-blue-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200" onclick="CamEmpr()"><i class="fa fa-power-off mr-1"></i> Cambiar Empresa</button>
 						<br>
-						<button type="button" class="btn btn-mastecno btn-block" data-toggle="modal" data-target="#ModDatosEmp"><i class="glyphicon glyphicon-edit"></i> Modificar Parametro</button>
+
+						<button data-modal-target="default-modal" data-modal-toggle="default-modal"  type="button" class="mt-2 mb-2 w-full inline-flex border border-gray-300 justify-center items-center px-2.5 py-1.5 text-xs font-medium shadow rounded text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200">
+							<i class="fa-solid fa-pen-to-square mr-1 text-white"></i>Modificar Parametros
+						</button>
 
 						<?php 
 							if($_SESSION['CONTRATO']=="N" && $_SESSION['ROL']=="A"){
@@ -707,8 +728,8 @@
 
 						<input type="hidden" name="swacu" id="swacu" value="">
 						<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-							<div class="panel-heading text-center">Consulta de Saldos</div>
-							<div class="panel-body" id="ConSaldoGrilla">
+							<div class="panel-heading text-center p-2.5 border-1 rounded-t-md">Consulta de Saldos</div>
+							<div class="panel-body p-3 border-1 border-gray-600 bg-white/30" id="ConSaldoGrilla">
 							</div>
 						</div>					
 					</div>
@@ -970,5 +991,6 @@
 
 		<div class="clearfix"></div>
 		<?php include 'footer.php'; ?>
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

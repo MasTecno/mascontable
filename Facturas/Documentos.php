@@ -192,16 +192,21 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 		<meta http-equiv="Content-Type" content="text/html; ">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
 		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
+
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type='text/javascript' src="../js/select2.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/select2.css">
@@ -249,8 +254,8 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 			include '../nav.php';
 		?>
 
-		<div class="container-fluid text-left">
-		<div class="row content">
+		<div class="min-h-screen bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 			<br>
 			<!-- <div class="col-md-2"></div> -->
 			<div class="col-md-12 text-left">
@@ -263,11 +268,16 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 
 				<br>
 
-				<div class="row">
-					<div class="col-md-3">
-						<div class="input-group"> 
-							<label for="anioFiltro" class="input-group-addon">Filtrar por Año:</label>
-							<select class="form-control" id="anioFiltro" name="anioFiltro" onchange="this.form.submit()">
+				<div class="flex justify-start items-start gap-6">
+					<div class="w-2/12 flex items-end">
+						<a href="../Facturas" class="bg-orange-300 hover:bg-orange-400 text-sm text-white font-medium py-1 px-2 border-2 border-orange-300 shadow rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+							<i class="fa-solid fa-arrow-left mr-1"></i>Volver
+						</a>
+					</div>
+					<div class="w-10/12">
+						<div> 
+							<!-- <label for="anioFiltro" class="input-group-addon">Filtrar por Año:</label> -->
+							<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="anioFiltro" name="anioFiltro" onchange="this.form.submit()">
 								<?php
 									for($anio = 2018; $anio <= $anioActual; $anio++) {
 										$selected = ($anio == $anioSeleccionado) ? 'selected' : '';
@@ -277,25 +287,20 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 							</select>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<a href="../Facturas" class="btn btn-warning">
-							<span class="glyphicon glyphicon-new-window"></span> Volver
-						</a>
-					</div>
 				</div>
 				<br>
 
-				<table class="table table-bordered table-striped table-hover">
-					<thead>
+				<table class="min-w-full divide-y divide-gray-200">
+					<thead class="bg-gray-50">
 						<tr style="background-color: #e51c20; color: #FFF;">
-							<th style="text-align: center;" width="1%"></th>
-							<th style="text-align: center;" width="10%">Rut</th>
-							<th style="text-align: center;">Raz&oacute;n Social</th>
-							<th style="text-align: center;" width="10%">Tipo</th>
-							<th style="text-align: center;" width="10%">Folio</th>
-							<th style="text-align: center;" width="10%">Fecha</th>
-							<th style="text-align: center;" width="10%">Monto</th>
-							<th style="text-align: center;" width="10%">Adeudado</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="1%"></th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Rut</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;">Raz&oacute;n Social</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Tipo</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Folio</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Fecha</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Monto</th>
+							<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Adeudado</th>
 						</tr>
 					</thead>
 					<tbody id="Empresas">
@@ -384,41 +389,41 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 
 								if ($SumTrans>=$registro["Total"]) {
 									echo '
-									<tr style="background-color:#dfffca;">
-										<td>
+									<tr class="bg-white hover:bg-gray-50 border border-gray-300 transition duration-150 ease-in-out" style="background-color:#dfffca;">
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 
 										</td>
-										<td style="text-align: center;">'.$registro["Rut"].'</td>
-										<td>'.$registro["RSocial"].'</td>
-										<td style="text-align: center;">'.$XTipo.'</td>
-										<td style="text-align: center;">'.$registro["Folio"].'</td>
-										<td style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
-										<td style="text-align: center;">'.number_format($registro["Total"],0,",",".").'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$registro["Rut"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">'.$registro["RSocial"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$XTipo.'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$registro["Folio"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.number_format($registro["Total"],0,",",".").'</td>
 										<!--<td style="text-align: center;">'.number_format($registro["Total"]-$SumTrans,0,",",".").'</td>-->
-										<td>'.$Info.'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$Info.'</td>
 									</tr>
 									';
 								}else{
 									echo '
-									<tr style="background-color:'.$ColorX.';" >
-										<td>';
+									<tr class="bg-white hover:bg-gray-50 border border-gray-300 transition duration-150 ease-in-out" style="background-color:'.$ColorX.';" >
+										<td class="flex justify-center items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">';
 
 										if ($NC==0) {
 											echo '
-											<button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#myModal" onclick="Asociar(\''.date('d-m-Y',strtotime($registro["Fecha"])).'\',\''.$registro["Folio"].'\',\''.$registro["Id"].'\')">
-												<span class="glyphicon glyphicon-pushpin"></span>
+											<button type="button" class="bg-orange-300 text-sm hover:bg-orange-400 text-gray-600 font-medium py-1 px-2 border-2 border-orange-300 rounded-md transition duration-200 focus:outline-none" data-modal-target="myModal" data-modal-toggle="myModal" onclick="Asociar(\''.date('d-m-Y',strtotime($registro["Fecha"])).'\',\''.$registro["Folio"].'\',\''.$registro["Id"].'\')">
+												<i class="fa-solid fa-thumbtack text-orange-800"></i>
 											</button>
 											';
 										}
 									echo '
 										</td>
-										<td style="text-align: center;">'.$registro["Rut"].'</td>
-										<td data-toggle="modal" data-target="#Autoriza" onclick="ConfirmarX(\''.date('d-m-Y',strtotime($registro["Fecha"])).'\',\''.$registro["Folio"].'\',\''.$registro["Id"].'\')">'.$registro["RSocial"].'</td>
-										<td style="text-align: center;">'.$XTipo.'</td>
-										<td style="text-align: center;">'.$registro["Folio"].'</td>
-										<td style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
-										<td style="text-align: center;">'.number_format($registro["Total"],0,",",".").'</td>
-										<td><strong>'.number_format($registro["Total"]-$SumTrans,0,",",".").'</strong><br>'.$Info.'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$registro["Rut"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center" data-modal-target="autorizaModal" data-modal-toggle="autorizaModal" onclick="ConfirmarX(\''.date('d-m-Y',strtotime($registro["Fecha"])).'\',\''.$registro["Folio"].'\',\''.$registro["Id"].'\')">'.$registro["RSocial"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$XTipo.'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.$registro["Folio"].'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;">'.number_format($registro["Total"],0,",",".").'</td>
+										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><strong>'.number_format($registro["Total"]-$SumTrans,0,",",".").'</strong><br>'.$Info.'</td>
 									</tr>
 									';									
 								}
@@ -430,124 +435,155 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
  <!-- ondblclick="ConfirmarX(\''.date('d-m-Y',strtotime($registro["Fecha"])).'\',\''.$registro["Folio"].'\',\''.$registro["Id"].'\')" -->
 
 
-					<div class="modal fade" id="Autoriza" role="dialog">
-					<div class="modal-dialog modal-sm">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Autorizaci&oacute;n Manual</h4>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="pwd">Password:</label>
-									<input type="password" class="form-control" id="pwd" name="pwd">
+					<div id="autorizaModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+						<div class="relative p-4 w-full max-w-2xl max-h-full">
+							<!-- Modal content -->
+							<div class="relative bg-white rounded-lg shadow-sm">
+								<!-- Modal header -->
+								<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+									<h3 class="text-xl font-semibold text-gray-900">
+										Autorización Manual
+									</h3>
+									<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="autorizaModal">
+										<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+											<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+										</svg>
+										<span class="sr-only">Close modal</span>
+									</button>
 								</div>
+								<!-- Modal body -->
+								<div class="p-4 md:p-5 space-y-4">
+									<div class="grid grid-cols-1 md:grid-cols-1 mb-2 mt-1">
+										<label for="pwd" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
+											<i class="fa-solid fa-key mr-1"></i>Password
+										</label>
+										<input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="pwd" name="pwd">
+									</div>
 
-								<input type="hidden" name="l1" id="l1">
-								<input type="hidden" name="l2" id="l2">
-								<input type="hidden" name="l3" id="l3">
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" onclick="Autor()">Confirmar</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<input type="hidden" name="l1" id="l1">
+									<input type="hidden" name="l2" id="l2">
+									<input type="hidden" name="l3" id="l3">
+								</div>
+								<!-- Modal footer -->
+								<div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+									<button data-modal-hide="autorizaModal" type="button" onclick="Autor()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+										Confirmar
+									</button>
+									<button data-modal-hide="autorizaModal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+										Cancelar
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-					</div>
 
 
-					<div class="modal fade" id="myModal" role="dialog">
-					<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<?php
-									$mysqli=ConCobranza();
-									$SQL="SELECT max(Fecha) As UFecha FROM Transferencias";
-									$resultados = $mysqli->query($SQL);
-									while ($registro = $resultados->fetch_assoc()) {
-										$UFecha=date('d-m-Y',strtotime($registro["UFecha"]));
-									}
-									$mysqli->close();
-								?>							
-							<h4 class="modal-title">Transferencias Recibidas (Cartola <?php echo $UFecha; ?>)</h4>
-						</div>
-						<div class="modal-body">
-
-							<div class="col-md-6">
-							<div class="input-group">
-								<span class="input-group-addon">Fecha</span>
-								<input type="text" class="form-control" id="FecAsociado" name="FecAsociado" value="" disabled="true">
-							</div>
-							</div> 
-							<div class="col-md-6">
-							<div class="input-group">
-								<span class="input-group-addon">Documentos</span>
-								<input type="text" class="form-control" id="DocAsociado" name="DocAsociado" value="" disabled="true">
-							</div>
-							</div> 
-
-							<div class="clearfix"> </div>
-							<br>							
-
-							<table class="table table-bordered table-striped table-hover">
-								<thead>
-									<tr style="background-color: #e51c20; color: #FFF;">
-										<th style="text-align: center;" width="10%">Fecha</th>
-										<th style="text-align: center;">Banco</th>
-										<th style="text-align: center;" width="">N. Operaci&oacute;n</th>
-										<th style="text-align: center;" width="">N. Cuenta</th>
-										<th style="text-align: center;" width="10%">Monto</th>
-										<th style="text-align: center;" width="10%">Saldo</th>
-									</tr>
-								</thead>
-								<tbody id="Empresas">
-									<?php
-										$mysqli=ConCobranza();
-
-										$SQL='SELECT Transferencias.Id, TransferenciasRut.IdServer, TransferenciasRut.Rut, Transferencias.Fecha, Transferencias.Banco, Transferencias.NOperacion, Transferencias.Cta, Transferencias.Monto, Transferencias.Estado
-										FROM TransferenciasRut LEFT JOIN Transferencias ON TransferenciasRut.Rut = Transferencias.Rut
-										WHERE (((TransferenciasRut.IdServer)="'.$_SESSION['xIdServer'].'")
-										AND ((Transferencias.Estado)="A") AND (Transferencias.Fecha >= "2023-01-01 00:00:00"))
-										ORDER BY Transferencias.Fecha DESC;';
-										// AND ((Transferencias.Estado)="A") AND (Transferencias.Fecha >= "2022-08-01 00:00:00"))
-										
-										$resultados = $mysqli->query($SQL);
-										while ($registro = $resultados->fetch_assoc()) {
-											$SumTrans=0;
-											$SQL1="SELECT sum(MontoTrans) AS SumTrans FROM FactTrans WHERE idTrans='".$registro["Id"]."'";
-											$resultados1 = $mysqli->query($SQL1);
-											while ($registro1 = $resultados1->fetch_assoc()) {
-												$SumTrans=$registro1["SumTrans"];
+					<div id="myModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+						<div class="relative p-4 w-full max-w-5xl max-h-full">
+							<!-- Modal content -->
+							<div class="relative bg-white rounded-lg shadow-sm">
+								<!-- Modal header -->
+								<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+									<h3 class="text-xl font-semibold text-gray-900">
+										<?php
+											$mysqli=ConCobranza();
+											$SQL="SELECT max(Fecha) As UFecha FROM Transferencias";
+											$resultados = $mysqli->query($SQL);
+											while ($registro = $resultados->fetch_assoc()) {
+												$UFecha=date('d-m-Y',strtotime($registro["UFecha"]));
 											}
+											$mysqli->close();
+										?>							
+										<h4 class="text-xl font-semibold text-gray-900">Transferencias Recibidas (Cartola <?php echo $UFecha; ?>)</h4>
+									</h3>
+									<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="myModal">
+										<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+											<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+										</svg>
+										<span class="sr-only">Close modal</span>
+									</button>
+								</div>
+								<!-- Modal body -->
+								<div class="p-4 md:p-5 space-y-4">
+									
 
-											if ($SumTrans<$registro["Monto"]) {
-												echo '
-												<tr onclick="Confirmar(\''.$registro["Id"].'\',\''.$registro["NOperacion"].'\')">
-													<td style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
-													<td>'.$registro["Banco"].'</td>
-													<td style="text-align: center;">'.$registro["NOperacion"].'</td>
-													<td style="text-align: center;">'.$registro["Cta"].'</td>
-													<td style="text-align: center;">'.number_format($registro["Monto"],0,",",".").'</td>
-													<td style="text-align: center;">'.number_format(($registro["Monto"]-$SumTrans),0,",",".").'</td>
-												</tr>
-												';
-											}
-										}
-										$mysqli->close();
-									?>
-								</tbody>
-							</table>
+									<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-2 mt-1">
+										<div>
+											<label for="FecAsociado" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
+												<i class="fa-solid fa-calendar mr-1"></i>Fecha
+											</label>
+											<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="FecAsociado" name="FecAsociado" value="" disabled="true">
+										</div>
 
+										<div>
+											<label for="DocAsociado" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
+											<i class="fa-solid fa-file-invoice mr-1"></i>Documentos
+											</label>
+											<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="DocAsociado" name="DocAsociado" value="" disabled="true">
+										</div>
+									</div>
+
+
+									<table class="min-w-full divide-y divide-gray-200">
+										<thead class="bg-gray-50">
+											<tr style="background-color: #e51c20; color: #FFF;">
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Fecha</th>
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;">Banco</th>
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="">N. Operaci&oacute;n</th>
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="">N. Cuenta</th>
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Monto</th>
+												<th class="px-6 py-2 text-left text-xs font-semibold text-white uppercase tracking-wider" style="text-align: center;" width="10%">Saldo</th>
+											</tr>
+										</thead>
+										<tbody id="Empresas">
+											<?php
+												$mysqli=ConCobranza();
+
+												$SQL='SELECT Transferencias.Id, TransferenciasRut.IdServer, TransferenciasRut.Rut, Transferencias.Fecha, Transferencias.Banco, Transferencias.NOperacion, Transferencias.Cta, Transferencias.Monto, Transferencias.Estado
+												FROM TransferenciasRut LEFT JOIN Transferencias ON TransferenciasRut.Rut = Transferencias.Rut
+												WHERE (((TransferenciasRut.IdServer)="'.$_SESSION['xIdServer'].'")
+												AND ((Transferencias.Estado)="A") AND (Transferencias.Fecha >= "2023-01-01 00:00:00"))
+												ORDER BY Transferencias.Fecha DESC;';
+												// AND ((Transferencias.Estado)="A") AND (Transferencias.Fecha >= "2022-08-01 00:00:00"))
+												
+												$resultados = $mysqli->query($SQL);
+												while ($registro = $resultados->fetch_assoc()) {
+													$SumTrans=0;
+													$SQL1="SELECT sum(MontoTrans) AS SumTrans FROM FactTrans WHERE idTrans='".$registro["Id"]."'";
+													$resultados1 = $mysqli->query($SQL1);
+													while ($registro1 = $resultados1->fetch_assoc()) {
+														$SumTrans=$registro1["SumTrans"];
+													}
+
+													if ($SumTrans<$registro["Monto"]) {
+														echo '
+														<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out" onclick="Confirmar(\''.$registro["Id"].'\',\''.$registro["NOperacion"].'\')">
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium" style="text-align: center;">'.date('d-m-Y',strtotime($registro["Fecha"])).'</td>
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium">'.$registro["Banco"].'</td>
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium" style="text-align: center;">'.$registro["NOperacion"].'</td>
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium" style="text-align: center;">'.$registro["Cta"].'</td>
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium" style="text-align: center;">'.number_format($registro["Monto"],0,",",".").'</td>
+															<td class="px-6 py-2 whitespace-nowrap text-sm font-medium" style="text-align: center;">'.number_format(($registro["Monto"]-$SumTrans),0,",",".").'</td>
+														</tr>
+														';
+													}
+												}
+												$mysqli->close();
+											?>
+										</tbody>
+									</table>
+									
+
+								</div>
+								<!-- Modal footer -->
+								<div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+									<button data-modal-hide="myModal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+										Cancelar
+									</button>
+								</div>
+							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						</div>
 					</div>
-					</div>
-					</div>
-
-
 
 
 				</form>
@@ -557,7 +593,7 @@ if ($_GET['Adm']!="" && isset($_GET['Adm'])) {
 		</div>
 
 		<?php include '../footer.php'; ?>
-
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 
 </html>

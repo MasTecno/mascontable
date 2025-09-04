@@ -85,18 +85,20 @@
 		<title>MasContable</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		
+		<script src="../js/jquery.min.js"></script>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="../js/propio.js"></script>
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type='text/javascript' src="../js/select2.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/select2.css">
@@ -121,82 +123,100 @@
 			include '../nav.php';
 		?>
 
-		<div class="container-fluid">
-		<div class="row content">
-		<form name="form1" method="post" action="<?php $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-			<br>
-
-			
-			<div class="col-sm-4">
-			</div>
-			<div class="col-sm-4">
-
-
-
-			</div>
-			<div class="clearfix"></div>	
-			<br>
-
-			<div class="col-sm-2">
-			</div>
-			<div class="col-sm-8">
-
-
-				<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-				<div class="panel-heading">IMPORTAR CUENTA CLIENTES/PROVEEDORES</div>
-					<div class="panel-body">
-						<!-- <div class="col-md-12"> -->
-							<br><br>
-							<div class="col-md-1"></div>
-							<div class="col-md-10">
-							<div class="input-group">
-								<span class="input-group-addon">Entidades</span>
-								<select class="form-control" id="SelCliPro" name="SelCliPro" required>
-									<option value="">Seleccione</option>
-									<option value="C">Clientes</option>
-									<option value="P">Proveedores</option>
-								</select>
-							</div>
-							</div>
-							<div class="clearfix"></div>
-							<br>
-
-
-							<div class="col-md-1"></div>
-							<div class="col-md-10">
-								<div class="form-group">
-									<input type="file" class="filestyle" data-buttonText="Seleccione archivo" name="excel">
-								</div>
-								<input type="hidden" value="upload" name="action">
-								<input type="hidden" name="swImport" id="swImport" value="S">
-
-								<?php
-									if ($Msj!="") {
-										echo "<h2>".$Msj."</h2>";
-									}
-								?>
-
-								<p>
-									Esta seguro de realiza la carga del nuevo plan de cuenta para Clientes/Proveedores?
-								</p>
-
-								<div class="checkbox">
-									<label><input type="checkbox" id="SwPago" name="SwPago" value="" onclick="ActivaBtn()"> Aceptar</label>
-								</div>
-								<div class="clearfix"></div>
-								<br><br>
-							</div>
-
-							<input class="btn btn-default btn-file btn-block" type='submit' name='BtnVisual' id="BtnVisual" style="visibility:hidden;" value="Importar"  />
-						<!-- </div> -->
-
+		<div class="min-h-screen bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+			<div class="space-y-8">
+				<form name="form1" method="post" action="<?php $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" class="space-y-6">
+					
+					<!-- Action Buttons -->
+					<div class="flex flex-wrap justify-start items-center gap-2 border-2 border-gray-300 rounded-md p-2 mb-5">
+						<button type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" onclick="history.back()">
+							<i class="fa fa-arrow-left mr-2"></i> Volver
+						</button>
 					</div>
-				</div>
 
-				<div class="clearfix"></div>
-				<br>				
+					<!-- Main Card -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+						<div class="flex justify-start items-center px-6 pt-3 pb-3 bg-gray-100 w-full shadow">
+							<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+								<i class="fa-solid fa-upload text-lg text-blue-600"></i>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-gray-800">
+									Importar Cuenta Clientes/Proveedores
+								</h3>
+								<p class="text-sm text-gray-600">Seleccione el tipo de entidad y cargue el archivo Excel</p>
+							</div>
+						</div>
+						
+						<div class="p-6 pt-1 space-y-6">
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+								
+								<div>
+									<label for="SelCliPro" class="block text-sm font-medium text-gray-700 mb-2">Entidades</label>
+									<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="SelCliPro" name="SelCliPro" required>
+										<option value="">Seleccione</option>
+										<option value="C">Clientes</option>
+										<option value="P">Proveedores</option>
+									</select>
+								</div>
+
+								<div>
+									<label for="excel" class="block text-sm font-medium text-gray-700 mb-2">Adjuntar Archivo</label>
+									<div class="relative">
+										<input type="file" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-md file:border-5 file:text-sm file:font-medium border border-gray-300 rounded-md file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-200" id="excel" name="excel" accept=".xlsx" required>
+									</div>
+									<input type="hidden" value="upload" name="action">
+									<input type="hidden" name="swImport" id="swImport" value="S">
+								</div>
+							</div>
+
+							<?php if ($Msj!="") { ?>
+								<div class="bg-red-50 border border-red-200 rounded-md p-4">
+									<div class="flex">
+										<div class="flex-shrink-0">
+											<i class="fa fa-exclamation-circle text-red-400"></i>
+										</div>
+										<div class="ml-3">
+											<h3 class="text-sm font-medium text-red-800">Error</h3>
+											<div class="mt-2 text-sm text-red-700">
+												<p><?php echo $Msj; ?></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php } ?>
+
+							<!-- Confirmation -->
+							<div class="bg-blue-50 border border-blue-200 rounded-md p-2.5">
+								<div class="flex items-center">
+									<div class="flex-shrink-0">
+										<i class="fa fa-info-circle text-blue-400 text-sm"></i>
+									</div>
+									<div class="ml-3">
+										<!-- <h3 class="text-sm font-medium text-blue-800">Confirmación</h3> -->
+										<div class="text-sm text-blue-700">
+											<p>¿Está seguro de realizar la carga del nuevo plan de cuenta para Clientes/Proveedores?</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Checkbox and Submit Button -->
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" id="SwPago" name="SwPago" value="" onclick="ActivaBtn()" class="h-4 w-4 border-2 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+									<label for="SwPago" class="ml-2 block text-sm text-gray-900">Aceptar</label>
+								</div>
+								
+								<button type="submit" name="BtnVisual" id="BtnVisual" style="visibility:hidden;" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+									<i class="fa fa-upload mr-2"></i> Importar
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
-		</form>
 		</div>
 		</div>
 		<script type="text/javascript">
@@ -211,7 +231,7 @@
 		</script>
 
 		<?php include '../footer.php'; ?>
-
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 
 </html>

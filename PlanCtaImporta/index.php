@@ -209,6 +209,7 @@
 					}else{
 						$SQL="SELECT * FROM CTRegLibroDiario WHERE rutempresa='$RutEmpresa'";
 					}
+					// echo $SQL;
 					$resultado = $mysqli->query("$SQL");
 					$CtaRegistros = $resultado->num_rows;
 					if ($CtaRegistros>0) {

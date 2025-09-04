@@ -43,61 +43,87 @@
 ?>
 
 
-	<table class="table table-striped table-bordered" width="100%">
-	<thead>
-		<tr>
-			<th width="50%">Mes</th>
-			<th width="50%">Valor</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Enero</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d01" name="d01" value="<?php echo $d01; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Febrero</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d02" name="d02" value="<?php echo $d02; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Marzo</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d03" name="d03" value="<?php echo $d03; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Abril</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d04" name="d04" value="<?php echo $d04; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Mayo</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d05" name="d05" value="<?php echo $d05; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Junio</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d06" name="d06" value="<?php echo $d06; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Julio</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d07" name="d07" value="<?php echo $d07; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Agosto</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d08" name="d08" value="<?php echo $d08; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Septiembre</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d09" name="d09" value="<?php echo $d09; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Octubre</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d10" name="d10" value="<?php echo $d10; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Noviembre</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d11" name="d11" value="<?php echo $d11; ?>" ></td>
-		</tr>
-		<tr>
-			<td>Diciembre</td>
-			<td class="text-right"><input type="text" class="form-control text-right" id="d12" name="d12" value="<?php echo $d12; ?>" ></td>
-		</tr>
-	</tbody>
-	</table>
+	<div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+		<table class="min-w-full divide-y divide-gray-300">
+			<thead class="bg-gray-50">
+				<tr>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mes</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Factor de Conversi&oacute;n</th>
+				</tr>
+			</thead>
+			<tbody class="bg-white divide-y divide-gray-200">
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Enero</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d01" name="d01" value="<?php echo $d01; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Febrero</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d02" name="d02" value="<?php echo $d02; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Marzo</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d03" name="d03" value="<?php echo $d03; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Abril</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d04" name="d04" value="<?php echo $d04; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Mayo</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d05" name="d05" value="<?php echo $d05; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Junio</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d06" name="d06" value="<?php echo $d06; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Julio</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d07" name="d07" value="<?php echo $d07; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Agosto</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d08" name="d08" value="<?php echo $d08; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Septiembre</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d09" name="d09" value="<?php echo $d09; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Octubre</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d10" name="d10" value="<?php echo $d10; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Noviembre</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d11" name="d11" value="<?php echo $d11; ?>" placeholder="0.00">
+					</td>
+				</tr>
+				<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+					<td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">Diciembre</td>
+					<td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+						<input type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right" id="d12" name="d12" value="<?php echo $d12; ?>" placeholder="0.00">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>

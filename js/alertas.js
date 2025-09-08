@@ -3,7 +3,7 @@ function mostrarMensaje(mensaje, estado) {
     const divAlertas = document.getElementById("divAlertas");
 
     const divMensaje = document.createElement("div");
-    divMensaje.className = "border-l-4 p-2.5 mb-6 hidden";
+    divMensaje.className = "border-l-4 rounded-md p-2.5 mb-6 hidden";
     divAlertas.appendChild(divMensaje);
 
     const divFlex = document.createElement("div");

@@ -5,15 +5,15 @@ function parse_jsobj($str, &$data) {
     $str = trim($str);
     if(strlen($str) < 1) return;
 
-    if($str{0} != '{') {
+    if($str[0] != '{') {
         throw new JsParserException('The given string is not a JS object');
     }
     $str = substr($str, 1);
 
     /* While we have data, and it's not the end of this dict (the comma is needed for nested dicts) */
-    while(strlen($str) && $str{0} != '}' && $str{0} != ',') {
+    while(strlen($str) && $str[0] != '}' && $str[0] != ',') {
         /* find the key */
-        if($str{0} == "'" || $str{0} == '"') {
+        if($str[0] == "'" || $str[0] == '"') {
             /* quoted key */
             list($str, $key) = parse_jsdata($str, ':');
         } else {
@@ -50,7 +50,7 @@ function parse_jsdata($str, $term="}") {
     $str = trim($str);
 
 
-    if(is_numeric($str{0}."0")) {
+    if(is_numeric($str[0]."0")) {
         /* a number (int or float) */
         $newpos = comma_or_term_pos($str, $term);
         $num = trim(substr($str, 0, $newpos));
@@ -59,29 +59,29 @@ function parse_jsdata($str, $term="}") {
             throw new JsParserException('OOPSIE while parsing number: "'.$num.'"');
         }
         return array(trim($str), $num+0);
-    } else if($str{0} == '"' || $str{0} == "'") {
+    } else if($str[0] == '"' || $str[0] == "'") {
         /* string */
-        $q = $str{0};
+        $q = $str[0];
         $offset = 1;
         do {
             $pos = strpos($str, $q, $offset);
             $offset = $pos;
-        } while($str{$pos-1} == '\\'); /* find un-escaped quote */
+        } while($str[$pos-1] == '\\'); /* find un-escaped quote */
         $data = substr($str, 1, $pos-1);
         $str = substr($str, $pos);
         $pos = comma_or_term_pos($str, $term);
         $str = substr($str, $pos+1);
         return array(trim($str), $data);
-    } else if($str{0} == '{') {
+    } else if($str[0] == '{') {
         /* dict */
         $data = array();
         $str = parse_jsobj($str, $data);
         return array($str, $data);
-    } else if($str{0} == '[') {
+    } else if($str[0] == '[') {
         /* array */
         $arr = array();
         $str = substr($str, 1);
-        while(strlen($str) && $str{0} != $term && $str{0} != ',') {
+        while(strlen($str) && $str[0] != $term && $str[0] != ',') {
             $val = null;
             list($str, $val) = parse_jsdata($str, ']');
             $arr[] = $val;
@@ -120,10 +120,16 @@ function parse_jsdata($str, $term="}") {
 // $urut = "77027328-5";
 // $upass= "zambrano77";
 
+//* Recibe rut y clasii
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+
+$urut = $data['rut'];
+$upass = $data['clasii'];
 
 
-$urut =$_POST['rut'];
-$upass =$_POST['clasii'];
+// $urut =$_POST['rut'];
+// $upass =$_POST['clasii'];
 
 try {
     $ch = curl_init();
@@ -286,7 +292,7 @@ try {
         "ciudad" => "$ciudad",
         "glosaActividad" => "$glosaActividad",
         "rRepresentante" => "$rRepresentante",
-        "fechaConstitucion" => "$fechaConstitucion"
+        "fechaConstitucion" => date("Y-m-d", strtotime($fechaConstitucion))
         )
     );
 

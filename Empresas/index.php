@@ -43,9 +43,19 @@
 	if(isset($_POST['idemp']) && $_POST['idemp']!=""){
 		$sw=1;
 		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$SQL="SELECT * FROM CTEmpresas WHERE id='".$_POST['idemp']."'";
-		$resultados = $mysqli->query($SQL);
+		$SQL = "SELECT * FROM CTEmpresas WHERE id = ?";
+		$stmt = $mysqli->prepare($SQL);
+		$stmt->bind_param("i", $_POST['idemp']);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
+
+		if($resultados->num_rows == 0){
+			print_r("Esta vacio");
+			exit;
+		}
+
 		while ($registro = $resultados->fetch_assoc()) {
+			
 			$rut=$registro["rut"];
 			$razonsocial=$registro["razonsocial"];
 			$rutrep=$registro["rut_representante"];
@@ -85,160 +95,6 @@
 		$mysqli->close();
 	}
 
-	if (isset($_POST['txtCambioEstado']) && $_POST['txtCambioEstado']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-
-		$strSql = "SELECT estado FROM CTEmpresas WHERE id = ?";
-		$stmt = $mysqli->prepare($strSql);
-		$stmt->bind_param("i", $_POST['txtCambioEstado']);
-		$stmt->execute();
-		$resultados = $stmt->get_result();
-		if ($registro = $resultados->fetch_assoc()) {
-			$estado = $registro["estado"];
-		}
-
-		if($estado == "A"){
-			$strSql = "UPDATE CTEmpresas SET estado='B' WHERE id=?";
-		}else{
-			$strSql = "UPDATE CTEmpresas SET estado='A' WHERE id=?";
-		}
-
-		$stmt = $mysqli->prepare($strSql);
-		$stmt->bind_param("i", $_POST['txtCambioEstado']); 
-		$stmt->execute();
-		$stmt->close();
-		$mysqli->close();
-	}
-
-	if(isset($_POST['eliemp']) && $_POST['eliemp']!=""){
-		$SoloAdmin=0;
-		if ($_SESSION['ROL']=="A"){
-			$RutEliEmp=$_POST['elirut'];
-
-			$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-
-
-			$SQL="SELECT * FROM CTEmpresas WHERE rut='$RutEliEmp'";
-			$resultados = $mysqli->query($SQL);
-			while ($registro = $resultados->fetch_assoc()) {
-				$razonsocial=$registro['razonsocial'];
-			}
-
-
-			$mysqli->query("DELETE FROM CT14D WHERE RutEmpresa='$RutEliEmp';");
-
-			$SQL="SELECT * FROM CT14TerCab WHERE rutempresa='$RutEliEmp'";
-			$resultados = $mysqli->query($SQL);
-			while ($registro = $resultados->fetch_assoc()) {
-				$mysqli->query("DELETE FROM CT14TerDet WHERE idcab='".$registro['id']."';");
-			}
-
-			$mysqli->query("DELETE FROM CT14TerCab WHERE rutempresa='$RutEliEmp';");
-
-			$mysqli->query("DELETE FROM CTAnticipos WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsiento WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsientoApertura WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsientoBolEle WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsientoFondo WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsientoHono WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTAsientoNoBase WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTBoletasDTE WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTCCosto WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTCliProCuenta WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTComprobanteFolio WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTConciliacionCab WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTConciliacionDet WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTConciliacionLog WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTContadoresAsignado WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTControRegDocPago WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTCuentas14Ter WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTCuentasEmpresa WHERE rut_empresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTEmpresas WHERE rut='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTEstResultadoDet WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTFondo WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTFondoPersonal WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTHonoGene WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTHonoGeneDeta WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTHonorarios WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTPeriodoEmpresa WHERE RutEmpresa='$RutEliEmp';");
-
-			$SQL="SELECT * FROM CTRegDocumentos WHERE rutempresa='$RutEliEmp'";
-			$resultados = $mysqli->query($SQL);
-			while ($registro = $resultados->fetch_assoc()) {
-				$mysqli->query("DELETE FROM CTRegDocumentosDiv WHERE Id_Doc='".$registro['id']."';");
-			}
-			$mysqli->query("DELETE FROM CTRegDocumentos WHERE rutempresa='$RutEliEmp';");
-
-			$mysqli->query("DELETE FROM CTRegLibroDiario WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTRegLibroDiarioCome WHERE rutempresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM CTVoucherT WHERE RutEmpresa='$RutEliEmp';");
-			$mysqli->query("DELETE FROM DTEParametros WHERE RutEmpresa='$RutEliEmp';");
-
-
-			$FECHA=date("Y-m-d");
-			$mysqli->query("INSERT INTO CTEmpresasLog VALUES('','$RutEliEmp','$razonsocial','$FECHA','".date("H:i:s")."','".$_SESSION['NOMBRE']."');");
-
-			$mysqli->close();
-			
-			$sw = 0;
-			$rut = "";
-			$razonsocial = "";
-			$rutrep = "";
-			$representante = "";
-			$direccion = "";
-			$giro = "";
-			$ciudad = "";
-			$correo = "";
-			$pinicio = "";
-			$pcomprobante = "";
-			$pplancta = "";
-			$fechainicio = "";
-			$dmes = "";
-			$dano = "";
-			
-			$_POST['idemp'] = "";
-			$_POST['txtCambioEstado'] = "";
-			$_POST['idempa'] = "";
-			$_POST['eliemp'] = "";
-			$_POST['elirut'] = "";
-			
-			// Mensaje de confirmación
-			$MsjEliminacion = "Empresa eliminada exitosamente.";
-		}else{
-			$SoloAdmin=5;
-		}
-	}
-
-	$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-	$SQL="SELECT count(razonsocial) AS CantEmp FROM CTEmpresas WHERE estado<>'X' ORDER BY razonsocial";
-	$resultados = $mysqli->query($SQL);
-	while ($registro = $resultados->fetch_assoc()) {
-		$TotalEmpresa=$registro['CantEmp'];
-	}
-	$mysqli->close();
-
-
-	$MsjEmpresa = $TotalEmpresa." de ".$_SESSION['PlanConta'];
-
-	$BloqueBtn="";
-	// if($TotalEmpresa>$_SESSION['PlanConta']){
-	// 	// 
-	// 	$MsjBloqueo="<strong>Alcanz&oacute; el l&iacute;mite de empresas en su plan, puede eliminar empresas para ganar cupos, de lo contrario contactar a su soporte para el aumento de plan.</strong> 
-	// 	<br> Por el momento es un mensaje para su conociemiento.";
-	// }
-
-	// Crear objeto DateTime para la fecha actual
-	$fechaActual = new DateTime();
-
-	// Crear objeto DateTime para la fecha especificada "01-01-2024"
-	$fechaComparacion = new DateTime("2024-01-01");
-
-	// Comparar las fechas
-	if ($TotalEmpresa>$_SESSION['PlanConta'] && $fechaActual > $fechaComparacion) {
-		$BloqueBtn="disabled";
-		$MsjBloqueo="<strong>Alcanz&oacute; el l&iacute;mite de empresas en su plan, puede eliminar empresas para ganar cupos, de lo contrario contactar a su soporte para el aumento de plan.</strong>";
-	}
-
 ?>
 <!DOCTYPE html>
 	<html >
@@ -268,38 +124,6 @@
 		
 
 		<script type="text/javascript">
-			function Modifi(id, rut, razonsocial){
-				form1.idemp.value = id;
-				form1.elirut.value = rut;
-				form1.action="./";
-				form1.submit();
-			}
-
-			function CambioEstado(valor){
-				form1.txtCambioEstado.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
-
-			// function Alta(valor){
-			// 	form1.idempa.value=valor;
-			// 	form1.action="#";
-			// 	form1.submit();
-			// }
-
-			function Elim(c1,c2,c3){
-				var r = confirm("Desea eliminar la empresa Rut: "+c2+", Razón Social: "+c3+".");
-				if (r == true) {
-					var r = confirm("Est\u00e1 eliminando toda la informaci\u00F3n y no se podr\u00e1 recuperar.\n\nConfirmar?");
-					// var r = confirm("Esta consciente que esta operaci\u00F3n realizara una eliminaci\u00F3n completa de toda la informaci\u00F3n asociada a este Rut.\n\nConfirmar?");
-					if (r == true) {
-						form1.eliemp.value=c1;
-						form1.elirut.value=c2;
-						form1.action="#";
-						form1.submit();
-					}
-				}
-			}
 
 			function Volver(){
 				form1.action="../frmMain.php";
@@ -325,132 +149,13 @@
 					return (key >= 48 && key <= 57 || key == 45 || key==75 || key==107)
 			}
 
-			function SIIData(){
-				var url = "DatosSII.php";
-
-				const btnSincronizar = document.getElementById("btnSincronizar");
-				const textoSincronizar = document.getElementById("textoSincronizar");
-
-				btnSincronizar.classList.remove("bg-primary-500", "hover:bg-blue-600");
-				btnSincronizar.classList.add("bg-blue-300", "opacity-75", "cursor-wait");
-				btnSincronizar.disabled = true;
-				textoSincronizar.textContent = "Sincronizando...";
-
-				$.ajax({
-					type: "POST",
-					url: url,
-					dataType: 'json',
-					data: $('#form1').serialize(),
-					
-					success: function(resp1) {
-						if(resp1.razonSocial=="" && resp1.eMail=="" && resp1.ciudad=="" && resp1.calle=="" && resp1.rRepresentante=="" && resp1.glosaActividad==""){
-							r1='No se ha podido obtener información desde el SII. Verifique el RUT y la contraseña e intente nuevamente.';
-							SinInfo(r1);
-						}else{
-							console.log("Se sincronizo correctamente");
-							$("#rsocial").val(resp1.razonSocial);
-							$("#representante").val(resp1.RazonRepresentante);
-							$("#correo").val(resp1.eMail);
-							$("#ciudad").val(resp1.ciudad);
-							$("#direccion").val(resp1.calle);
-							$("#rutrep").val(resp1.rRepresentante);
-							$("#giro").val(resp1.glosaActividad);
-							$("#finicio").val(resp1.fechaConstitucion);
-
-							if(resp1.rRepresentante=="SinRut"){
-								r1='El Rut del representa no esta disponible en la consulta.';
-								SinInfo(r1);
-							}
-
-						}
-					}
-				});	
-				
-				setTimeout(() => {
-					btnSincronizar.classList.remove("bg-blue-300", "opacity-75", "cursor-wait")
-					btnSincronizar.classList.add("bg-blue-500", "hover:bg-blue-600");;
-					btnSincronizar.disabled = false;
-					textoSincronizar.textContent = "Sincronizar";
-				}, 1500);
-			}
 
 			function SinInfo(r1){
-				alert(r1);
-				// Swal.fire({
-				// 	title: 'Advertencia',
-				// 	text: r1,
-				// 	icon: 'info',
-				// 	confirmButtonText: 'Aceptar'
-				// });					
-			}
-
-			function ExisteEmpresa(){
-				alert('El Rut ingresado para la creación de una nueva empresa, ya está registrado.');
-				// Swal.fire({
-				// 	title: 'Advertencia',
-				// 	text: 'El Rut ingresado para la creación de una nueva empresa, ya está registrado.',
-				// 	icon: 'warning',
-				// 	confirmButtonText: 'Aceptar'
-				// });					
+				alert(r1);				
 			}
 
 			function RutMal(){
-				alert('El Rut ingresado es incorrecto, favor validar e intentar nuevamente.');
-				// Swal.fire({
-				// 	title: 'Advertencia',
-				// 	text: 'El Rut ingresado es incorrecto, favor validar e intentar nuevamente.',
-				// 	icon: 'warning',
-				// 	confirmButtonText: 'Aceptar'
-				// });					
-			}
-
-			function limpiarFormulario() {
-
-				document.getElementById("rut").value = "";
-				document.getElementById("clasii").value = "";
-				document.getElementById("rsocial").value = "";
-				document.getElementById("representante").value = "";
-				document.getElementById("correo").value = "";
-				document.getElementById("ciudad").value = "";
-				document.getElementById("direccion").value = "";
-				document.getElementById("rutrep").value = "";
-				document.getElementById("giro").value = "";
-				document.getElementById("finicio").value = "";
-
-				document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
-				document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
-
-				document.getElementById("txtCambioEstado").value = "";
-				document.getElementById("idempa").value = "";
-				document.getElementById("eliemp").value = "";
-				document.getElementById("elirut").value = "";
-
-				window.location.href = "index.php";
-
-			}
-
-			function EliminarEmpresaActual() {
-				const id = document.getElementById("idemp").value;
-				const rut = document.getElementById("rut").value;
-				const razonsocial = document.getElementById("rsocial").value;
-
-				console.log(id, rut, razonsocial);
-				
-				Elim(id, rut, razonsocial);
-			}
-
-			function Exportar() {
-				console.log("Exportando");
-				deshabilitarBoton("btnImprimir");
-
-			}
-
-			function deshabilitarBoton(buttonId) {
-				const button = document.getElementById(buttonId);
-				if (button) {
-					button.disabled = true;
-					button.className = "bg-gray-100 cursor-not-allowed opacity-50 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
-				}
+				alert('El Rut ingresado es incorrecto, favor validar e intentar nuevamente.');				
 			}
 			
 
@@ -470,47 +175,46 @@
 
 					<div class="flex flex-wrap justify-start items-center gap-2 border-2 border-gray-300 rounded-md p-2">
 						<button type="button" 
-								class="bg-slate-100 text-sm hover:bg-gray-300 text-blue-600 font-medium py-1 px-2 border-2 border-blue-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" 
+								class="bg-slate-100 text-sm hover:bg-blue-200 text-blue-600 font-medium py-1 px-2 border-2 border-blue-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" 
 								onclick="limpiarFormulario()">
 							<i class="fa fa-plus mr-2"></i>Nueva
 						</button>
-						<?php 
-							if ($sw==1) {
-								echo '<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="15">
-										<i class="fa fa-edit mr-2"></i>Modificar
-									</button>';
-								if ($_SESSION['ROL']=="A") {
-									echo '<button type="button" id="btnEliminar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" onclick="EliminarEmpresaActual()" tabindex="16">
-											<i class="fa fa-trash mr-2"></i>Eliminar
-										</button>';
-								}
-							}else{
-								echo '<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="15" '.$BloqueBtn.'>
-										<i class="fa fa-save mr-2"></i>Grabar
-									</button>';
-							}
-						?>
+						
+						<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="15" '.$BloqueBtn.'>
+							<i class="fa fa-save mr-2"></i>Grabar
+						</button>
+							
+
+						<button type="button" hidden id="btnEliminar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="16">
+							<i class="fa fa-trash mr-2"></i>Eliminar
+						</button>
+
 						<button type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
 								data-modal-target="searchModal" 
 								data-modal-toggle="searchModal">
 							<i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
 						</button>
-						<button id="btnImprimir" onclick="Exportar()" type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+						<button id="btnImprimir" type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
 							<i class="fa-solid fa-print text-gray-600 mr-2"></i>Imprimir
 						</button>
 
 						<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-black bg-gray-100 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg transition duration-200 text-sm px-2 py-1 border-2 border-gray-600 text-center inline-flex items-center" type="button">
 							<i class="fa-solid fa-download mr-2"></i>Exportar
+							<i class="fa-solid fa-chevron-down ml-2.5"></i>
 						</button>
 
 						<!-- Dropdown menu -->
 						<div id="dropdown" class="z-10 hidden bg-gray-100 divide-y divide-gray-100 rounded-lg shadow-sm w-44">
 							<ul class="py-2 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
 								<li>
-									<a href="#" class="block px-4 py-2 hover:bg-gray-300 text-black font-medium">CSV</a>
+									<button type="button" onclick="ExportCSV()" class="w-full block px-4 py-2 hover:bg-gray-300 text-black text-left font-medium">
+										<i class="fa-solid fa-file-csv mr-2"></i>CSV
+									</button>
 								</li>
 								<li>
-									<a href="#" class="block px-4 py-2 hover:bg-gray-300 text-black font-medium">PDF</a>
+									<a href="#" class="w-full block px-4 py-2 hover:bg-gray-300 text-black text-left font-medium">
+										<i class="fa-solid fa-file-pdf mr-2"></i>PDF
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -540,11 +244,25 @@
 						<div class="p-6 pt-1 space-y-6">
 
 							<!-- Hidden inputs -->
-							<input type="hidden" name="idemp" id="idemp" value="<?php if(isset($_POST['idemp'])){ echo $_POST['idemp']; }else{ echo ''; } ?>">
+							<input type="hidden" name="idemp" id="idemp">
 							<input type="hidden" name="txtCambioEstado" id="txtCambioEstado">
 							<input type="hidden" name="idempa" id="idempa">
 							<input type="hidden" name="eliemp" id="eliemp">
 							<input type="hidden" name="elirut" id="elirut">
+
+							<div id="divAlertas">
+								<div class="border-l-4 p-2.5 mb-6 hidden" id="divMensaje">
+									<div class="flex items-center">
+										<div class="flex-shrink-0" id="iconoMensaje">
+											<i class="fas fa-file-invoice"></i>
+										</div>
+										<div class="ml-3">
+											<p class="text-sm font-semibold" id="textoMensaje"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 
 							<!-- First Row: RUT and SII -->
 							<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
@@ -563,7 +281,7 @@
 										   placeholder="Ej. 96900500-1" 
 										   value="<?php echo $rut; ?>" 
 										   <?php if($sw==1){ echo 'readonly="false"';} ?> 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -581,7 +299,7 @@
 								<div class="flex items-end">
 									<button id="btnSincronizar" type="button" 
 											class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2" 
-											onclick="SIIData()">
+											onclick="sincronizarSII()">
 											
 										<i class="fa fa-sync mr-2"></i><span id="textoSincronizar">Sincronizar</span>
 									</button>
@@ -601,7 +319,7 @@
 										   name="rsocial" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $razonsocial; ?>" 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -632,7 +350,7 @@
 										   maxlength="10" 
 										   placeholder="Ej. 96900500-1" 
 										   value="<?php echo $rutrep; ?>" 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -646,7 +364,7 @@
 										   name="representante" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $representante; ?>" 
-										   required>
+										   >
 								</div>
 							</div>
 
@@ -663,7 +381,7 @@
 										   name="direccion" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $direccion; ?>" 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -677,7 +395,7 @@
 										   name="giro" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $giro; ?>" 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -692,7 +410,7 @@
 										   maxlength="50" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $ciudad; ?>" 
-										   required>
+										   >
 								</div>
 
 								<div>
@@ -736,7 +454,6 @@
 								<select class="<?php input_css(); ?>" 
 										id="plancta" 
 										name="plancta" 
-										required 
 										<?php if ($pplancta=="S") { echo "disabled"; } ?>>
 									<option value="">Seleccione</option>
 									<option value="N" <?php if ($pplancta=="N") { echo "selected"; } ?>>Común</option>
@@ -749,26 +466,6 @@
 							<!-- </div> -->
 						</div>
 					</div>
-
-					<!-- Action Buttons -->
-					<!-- <div class="flex justify-end space-x-4">
-						<?php 
-							if ($sw==1) {
-								echo '<button type="submit" class="bg-warning-500 hover:bg-warning-600 text-white font-medium py-2 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-warning-500 focus:ring-offset-2" tabindex="15">
-										<i class="fa fa-edit mr-2"></i>Modificar
-									</button>';
-							}else{
-								echo '<button type="submit" class="bg-success-500 hover:bg-success-600 text-white font-medium py-2 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-success-500 focus:ring-offset-2" tabindex="15" '.$BloqueBtn.'>
-										<i class="fa fa-save mr-2"></i>Grabar
-									</button>';
-							}
-						?>
-						<button type="button" 
-								class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" 
-								onclick="Volver()">
-							<i class="fa fa-times mr-2"></i>Cancelar
-						</button>
-					</div> -->
 
 					<?php if(isset($MsjBloqueo) && $MsjBloqueo != ""): ?>
 						<div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
@@ -805,7 +502,7 @@
 									<h3 class="text-lg font-semibold text-gray-900 flex items-center">
 										Empresas Creadas
 									</h3>	
-									<p class="text-sm text-gray-600"><?php echo $MsjEmpresa; ?></p>
+									<p class="text-sm text-gray-600" id="msgEmpresa"></p>
 								</div>	
 							</div>
 
@@ -849,70 +546,11 @@
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RUT</th>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Razón Social</th>
-										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th> -->
-										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Giro</th> -->
-										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th> -->
-										<!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contabilización</th> -->
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan Activo</th>
 									</tr>
 								</thead>
-						<tbody id="myTable">
-							<?php 
-								$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-								$cont=1;
-								$SQL="SELECT * FROM CTEmpresas WHERE estado<>'X' ORDER BY razonsocial";
-								$resultados = $mysqli->query($SQL);
-								while ($registro = $resultados->fetch_assoc()) {
-									if ($registro["plan"]=="S") {
-										$xplan="Individual";
-									}else{
-										$xplan="Com&uacute;n";
-									}
-									if ($registro['comprobante']=="S") {
-										$xtipo="Soporte Auxiliar";
-									}else{
-										$xtipo="Tradicional";
-									}
-									echo '
-									<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out">
-										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$cont.'</td>
-										
-										<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-											<div class="flex space-x-2">
-												<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-warning-700 bg-warning-100 hover:bg-warning-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning-500 transition duration-200" onclick="Modifi(\''.$registro["id"].'\',\''.$registro["rut"].'\',\''.$registro["razonsocial"].'\')">
-													<i class="fa fa-edit mr-1"></i>Modificar
-												</button>
-												<!-- <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger-500 transition duration-200" onclick="Elim(\''.$registro["id"].'\',\''.$registro["rut"].'\',\''.$registro["razonsocial"].'\')">
-													<i class="fa fa-trash mr-1"></i>Eliminar
-												</button> -->';
-										if($registro["estado"]=="B"){
-											echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="CambioEstado('.$registro["id"].')">
-														<i class="fa fa-check mr-1"></i>Disponible
-													</button>';
-										}else{
-											echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="CambioEstado('.$registro["id"].')">
-														<i class="fa fa-ban mr-1"></i>Inactiva
-													</button>';
-										}
-
-									echo '
-											</div>
-										</td>
-
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono">'.$registro["rut"].'</td>
-										<td class="px-6 py-4 text-sm text-gray-900">'.$registro["razonsocial"].'</td>
-										<!-- <td class="px-6 py-4 text-sm text-gray-900">'.$registro["direccion"].'</td> -->
-										<!-- <td class="px-6 py-4 text-sm text-gray-900">'.$registro["giro"].'</td> -->
-										<!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$registro["periodo"].'</td> -->
-										<!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xtipo.'</td> -->
-										<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$xplan.'</td>
-									</tr>
-									';
-
-									$cont++;
-								}       
-								$mysqli->close();
-							?>
+								<tbody id="myTable">
+									
 								</tbody>
 							</table>
 						</div>
@@ -934,30 +572,7 @@
 					if($sw==3){
 						echo 'alert("Esta empresa cuenta con registros en sistema, no se puede eliminar solo se puede dar de baja"); form1.eliemp.value="";';
 					}
-					if($_GET['Err']==4){
-						echo 'ExisteEmpresa();';
-					}
-					if($SoloAdmin==5){
-						echo 'alert("Solo la cuenta administrador, puede realizar el proceso de eliminar empresas.");';
-					}
-					if($_GET['Mjs']=="EmpCreCor"){
-						echo 'alert("Empresa creada correctamente.");';
-					}
-					if($_GET['Mjs']=="EmpActCor"){
-						echo 'alert("Empresa actualizada correctamente.");';
-					}
 				?>
-			</script>
-
-			<script>
-				$(document).ready(function(){
-				$("#myInput").on("keyup", function() {
-				var value = $(this).val().toLowerCase();
-				$("#myTable tr").filter(function() {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-				});
-				});
-				});
 			</script>
 
 		</div>
@@ -968,6 +583,420 @@
 
 		<?php include '../footer.php'; ?>
 		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+		<script src="../js/alertas.js"></script>
+
+		<script>
+
+			function handleFetchErrors(response) {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			}
+
+			function sincronizarSII() {
+				const url = "DatosSII.php";
+				// const btnSincronizar = document.getElementById("btnSincronizar");
+				// const textoSincronizar = document.getElementById("textoSincronizar");
+
+				const rut = document.getElementById("rut").value;
+				const clasii = document.getElementById("clasii").value;
+
+				if(rut === "" || clasii === "") {
+					mostrarMensaje("Por favor, ingrese el RUT y la Clave SII", "warning");
+					return;
+				}
+				
+				const datosSII = {
+					rut: rut,
+					clasii: clasii
+				};
+
+				const btnSincronizar = document.getElementById("btnSincronizar");
+				const textoSincronizar = document.getElementById("textoSincronizar");
+
+				btnSincronizar.classList.remove("bg-primary-500", "hover:bg-blue-600");
+				btnSincronizar.classList.add("bg-blue-300", "opacity-75", "cursor-wait");
+				btnSincronizar.disabled = true;
+				textoSincronizar.textContent = "Sincronizando...";
+				
+				// Agregar animación de rotación al icono
+				const icono = btnSincronizar.querySelector('i');
+				icono.classList.add('animate-spin');
+
+				fetch(url, {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(datosSII)
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data);
+					document.getElementById("rsocial").value = data.razonSocial;
+					document.getElementById("representante").value = data.RazonRepresentante;
+					document.getElementById("finicio").value = data.fechaConstitucion;
+					document.getElementById("correo").value = data.eMail;
+					document.getElementById("ciudad").value = data.ciudad;
+					document.getElementById("direccion").value = data.calle;
+					document.getElementById("rutrep").value = data.rRepresentante;
+					document.getElementById("giro").value = data.glosaActividad;
+
+					setTimeout(() => {
+						btnSincronizar.classList.remove("bg-blue-300", "opacity-75", "cursor-wait")
+						btnSincronizar.classList.add("bg-blue-500", "hover:bg-blue-600");;
+						btnSincronizar.disabled = false;
+						textoSincronizar.textContent = "Sincronizar";
+						
+						// Remover animación de rotación del icono
+						const icono = btnSincronizar.querySelector('i');
+						icono.classList.remove('animate-spin');
+					}, 1000);
+				})
+				.catch(error => {
+					console.error("Error:", error);
+					console.log("Error al sincronizar con SII: " + error.message);
+					
+					// Restaurar botón y remover animación en caso de error
+					btnSincronizar.classList.remove("bg-blue-300", "opacity-75", "cursor-wait");
+					btnSincronizar.classList.add("bg-blue-500", "hover:bg-blue-600");
+					btnSincronizar.disabled = false;
+					textoSincronizar.textContent = "Sincronizar";
+					
+					const icono = btnSincronizar.querySelector('i');
+					icono.classList.remove('animate-spin');
+				});
+				
+				
+			}
+
+			function ingresarEmpresa(e) {
+				e.preventDefault();
+				
+				const rut = document.getElementById("rut").value;
+				const clasii = document.getElementById("clasii").value;
+				const rsocial = document.getElementById("rsocial").value;
+				const representante = document.getElementById("representante").value;
+				const correo = document.getElementById("correo").value;
+				const ciudad = document.getElementById("ciudad").value;
+				const direccion = document.getElementById("direccion").value;
+				const rutrep = document.getElementById("rutrep").value;
+				const giro = document.getElementById("giro").value;
+				const finicio = document.getElementById("finicio").value;
+				const plancta = document.getElementById("plancta").value;
+
+				const seleMes = document.getElementById("SeleMes").value;
+				const seleAno = document.getElementById("SeleAno").value;
+
+				const campos = ["rut", "rsocial", "representante", "ciudad", "direccion", "rutrep", "giro", "plancta"];
+
+				const camposVacios = campos.some(campo => !document.getElementById(campo).value);
+
+				if (camposVacios) {
+					mostrarMensaje("Faltan datos", "info")
+					return;
+				}
+
+				const idemp = document.getElementById("idemp").value;
+
+				const empresaData = {
+					rut: rut,
+					clasii: clasii,
+					rsocial: rsocial,
+					representante: representante,
+					correo: correo,
+					ciudad: ciudad,
+					direccion: direccion,
+					rutrep: rutrep,
+					giro: giro,
+					finicio: finicio,
+					plancta: plancta,
+					seleMes: seleMes,
+					seleAno: seleAno
+				};
+
+				if(idemp !== "") empresaData.idemp = idemp;
+
+				const action = idemp === "" ? "ingresarEmpresa" : "modificarEmpresa";
+
+				fetch(`router/router.php?action=${action}`, {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(empresaData)
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data);
+					if (data.success) {
+						console.log(data.mensaje);
+						cargarEmpresas();
+						limpiarFormulario();
+						mostrarMensaje(data.mensaje, "success");
+					} else if(data.error) {
+						console.log(data.mensaje);
+					} else {
+						console.log("Error al procesar los datos: " + data.mensaje);
+					}
+				})
+				.catch(error => {
+					console.error("Error:", error);
+					console.log("Error al procesar los datos: " + error.message);
+				});
+			}
+
+			function cargarEmpresas() {
+				fetch("router/router.php?action=cargarEmpresas", {
+					method: "GET",
+					headers: {
+						'Content-Type': 'application/json',
+					}
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data);
+					const tabla = document.getElementById("myTable");
+					tabla.innerHTML = "";
+					
+					if(data.empresas.length === 0) {
+						const tr = document.createElement("tr");
+						tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+						tr.innerHTML = `
+							<td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">No hay empresas creadas</td>
+						`;
+						tabla.appendChild(tr);
+					} else {
+						const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
+						let contador = 1;
+						document.getElementById("msgEmpresa").textContent = data.msgEmpresa;
+						data.empresas.forEach(empresa => {
+							
+							let xPlan = "";
+							let xComprobante = "";
+
+							const plan = empresa.plan;
+							const comprobante = empresa.comprobante;
+
+							if(plan === "S") {
+								xPlan = "Individual";
+							}else{
+								xPlan = "Común";
+							}
+
+							if(comprobante === "S") {
+								xComprobante = "Soporte Auxiliar";
+							}else{
+								xComprobante = "Tradicional";
+							}
+
+							const tr = document.createElement("tr");
+							tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+
+							const tdContador = document.createElement("td");
+							tdContador.className = clase;
+							tdContador.textContent = contador++;
+							tr.appendChild(tdContador);
+
+							const tdAcciones = document.createElement("td");
+							tdAcciones.className = clase;
+							tr.appendChild(tdAcciones);
+
+							const divAcciones = document.createElement("div");
+							divAcciones.className = "flex space-x-2";
+							tdAcciones.appendChild(divAcciones);
+
+							const btnModificar = document.createElement("button");
+							btnModificar.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							btnModificar.innerHTML = '<i class="fa fa-edit mr-1"></i>Modificar';
+							btnModificar.onclick = function() {
+								document.getElementById("idemp").value = empresa.id;
+								document.getElementById("rut").value = empresa.rut;
+								document.getElementById("rsocial").value = empresa.razonsocial;
+								document.getElementById("finicio").value = empresa.fechainicio;
+								document.getElementById("rutrep").value = empresa.rut_representante;
+								document.getElementById("representante").value = empresa.representante;
+								document.getElementById("ciudad").value = empresa.ciudad;
+								document.getElementById("direccion").value = empresa.direccion;
+								document.getElementById("giro").value = empresa.giro;
+								document.getElementById("correo").value = empresa.correo;
+								document.getElementById("plancta").value = empresa.plan;
+
+								document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Modificar";
+
+								const btnEliminar = document.getElementById("btnEliminar");
+								btnEliminar.hidden = false;
+
+
+								const permiso = verificarPermisos();
+								if(permiso) {
+									btnEliminar.onclick = function() {
+										eliminarEmpresa(empresa.id, empresa.rut, empresa.razonsocial);
+									}
+								} else {
+									deshabilitarBoton("btnEliminar");
+									btnEliminar.onclick = function() {
+										mostrarMensaje("No tienes permisos para eliminar esta empresa", "warning");
+									}
+								}
+
+								const closeButton = document.querySelector("[data-modal-hide='searchModal']");
+								if (closeButton) closeButton.click();
+
+							};
+							divAcciones.appendChild(btnModificar);
+
+							const btnEstado = document.createElement("button");
+							btnEstado.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							
+							const estadoTexto = empresa.estado === 'A' ? 'Activa' : 'Inactiva';
+							const estadoIcono = empresa.estado === 'A' ? 'fa-check' : 'fa-ban';
+							btnEstado.innerHTML = `<i class="fa ${estadoIcono} mr-1"></i>${estadoTexto}`;
+
+							btnEstado.addEventListener("click", function() {
+								cambiarEstado(empresa.id);
+							});
+
+
+							divAcciones.appendChild(btnEstado);
+
+							const tdRut = document.createElement("td");
+							tdRut.className = clase;
+							tdRut.textContent = empresa.rut;
+							tr.appendChild(tdRut);
+
+							const tdRazonSocial = document.createElement("td");
+							tdRazonSocial.className = clase;
+							tdRazonSocial.textContent = empresa.razonsocial;
+							tr.appendChild(tdRazonSocial);
+
+							const tdPlan = document.createElement("td");
+							tdPlan.className = clase;
+							tdPlan.textContent = xPlan;
+							tr.appendChild(tdPlan);
+
+							tabla.appendChild(tr);
+						});
+					}
+				})
+				.catch(error => {
+					console.error("Error:", error);
+					console.log("Error al cargar las empresas: " + error.message);
+				});
+			}
+
+			function eliminarEmpresa(id, rut, razonsocial) {
+				
+				const empresaDelete = {
+					id: id,
+					rut: rut,
+					razonsocial: razonsocial
+				};
+
+				fetch(`router/router.php?action=eliminarEmpresa`, {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(empresaDelete)
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					if(data.success) {
+						console.log(data.mensaje);
+						cargarEmpresas();
+						limpiarFormulario();
+						mostrarMensaje(data.mensaje, "success");
+					} else if(data.warning) {
+						mostrarMensaje(data.mensaje, "info");
+					} else {
+						console.log(data.mensaje);
+						mostrarMensaje(data.mensaje, "error");
+					}
+				})
+				.catch(error => {
+					console.error("Error:", error);
+					console.log("Error al eliminar la empresa: " + error.message);
+				});
+
+			}
+
+			function cambiarEstado(idEmp) {
+				fetch(`router/router.php?action=estadoEmpresa`, { 
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ idEmp: idEmp })
+				})
+					.then(handleFetchErrors)
+					.then(data => {
+						if (data.success) {
+							console.log(data.mensaje);
+							cargarEmpresas();
+
+							const closeButton = document.querySelector("[data-modal-hide='searchModal']");
+							if (closeButton) closeButton.click();
+						} else if (data.error) {
+							throw new Error(data.mensaje);
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error al actualizar el estado: ' + error.message);
+					});
+			}
+			
+			function verificarPermisos() {
+				fetch(`router/router.php?action=verificarPermisos`, {
+					method: "GET",
+					headers: {
+						'Content-Type': 'application/json',
+					}
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data.permiso);
+					return data.permiso;
+				});
+			}
+
+			function limpiarFormulario() {
+
+				const campos = ["rut", "clasii", "rsocial", "representante", "correo", "ciudad", "direccion", "rutrep", "giro", "finicio", "plancta", "txtCambioEstado", "idemp", "idempa", "eliemp", "elirut"];
+				campos.forEach(campo => {
+					document.getElementById(campo).value = "";
+				});
+
+				document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
+				document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
+
+				const btnEliminar = document.getElementById("btnEliminar");
+				btnEliminar.hidden = true;
+				btnEliminar.onclick = null;
+				btnEliminar.disabled = false;
+				btnEliminar.className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
+
+			}
+
+			function deshabilitarBoton(buttonId) {
+				const button = document.getElementById(buttonId);
+				if (button) {
+					button.disabled = true;
+					button.className = "bg-gray-100 cursor-not-allowed opacity-50 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
+				}
+			}
+
+			document.addEventListener("DOMContentLoaded", function() {
+				cargarEmpresas();
+				verificarPermisos();
+				document.getElementById("form1").addEventListener("submit", ingresarEmpresa);
+
+			});
+
+
+		</script>
 
 	</body>
 </html>

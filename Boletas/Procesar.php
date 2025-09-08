@@ -521,13 +521,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
+
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
+
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<script src="../js/propio.js"></script>
@@ -535,7 +538,7 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type="text/javascript">
 			function Proce(){
@@ -549,88 +552,99 @@
 			include '../nav.php';
 		?>
 
-		<div class="container-fluid text-left">
-		<div class="row content">
-			<br>
-			<div class="col-sm-12 text-left">
+		<div class="min-h-screen bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-				<form enctype="multipart/form-data" method="post" action="" name="formbol" id="formbol">
+			<div class="space-y-8">
+			<form enctype="multipart/form-data" method="post" action="" name="formbol" id="formbol">
 
-					<div class="col-md-2"></div>
-					<div class="col-md-8">
-						<div class="panel panel-default">
-						<div class="panel-heading text-center">Importar Libros</div>
-						<div class="panel-body">
+				<div class="bg-white rounded-lg shadow-sm border border-gray-200">            
+					<div class="flex justify-start items-center px-6 pt-3 pb-3 bg-gray-100 w-full shadow">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+							<i class="fa-solid fa-file-import text-lg text-blue-600"></i>
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-gray-800">
+								Importar Libros
+							</h3>
+							<p class="text-sm text-gray-600">Procesar archivos CSV de boletas electrónicas</p>
+						</div>
+					</div> 
+					
+					<div class="p-6 pt-1 space-y-6">
 
-								<div class="col-md-6">
-								<div class="input-group">
-									<span class="input-group-addon">Mes</span>
-									<select class="form-control" id="messelect" name="messelect" required>
-									<?php 
-										$Meses=array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-										$i=1;
-										$dmes=$dmes*1;
-										while($i<=12){
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+							<div>
+								<label for="messelect" class="block text-sm font-medium text-gray-700 mb-2">Mes</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="messelect" name="messelect" required>
+								<?php 
+									$Meses=array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+									$i=1;
+									$dmes=$dmes*1;
+									while($i<=12){
 
-											if ($i==$dmes) {
-												echo "<option value ='".$i."' selected>".$Meses[($i-1)]."</option>";
-											}else{
-												echo "<option value ='".$i."'>".$Meses[($i-1)]."</option>";
-											}
-											$i++;
+										if ($i==$dmes) {
+											echo "<option value ='".$i."' selected>".$Meses[($i-1)]."</option>";
+										}else{
+											echo "<option value ='".$i."'>".$Meses[($i-1)]."</option>";
 										}
-									?>
-									</select>
-								</div>
-								</div>
+										$i++;
+									}
+								?>
+								</select>
+							</div>
 
-								<div class="col-md-6">
-								<div class="input-group">
-									<span class="input-group-addon">A&ntilde;o</span>
-									<select class="form-control" id="anoselect" name="anoselect" required>
-									<?php 
-										$yoano=date('Y');
-										$tano="2010";
+							<div>
+								<label for="anoselect" class="block text-sm font-medium text-gray-700 mb-2">A&ntilde;o</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="anoselect" name="anoselect" required>
+								<?php 
+									$yoano=date('Y');
+									$tano="2010";
 
-										while($tano<=($yoano+1)){
-											if ($dano==$tano) {
-												echo "<option value ='".$tano."' selected>".$tano."</option>";
-											}else{
-												echo "<option value ='".$tano."'>".$tano."</option>";
-											}
-											$tano=$tano+1;
+									while($tano<=($yoano+1)){
+										if ($dano==$tano) {
+											echo "<option value ='".$tano."' selected>".$tano."</option>";
+										}else{
+											echo "<option value ='".$tano."'>".$tano."</option>";
 										}
-									?>
-									</select>
+										$tano=$tano+1;
+									}
+								?>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="space-y-6">
+							<div>
+								<label for="file" class="block text-sm font-medium text-gray-700 mb-2">Seleccionar Archivo</label>
+								<div class="flex items-center gap-2">
+									<input type="file" name="file" id="file" accept=".csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-l-md file:border-5 file:text-sm file:font-medium border border-gray-300 rounded-md file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-200">
 								</div>
+								<p class="mt-1 text-sm text-gray-500">* Solo archivo CSV.</p>
+							</div>
+
+							<div class="flex items-center gap-4">
+								<a href="EjemploBE.csv" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-md border border-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" role="button">
+									<i class="fa-solid fa-download mr-2"></i> Ejemplo de Formato
+								</a>
+							</div>
+
+							<div>
+								<h3 class="text-lg font-medium text-gray-900 mb-4">Tipo de Centralizaci&oacute;n</h3>
+								<div class="flex gap-6">
+									<label class="flex items-center">
+										<input type="radio" name="OptCentra" value="M" checked class="border-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+										<span class="ml-2 text-sm text-gray-700">Mensual</span>
+									</label>
+									<label class="flex items-center">
+										<input type="radio" name="OptCentra" value="S" class="border-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+										<span class="ml-2 text-sm text-gray-700">Semanal</span>
+									</label>
 								</div>
-
-								<div class="clearfix"></div>
-								<br>
-
-
-								<div class="col-md-8">
-									<div class="input-group">
-										<span class="input-group-addon">Seleccionar Archivo</span>
-										<input type="file" name="file" id="file">
-									</div>
-									<small id="fileHelp" class="form-text text-muted">* Solo archivo CSV.</small><br>
-
-									<!-- <div class="col-md-10"> -->
-										<br>
-										<a href="EjemploBE.csv" class="btn btn-default" role="button">
-											<span class="glyphicon glyphicon-download-alt"></span> Ejemplo de Formato
-										</a>
-									<!-- </div> -->
-
-
-
-									<h3>Tipo de Centralizaci&oacute;n</h3>
-
-									<label class="radio-inline"><input type="radio" name="OptCentra" value="M" checked>Mensual</label>
-									<label class="radio-inline"><input type="radio" name="OptCentra" value="S">Semanal</label>
-									<br>
-									<br>
+							</div>
+							<div class="flex flex-col gap-6">
+								<div class="flex-1">
 									<?php
 										$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 										$row_cnt=0;
@@ -645,53 +659,39 @@
 										}
 
 										if ($row_cnt==0) {
-											echo 'No se cuenta con el asiento configurado para esta operaci&oacute;n';
+											echo '<div class="bg-yellow-50 border border-yellow-200 rounded-md p-4"><p class="text-sm text-yellow-800">No se cuenta con el asiento configurado para esta operaci&oacute;n</p></div>';
 										}else{
-											echo '<input type="submit" value="Enviar" class="btn btn-success" onclick="Proce()" name="enviar" id="enviar">';
+											echo '<button type="submit" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onclick="Proce()" name="enviar" id="enviar">
+												<i class="fa-solid fa-upload mr-2"></i> Procesar Archivo
+											</button>';
 										}
 										$mysqli->close();
 									?>
-
-
 									
-									<br>
-									<small id="fileHelp" class="form-text text-muted">* Los documentos se cancelaran de forma automatica</small>
-								</div> 
-
-								<div class="col-md-4">
-									<img class="img-responsive" src="../images/SisBoletas.png" alt="">
+									<p class="mt-3 text-sm text-gray-500">* Los documentos se cancelaran de forma automática</p>
 								</div>
 
-								<div class="clearfix"></div>
-								<br>
-
-								<div class="col-md-12">
-
-									<div class="form-group">
-										<label class="control-label col-md-12" for="file"></label>
-										<div class="col-md-12">
-										<?PHP
-											if ($Msj!="") {
-												echo $Msj;
-											}
-										?>
-										</div>
-									</div> 
-
+								<div class="flex-shrink-0 flex justify-center md:justify-start lg:mt-0 mt-3">
+									<img class="w-64 h-64 lg:w-80 lg:h-80 object-contain" src="../images/SisBoletas.png" alt="Sistema de Boletas">
 								</div>
+							</div>
+						</div>
 
-						</div>
-						</div>
+						<?PHP
+							if ($Msj!="") {
+								echo '<div class="mt-6">' . $Msj . '</div>';
+							}
+						?>
 					</div>
-				</form>				
+				</div>
+			</form>				
 
-			</div>
-
+		</div>
 		</div>
 		</div>
 
 		<?php include '../footer.php'; ?>
-
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 
 </html>

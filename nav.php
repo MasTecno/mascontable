@@ -19,7 +19,14 @@
 		$nivel="../";
 	}
 
-    $dirname = str_replace('/', '', dirname($RutOrg));
+    $carpeta = "/" . basename(__DIR__) . "/";
+    $dirname2 = str_replace($carpeta, '', dirname($RutOrg));
+
+    // echo $nivel . basename(__DIR__) . $dirname2;
+
+    $dirname = str_replace("/", "", dirname($RutOrg));
+
+    // echo $dirname;
 ?>
 
 <!-- Tailwind CSS CDN -->

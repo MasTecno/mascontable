@@ -73,7 +73,7 @@
                 $a=explode("-", $LRut);
 
 				if (count($a)<=1) {
-					$ListError='<div class="alert alert-danger"><strong>Advertencia!</strong> El rut '.$LRut.', No es valido.<br>Operaci&oacute;n Cancelada</div><br>';
+					$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>El rut '.$LRut.', No es valido.<br>Operaci&oacute;n Cancelada</p></div></div></div></div>';
                     break;
 				}
 
@@ -91,12 +91,12 @@
 				$resultadoin = $mysqliX->query($sqlin);
 				$row_cnt = $resultadoin->num_rows;
 				if ($row_cnt>0) {
-					$ListError='<div class="alert alert-danger"><strong>Advertencia!</strong> El rut '.$LRut.', Ya esta registrado.<br>Operaci&oacute;n Cancelada</div><br>';
+					$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>El rut '.$LRut.', Ya esta registrado.<br>Operaci&oacute;n Cancelada</p></div></div></div></div>';
                     break;
 				}
 
 				if(valida_rut($LRut)==false){
-					$ListError='<div class="alert alert-danger"><strong>Advertencia!</strong> El rut '.$LRut.', No son validos.<br>Operaci&oacute;n Cancelada</div><br>';
+					$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>El rut '.$LRut.', No son validos.<br>Operaci&oacute;n Cancelada</p></div></div></div></div>';
                     break;
 				}
 
@@ -113,11 +113,11 @@
 
 		if ($ListError=="") {
 			if (!$resultado = $mysqliX->query($STRSQL)) {
-				$ListError='<div class="alert alert-danger"><strong>Informativo</strong> Error al intentar procesar el archivo, puede ser que no contenga datos, verifique la estructura del mismo y vuelva a procesar.<br> Si el error persiste Contacte al administrador del Sistema...</div><br>';
+				$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Error</h3><div class="mt-2 text-sm text-red-700"><p>Error al intentar procesar el archivo, puede ser que no contenga datos, verifique la estructura del mismo y vuelva a procesar.<br> Si el error persiste Contacte al administrador del Sistema...</p></div></div></div></div>';
 			}
 
 			if ($ListError=="") {
-          		$ListError='<div class="alert alert-success"><strong>Informativo</strong> El archivo fue procesado con Exito.</div><br>';
+          		$ListError='<div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa fa-check-circle text-green-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-green-800">Éxito</h3><div class="mt-2 text-sm text-green-700"><p>El archivo fue procesado con Exito.</p></div></div></div></div>';
           	}
 	   	}
 
@@ -132,16 +132,27 @@
 		<title>MasContable</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-			<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
+		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
+		<!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
+		<script src="../js/jquery.min.js"></script>
+		<!-- <script src="../js/bootstrap.min.js"></script> -->
+
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="../js/propio.js"></script>
+
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 		<script type="text/javascript">
 			function CargaArc(){
 				var r = confirm("El proceso puede tomar tiempo");
@@ -160,69 +171,63 @@
 
 		<?php include '../nav.php'; ?>
 
-		<div class="container-fluid text-left">
-		<div class="row content">
-			<h3 class="text-center">Carga Masiva Empresas</h3>
+		<div class="min-h-screen bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+			<div class="space-y-8">
 			<form name="importar" method="post" action="<?php echo $PHP_SELF; ?>" enctype="multipart/form-data" class="form-horizontal">
-				<!-- <div class="col-sm-2">
-				</div> -->
-				<div class="col-sm-12">
+				<input type="hidden" value="upload" name="action" />
 
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="file">Seleccionar Archivo</label>
-						<div class="col-sm-10">
-							<input type="file" class="form-control-file" id="file" name="file" aria-describedby="fileHelp">
-							<small id="fileHelp" class="form-text text-muted">* Solo archivo CSV.</small><br>
-							<!-- <small id="fileHelp" class="form-text text-muted">** Solo se procesar&aacute;án documentos que no est&eacute;n cargados previamente.</small> -->
-							<input type="hidden" value="upload" name="action" />
+				<div class="bg-white rounded-lg shadow-sm border border-gray-200">            
+					<div class="flex justify-start items-center px-6 pt-3 pb-3 bg-gray-100 w-full shadow">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+							<i class="fa-solid fa-building text-lg text-blue-600"></i>
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-gray-800">
+								Carga Masiva de Empresas
+							</h3>
+							<p class="text-sm text-gray-600">Importe empresas desde un archivo CSV</p>
 						</div>
 					</div> 
+					
+					<div class="p-6 pt-1 space-y-6">
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
 
+							<div>
+								<label for="file" class="block text-sm font-medium text-gray-700 mb-2">Seleccionar Archivo</label>
+								<input type="file" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-l-md file:border-5 file:text-sm file:font-medium border border-gray-300 rounded-md file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-200" id="file" name="file" aria-describedby="fileHelp" accept=".csv">
+								<span id="fileHelp" class="mt-2 p-1 text-sm text-gray-500">* Solo archivos CSV.</span>
+							</div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="file">Separador</label>
-						<div class="col-sm-10">
-							<input type="text" name="separador" value="<?php echo $DLIST; ?>" id="separador">
+							<div>
+								<label for="separador" class="block text-sm font-medium text-gray-700 mb-2">Separador</label>
+								<input type="text" name="separador" value="<?php echo $DLIST; ?>" id="separador" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Separador de columnas">
+							</div>
+
 						</div>
-					</div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="file">Seleccionar Archivo</label>
-						<div class="col-sm-10">
-							<button type="submit" class="btn btn-grabar btn-block">Procesar</button>
-						<!-- <span>* Este proceso eliminara todos los Haberes y Descuento Previamente Cargado, para el periodo <?php echo $Periodo; ?></span> -->
-						</div>
-					</div>
+						<div class="flex flex-wrap justify-start items-center gap-2 mt-6">
+							<button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onclick="CargaArc()">
+								<i class="fa fa-upload mr-2"></i> Procesar Archivo
+							</button>
 
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="file">Plantilla</label>
-						<div class="col-sm-10">
-							<a href="PlantillaImportarEmpresas.csv" class="btn btn-exportar" role="button">
-								<span class="glyphicon glyphicon-download-alt"></span> Descargar
+							<a href="PlantillaImportarEmpresas.csv" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" role="button">
+								<i class="fa fa-download mr-2"></i> Descargar Plantilla
 							</a>
 						</div>
-					</div>
 
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="file"></label>
-						<div class="col-sm-12">
 						<?PHP
 							if ($ListError!="") {
 								echo $ListError;
 							}
 						?>
-						</div>
-					</div> 
 
-					<div class="clearfix"></div>
-
-
+					</div>
 				</div>
 
 			</form>
-
+			</div>
 		</div>
 		</div>
 
@@ -230,6 +235,6 @@
 
 
 		<?php include '../footer.php'; ?>
-
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

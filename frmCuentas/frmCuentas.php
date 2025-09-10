@@ -145,7 +145,7 @@
 				form1.target="";
 				form1.action="#";
 			}
-				
+			
 
 		</script>
 	</head>
@@ -212,7 +212,7 @@
 						</div>
 						<div class="p-6 pt-1 space-y-6">
 
-							<div class="mt-5" id="divAlertas"></div>
+							<div class="mt-3" id="divAlertas"></div>
 
 							<!-- Category Selection -->
 							<div class="grid grid-cols-1 md:grid-cols-1 gap-6">
@@ -506,11 +506,21 @@
 				});
 			}
 
-			function cargarCuentas() {
+			function cargarCuentas(buscar = "") {
 
 				const myTable = document.getElementById("myTable");
+				const myInput = document.getElementById("myInput");
 
-				fetch("router/router.php?action=cargarCuentas", {
+				let url;
+
+				if(buscar) {
+					url = "router/router.php?action=cargarCuentas&buscar=" + buscar;
+				} else {
+					url = "router/router.php?action=cargarCuentas";
+				}
+
+
+				fetch(url, {
 					method: "GET",
 					headers: {
 						'Content-Type': 'application/json',
@@ -524,7 +534,7 @@
 						if(data.cuentas.length === 0) {
 							return;
 						}else{
-							
+							myTable.innerHTML = "";
 							data.cuentas.forEach(cuenta => {
 								const tr = document.createElement("tr");
 								tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
@@ -719,6 +729,10 @@
 					setTimeout(() => {
 						myInput.focus();
 					}, 100);
+
+					myInput.addEventListener("input", function() {
+						cargarCuentas(myInput.value);
+					});
 				});
 			
 				document.getElementById("form1").addEventListener("submit", ingresarCuenta);

@@ -1,35 +1,8 @@
 <?php
-    include 'conexion/conexionmysqli.php';
-    include 'js/funciones.php';
-    include 'conexion/secciones.php';
-    include 'clases/clasesCss.php';
-
-    if (isset($_POST['idempb']) && $_POST['idempb']!="") {
-        $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-        $mysqli->query("UPDATE CTTipoDocumento SET estado='B' WHERE id='".$_POST['idempb']."'");
-        $mysqli->close();
-    }
-
-    if (isset($_POST['idempa']) && $_POST['idempa']!="") {
-        $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-        $mysqli->query("UPDATE CTTipoDocumento SET estado='A' WHERE id='".$_POST['idempa']."'");
-        $mysqli->close();
-    }
-
-	if(isset($_POST['idmod']) && $_POST['idmod']!=""){
-		$sw=1;
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$SQL="SELECT * FROM CTTipoDocumento WHERE id='".$_POST['idmod']."'";
-		$resultados = $mysqli->query($SQL);
-		while ($registro = $resultados->fetch_assoc()) {
-			$tiposii=$registro["tiposii"];
-			$xdetalle=strtoupper($registro["nombre"]);
-			$operador=$registro["operador"];
-		} 
-		$mysqli->close();
-	}
-
-
+    include '../conexion/conexionmysqli.php';
+    include '../js/funciones.php';
+    include '../conexion/secciones.php';
+    include '../clases/clasesCss.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,47 +15,16 @@
 
     <!-- tailwind css -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="js/tailwind.js"></script>
+    <script src="../js/tailwind.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="css/StConta.css">
+    <link rel="stylesheet" type="text/css" href="../css/StConta.css">
     <script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        function Baja(valor){
-            form1.idempb.value=valor;
-            form1.action="#";
-            form1.submit();
-        }
-        function Alta(valor){
-            form1.idempa.value=valor;
-            form1.action="#";
-            form1.submit();
-        }
-        function Volver(){
-            form1.action="frmMain.php";
-            form1.submit();
-        }
-
-        function Modifi(valor){
-            form1.idmod.value=valor;
-            form1.action="#";
-            form1.submit();
-        }
-
-        function limpiarFormulario() {
-            document.getElementById("nombre").value = "";
-            document.getElementById("csii").value = "";
-            document.getElementById("operador").value = "";
-            document.getElementById("idmod").value = "";
-            window.location.href = "frmTipoDocumento.php";
-        }
-
-    </script>  
+ 
     <style>
         .overlay {
             position: fixed;
@@ -108,10 +50,10 @@
     </style>
 
     </head>
-    <body onload="<?php if(isset($_GET['Exito']) && $_POST['idmod']=="") { echo "showMessage()";}?>">
+    <body>
 
         <?php 
-            include 'nav.php';
+            include '../nav.php';
         ?>
 
         <div class="min-h-screen bg-gray-50">
@@ -124,7 +66,7 @@
                     <h1>Enviado Satisfactoriamente</h1>
                 </div>
             </div>
-                <form action="xfrmTipoDocumento.php" method="POST" name="form1" id="form1" class="space-y-8">
+                <form method="POST" name="form1" id="form1" class="space-y-8">
 
                     <div class="flex flex-wrap justify-start items-center gap-2 border-2 border-gray-300 rounded-md p-2">
                         <button type="button" 
@@ -132,23 +74,12 @@
                                 onclick="limpiarFormulario()">
                             <i class="fa fa-plus mr-2"></i>Nuevo
                         </button>
-                        <?php 
-                            if ($sw==1) {
-                        ?>
-                            <button type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                                <i class="fa fa-edit mr-2"></i>Modificar
-                            </button>
-                        <?php 
-                        }else{
-                        ?>
-                            <button type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                                <i class="fa fa-save mr-2"></i>Grabar
-                            </button>
-                        <?php 
-                        }
-                        ?>
+                        
+                        <button id="btnGrabar" type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                            <i class="fa fa-save mr-2"></i>Grabar
+                        </button>
 
-                        <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
+                        <button id="btnBuscar" data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
                             <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
                         </button>
 
@@ -172,6 +103,8 @@
                         </div>
                         <div class="p-6 pt-1 space-y-6">
 
+                            <div id="divAlertas" class="mt-3"></div>
+
                             <!-- Hidden inputs -->
                             <input type="hidden" name="idempb" id="idempb">
                             <input type="hidden" name="idempa" id="idempa">
@@ -187,8 +120,7 @@
                                            class="<?php input_css(); ?>" 
                                            id="nombre" 
                                            name="nombre" 
-                                           onChange="javascript:this.value=this.value.toUpperCase();" 
-                                           value="<?php echo $xdetalle; ?>" 
+                                           onChange="javascript:this.value=this.value.toUpperCase();"
                                            required>
                                 </div>
                             </div>
@@ -202,8 +134,7 @@
                                     <input type="text" 
                                            class="<?php input_css(); ?>" 
                                            id="csii" 
-                                           name="csii" 
-                                           value="<?php echo $tiposii; ?>" 
+                                           name="csii"
                                            required>
                                 </div>
 
@@ -216,8 +147,8 @@
                                             name="operador" 
                                             required>
                                         <option value="">Seleccione</option>
-                                        <option value="S" <?php if ($operador=="S") { echo "selected"; } ?>>Suma</option>
-                                        <option value="R" <?php if ($operador=="R") { echo "selected"; } ?>>Resta</option>
+                                        <option value="S">Suma</option>
+                                        <option value="R">Resta</option>
                                     </select>
                                 </div>
                             </div>
@@ -356,55 +287,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="myTable" class="bg-white divide-y divide-gray-200">
-                                <?php 
-                                $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-                                $SQL="SELECT * FROM CTTipoDocumento WHERE estado<>'X'";
-                                $resultados = $mysqli->query($SQL);
-                                while ($registro = $resultados->fetch_assoc()) {
-
-                                echo '
-                                <tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$registro["tiposii"].'</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">'.$registro["nombre"].'</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">'.$registro["sigla"].'</td>
-                                ';
-                                if ($registro["operador"]=="S") {
-                                    echo '
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Suma</td>
-                                    ';
-                                }else{
-                                    echo '
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Resta</td>
-                                    ';
-                                }
-
-                                echo '<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2">
-                                            <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-warning-700 bg-warning-100 hover:bg-warning-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning-500 transition duration-200" onclick="Modifi('.$registro["id"].')">
-                                                <i class="fa fa-edit mr-1"></i>Modificar
-                                            </button>';
-
-                                if($registro["estado"]=="B"){
-                                    echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="Alta('.$registro["id"].')">
-                                                <i class="fa fa-check mr-1"></i>Alta
-                                            </button>';
-                                }else{
-                                    echo '<button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="Baja('.$registro["id"].')">
-                                                <i class="fa fa-ban mr-1"></i>Baja
-                                            </button>';
-                                }
-
-                                echo '
-                                        </div>
-                                    </td>
-                                </tr>
-                                ';
-                                }       
-                                $mysqli->close();
-                                ?>
-
-
-
+                                
                                         </tbody>
                                     </table>
                                 </div>
@@ -417,17 +300,188 @@
             </div>
         </div>
 
-        <script>
-            function showMessage() {
-                $("#overlay").fadeIn();
-                setTimeout(function(){
-                    $("#overlay").fadeOut();
-                }, 3000); // Ocultar después de 3 segundos
-            }
-        </script>
-
-        <?php include 'footer.php'; ?>
+        <?php include '../footer.php'; ?>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+        <script src="../js/alertas.js"></script>
+        <script>
+
+            function Volver(){
+                form1.action="../frmMain.php";
+                form1.submit();
+            }
+
+            function handleFetchErrors(response) {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			}
+
+            function ingresarDocumento(e) {
+                e.preventDefault();
+
+                const nombre = document.getElementById("nombre").value;
+                const csii = document.getElementById("csii").value;
+                const operador = document.getElementById("operador").value;
+
+                const documentoData = {
+                    nombre: nombre,
+                    csii: csii,
+                    operador: operador
+                };
+
+                const idmod = document.getElementById("idmod").value;
+                if(idmod !== "") documentoData.idmod = idmod;
+                const action = idmod === "" ? "ingresarDocumento" : "modificarDocumento";
+
+                fetch(`router/router.php?action=${action}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(documentoData)
+                })
+                .then(handleFetchErrors)
+                .then(data => {
+                    if (data.success) {
+                        mostrarMensaje(data.mensaje, "success");
+                        limpiarFormulario();
+                    }else{
+                        mostrarMensaje(data.mensaje, "error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error: " + error);
+                });
+            }
+
+            function cargarDocumentos() {
+                fetch("router/router.php?action=cargarDocumentos", {
+                    method: "GET"
+                })
+                .then(handleFetchErrors)
+                .then(data => {
+                    if (data.success) {
+                        const myTable = document.getElementById("myTable");
+                        myTable.innerHTML = "";
+
+                        if(data.documentos.length === 0) {
+                            return;
+                        }else{
+                            const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
+                            data.documentos.forEach(doc => {
+                                const tr = document.createElement("tr");
+                                tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+                                myTable.appendChild(tr);
+
+                                const tdCodigo = document.createElement("td");
+                                tdCodigo.className = clase;
+                                tdCodigo.textContent = doc.tiposii;
+                                tr.appendChild(tdCodigo);
+
+                                const tdNombre = document.createElement("td");
+                                tdNombre.className = clase;
+                                tdNombre.textContent = doc.nombre;
+                                tr.appendChild(tdNombre);
+
+                                const tdSigla = document.createElement("td");
+                                tdSigla.className = clase;
+                                tdSigla.textContent = doc.sigla;
+                                tr.appendChild(tdSigla);
+
+                                const tdOperador = document.createElement("td");
+                                tdOperador.className = clase;
+
+                                let operador = doc.operador;
+                                operador == "S" ? tdOperador.textContent = "Suma" : tdOperador.textContent = "Resta";
+                                tr.appendChild(tdOperador);
+
+                                const tdAcciones = document.createElement("td");
+                                tdAcciones.className = clase;
+                                tr.appendChild(tdAcciones);
+
+                                const divAcciones = document.createElement("div");
+                                divAcciones.className = "flex space-x-2";
+                                tdAcciones.appendChild(divAcciones);
+
+                                const btnModificar = document.createElement("button");
+                                btnModificar.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+                                btnModificar.innerHTML = "<i class='fa fa-edit mr-2'></i>Modificar";
+                                btnModificar.addEventListener("click", () => {
+                                    document.getElementById("nombre").value = doc.nombre;
+                                    document.getElementById("csii").value = doc.tiposii;
+                                    document.getElementById("operador").value = doc.operador;
+                                    document.getElementById("idmod").value = doc.id;
+                                    document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-edit mr-2'></i>Modificar";
+
+                                    const closeButton = document.querySelector("[data-modal-hide='default-modal']");
+                                    if (closeButton) closeButton.click();
+                                });
+
+                                divAcciones.appendChild(btnModificar);
+
+                                const btnEstado = document.createElement("button");
+                                btnEstado.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+                                
+                                
+                                const estadoTexto = doc.estado === "A" ? "Alta" : "Baja";
+                                const estadoIcono = doc.estado === "A" ? "fa-check" : "fa-ban";
+                                
+                                btnEstado.innerHTML = `<i class="fa ${estadoIcono} mr-1"></i>${estadoTexto}`;
+                                btnEstado.addEventListener("click", () => {
+                                    estadoDocumento(doc.id);
+
+                                    const closeButton = document.querySelector("[data-modal-hide='default-modal']");
+                                    if (closeButton) closeButton.click();
+                                });
+
+                                divAcciones.appendChild(btnEstado);
+
+
+                            });
+                        }
+                        console.log(data);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error: " + error);
+                });
+            }
+
+            function estadoDocumento(id) {
+
+                fetch(`router/router.php?action=estadoDocumento`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                .then(handleFetchErrors)
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+
+            function limpiarFormulario() {
+                document.getElementById("nombre").value = "";
+                document.getElementById("csii").value = "";
+                document.getElementById("operador").value = "";
+                document.getElementById("idmod").value = "";
+                document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+
+                const btnBuscar = document.getElementById("btnBuscar");
+                btnBuscar.addEventListener("click", cargarDocumentos);
+
+                document.getElementById("form1").addEventListener("submit", ingresarDocumento);
+            });
+        </script>   
 
     </body>
 </html>

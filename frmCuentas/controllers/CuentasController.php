@@ -200,13 +200,33 @@
         public function cargarCuentas() {
             try {
                 $cuentas = [];
+
+                if(isset($_GET["buscar"])) {
+                    $buscar = $this->sanitizar($_GET["buscar"]);
+                }
+
                 if($_SESSION["PLAN"] === "S"){
-                    $sql = "SELECT * FROM CTCuentasEmpresa WHERE estado <> 'X' AND rut_empresa = ? ORDER BY numero ASC";
-                    $stmt = $this->mysqli->prepare($sql);
-                    $stmt->bind_param("s", $_SESSION["RUTEMPRESA"]);
+                    
+                    if($buscar) {
+                        $buscar = "%".$buscar."%";
+                        $sql = "SELECT * FROM CTCuentasEmpresa WHERE estado <> 'X' AND rut_empresa = ? AND (rut_empresa LIKE ? OR detalle LIKE ?) ORDER BY numero ASC";
+                        $stmt = $this->mysqli->prepare($sql);
+                        $stmt->bind_param("sss", $_SESSION["RUTEMPRESA"], $buscar, $buscar);
+                    }else{
+                        $sql = "SELECT * FROM CTCuentasEmpresa WHERE estado <> 'X' AND rut_empresa = ? ORDER BY numero ASC";
+                        $stmt = $this->mysqli->prepare($sql);
+                        $stmt->bind_param("s", $_SESSION["RUTEMPRESA"]);
+                    }
                 }else{
-                    $sql = "SELECT * FROM CTCuentas WHERE estado <> 'X' ORDER BY numero ASC";
-                    $stmt = $this->mysqli->prepare($sql);
+                    if($buscar) {
+                        $buscar = "%".$buscar."%";
+                        $sql = "SELECT * FROM CTCuentas WHERE estado <> 'X' AND (numero LIKE ? OR detalle LIKE ?) ORDER BY numero ASC";
+                        $stmt = $this->mysqli->prepare($sql);
+                        $stmt->bind_param("ss", $buscar, $buscar);
+                    }else{
+                        $sql = "SELECT * FROM CTCuentas WHERE estado <> 'X' ORDER BY numero ASC";
+                        $stmt = $this->mysqli->prepare($sql);
+                    }
                 }
 
                 $stmt->execute();

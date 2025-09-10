@@ -146,7 +146,7 @@
                                 <a href="<?php echo $nivel . $dirname ?>/CliPro/index.php?nomfrm=C" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clientes</a>
                                 <a href="<?php echo $nivel . $dirname ?>/CliPro/index.php?nomfrm=P" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Proveedores</a>
                                 <a href="<?php echo $nivel . $dirname ?>/frmCuentas/frmCuentas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cuentas</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmTipoDocumento.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tipo de Documentos</a>
+                                <a href="<?php echo $nivel . $dirname ?>/TipoDocumento/frmTipoDocumento.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tipo de Documentos</a>
                                 <div class="border-t border-gray-100 my-1"></div>
                                 <a href="<?php echo $nivel . $dirname ?>/CCostos/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centros de Costos</a>
                                 <a href="<?php echo $nivel . $dirname ?>/Contadores/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Contadores</a>

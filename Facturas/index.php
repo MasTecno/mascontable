@@ -8,17 +8,22 @@
 
 		// $_SESSION['PERIODO']."' AND RutEmpresa='".$_SESSION['RUTEMPRESA']
 
-		$_SESSION['NOMBRE']="Admini";
-		$_SESSION['RAZONSOCIAL']="Admini";
-		$_SESSION['ROL']="A";
+		$_SESSION['NOMBRE'] = "Admini";
+		$_SESSION['RAZONSOCIAL'] = "Admini";
+		$_SESSION['ROL'] = "A";
 
 		$mysqli=ConCobranza();
 		
-		$SQL="SELECT * FROM Servidores WHERE Id='".descript($_GET['Adm'])."'";
-		$resultados = $mysqli->query($SQL);
+		// $SQL="SELECT * FROM Servidores WHERE Id='".descript($_GET['Adm'])."'";
+		$SQL = "SELECT * FROM Servidores WHERE Id = ?";
+		$stmt = $mysqli->prepare($SQL);
+		$adm = descript($_GET['Adm']);
+		$stmt->bind_param("s", $adm);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
-			$NServer=$registro['Nombre'];
-			$_SESSION['xIdServer']=$registro['Id'];  
+			$NServer = $registro['Nombre'];
+			$_SESSION['xIdServer'] = $registro['Id'];  
 		}
 
 		$mysqli->close();
@@ -28,14 +33,18 @@
 		$Pref=randomText(35);
 		$Suf=randomText(8);
 
-		$SQL="SELECT * FROM UnionServer WHERE Alias='".$NServer."' OR Server='".$NServer."' AND Estado='A'";
-		$resultados = $mysqli->query($SQL);
+		// $SQL = "SELECT * FROM UnionServer WHERE Alias='".$NServer."' OR Server='".$NServer."' AND Estado='A'";
+		$SQL = "SELECT * FROM UnionServer WHERE Alias = ? OR Server = ? AND Estado = 'A'";
+		$stmt = $mysqli->prepare($SQL);
+		$stmt->bind_param("ss", $NServer, $NServer);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$NumServer=$registro["Numero"];
-			$_SESSION['NomServer']=$registro["Server"];
-			$_SESSION['BaseSV']=$registro["Base"];
-			$_SESSION['UsuariaSV']=$registro["Usuario"];
-			$_SESSION['PassSV']=$Pref.$registro["Clave"].$Suf;
+			$_SESSION['NomServer'] = $registro["Server"];
+			$_SESSION['BaseSV'] = $registro["Base"];
+			$_SESSION['UsuariaSV'] = $registro["Usuario"];
+			$_SESSION['PassSV'] = $Pref.$registro["Clave"].$Suf;
 		}
 
 		$mysqli->close();
@@ -58,38 +67,49 @@
 
 	$mysqli=ConCobranza();
 
-	$SQL="SELECT * FROM Contacto WHERE IdServer='".$_SESSION['xIdServer']."'";
-	$resultados = $mysqli->query($SQL);
+	$SQL = "SELECT * FROM Contacto WHERE IdServer = ?";
+	$stmt = $mysqli->prepare($SQL);
+	$stmt->bind_param("s", $_SESSION['xIdServer']);
+	$stmt->execute();
+	$resultados = $stmt->get_result();
 	while ($registro = $resultados->fetch_assoc()) {
-		$xnombre=$registro['Nombre'];  
-		$xcorreo=$registro['Correo'];  
-		$xtelefono=$registro['Telefono'];  
+		$xnombre = $registro['Nombre'];  
+		$xcorreo = $registro['Correo'];  
+		$xtelefono = $registro['Telefono'];  
 	}
-// Maestra
-	$SQL="SELECT * FROM Maestra WHERE IdServer='".$_SESSION['xIdServer']."'";
-	$resultados = $mysqli->query($SQL);
+
+	// Maestra
+	$SQL = "SELECT * FROM Maestra WHERE IdServer = ?";
+	$stmt = $mysqli->prepare($SQL);
+	$stmt->bind_param("s", $_SESSION['xIdServer']);
+	$stmt->execute();
+	$resultados = $stmt->get_result();
 	while ($registro = $resultados->fetch_assoc()) {
-		$lRutFactura=$registro['RutFactura'];  
-		$lRSocial=$registro['RSocial'];  
-		$lDireccion=$registro['Direccion'];  
-		$lComuna=$registro['Comuna'];  
-		$lGiro=$registro['Giro'];  
-		$lTelefono=$registro['Telefono'];  
-		$lCorreo=$registro['Correo'];  
-		$lexenta=$registro['Exenta'];
-		$lvalor=$registro['Valor'];
-		$lplan=$registro['IdPlan'];
+		$lRutFactura = $registro['RutFactura'];  
+		$lRSocial = $registro['RSocial'];  
+		$lDireccion = $registro['Direccion'];  
+		$lComuna = $registro['Comuna'];  
+		$lGiro = $registro['Giro'];  
+		$lTelefono = $registro['Telefono'];  
+		$lCorreo = $registro['Correo'];  
+		$lexenta = $registro['Exenta'];
+		$lvalor = $registro['Valor'];
+		$lplan = $registro['IdPlan'];
 	}
 	// echo $_SESSION['NOMBRE'];
 
-	$SQL="SELECT * FROM Sistemas WHERE Id='$lplan'";
-	$resultados = $mysqli->query($SQL);
+	$SQL = "SELECT * FROM Sistemas WHERE Id = ?";
+	$stmt = $mysqli->prepare($SQL);
+	$stmt->bind_param("s", $lplan);
+	$stmt->execute();
+	$resultados = $stmt->get_result();
+
 	while ($registro = $resultados->fetch_assoc()) {
-		$lplan=$registro['Nombre']; 
+		$lplan = $registro['Nombre']; 
 	}
 
-	if ($lplan=="") {
-		$lplan="Sin Plan Asignado";
+	if ($lplan == "") {
+		$lplan = "Sin Plan Asignado";
 	}
 
 	$mysqli->close();

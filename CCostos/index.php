@@ -2,47 +2,6 @@
 	include '../conexion/conexionmysqli.php';
 	include '../js/funciones.php';
 	include '../conexion/secciones.php';
-
-	$sw=0;
-
-	if(isset($_POST['idccosto']) && $_POST['idccosto']!=""){
-		$sw=1;
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$SQL="SELECT * FROM CTCCosto WHERE id='".$_POST['idccosto']."' AND rutempresa='".$_SESSION['RUTEMPRESA']."'";
-		$resultados = $mysqli->query($SQL);
-		while ($registro = $resultados->fetch_assoc()) {
-			$codigo=$registro["codigo"];
-			$nombre=$registro["nombre"];
-		}  
-		$mysqli->close();
-	}
-
-	if (isset($_POST['idccostob']) && $_POST['idccostob']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTCCosto SET estado='B' WHERE id='".$_POST['idccostob']."'");
-		$mysqli->close();
-	}
-
-	if (isset($_POST['idccostoa']) && $_POST['idccostoa']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTCCosto SET estado='A' WHERE id='".$_POST['idccostoa']."'");
-		$mysqli->close();
-	}
-
-	if (isset($_POST['idccostoe']) && $_POST['idccostoe']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-
-		$SQL="SELECT * FROM CTRegLibroDiario WHERE ccosto='".$_POST['idccostoe']."' AND rutempresa='".$_SESSION['RUTEMPRESA']."'";
-		$resultados = $mysqli->query($SQL);
-		$row_cnt = $resultados->num_rows;
-		if ($row_cnt==0) {
-			$mysqli->query("DELETE FROM CTCCosto WHERE id='".$_POST['idccostoe']."' AND rutempresa='".$_SESSION['RUTEMPRESA']."'");
-		}else{
-			$NoElimina="N";
-		}
-
-		$mysqli->close();
-	}
 ?>
 <!DOCTYPE html>
 <html > 
@@ -118,6 +77,8 @@
 
 			document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
 			document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
+			document.getElementById("btnEliminar").hidden = true;
+			document.getElementById("btnEliminar").onclick = null;
 		}
 
 	</script>  
@@ -133,7 +94,7 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 		<div class="space-y-8">
 
-			<form action="xfrmCCostos.php" method="POST" name="form1" id="form1" class="space-y-8">
+			<form method="POST" name="form1" id="form1" class="space-y-8">
 				
 				<div class="flex flex-wrap justify-start items-center gap-2 border-2 border-gray-300 rounded-md p-2">
                     <button type="button" 
@@ -141,23 +102,16 @@
                             onclick="limpiarFormulario()">
                         <i class="fa fa-plus mr-2"></i>Nuevo
                     </button>
-                    <?php 
-                        if ($sw==1) {
-                    ?>
-                    <button id="btnGrabar" type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <i class="fa fa-edit mr-2"></i>Modificar
-                    </button>
-                    <?php 
-                    }else{
-                    ?>
-                    <button id="btnGrabar" type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            <i class="fa fa-save mr-2"></i>Grabar
-                    </button>
-                    <?php 
-                    }
-                    ?>
 
-					<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
+					<button id="btnGrabar" type="submit" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <i class="fa fa-save mr-2"></i>Grabar
+                    </button>
+
+                    <button id="btnEliminar" hidden type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <i class="fa fa-xmark mr-2"></i>Eliminar
+                    </button>
+
+					<button id="btnBuscar" data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
                         <i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
                     </button>
 
@@ -180,48 +134,30 @@
 					</div>
 					<div class="p-6 pt-1 space-y-6">
 						
+						<div id="divAlertas" class="mt-3"></div>
+
 						<div class="grid grid-cols-2 gap-6 mt-5">
 							<div>
 								<label for="codigo" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
 									<i class="fa fa-file-text mr-1"></i>Codigo
 								</label>
-								<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="codigo" name="codigo" autocomplete="off" onChange="javascript:this.value=this.value.toUpperCase();" placeholder="05-ADMIN-MADRID" value="<?php echo $codigo; ?>" <?php if($sw==1){ echo 'readonly="false"';} ?> required>
+								<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="codigo" name="codigo" autocomplete="off" onChange="javascript:this.value=this.value.toUpperCase();" placeholder="05-ADMIN-MADRID" required>
 							</div>
-							<input type="hidden" name="idccosto" id="idccosto" value="<?php echo $_POST['idccosto']; ?>">
+							<input type="hidden" name="idccosto" id="idccosto">
 							<input type="hidden" name="idccostob" id="idccostob">
 							<input type="hidden" name="idccostoa" id="idccostoa">
 							<input type="hidden" name="idccostoe" id="idccostoe">
 							<div>
-								<label for="codigo" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
+								<label for="nombre" class="block text-sm font-medium text-gray-700 mb-1 pl-1">
 									<i class="fa fa-file-text mr-1"></i>Nombre
 								</label>
-								<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="nombre" name="nombre" onChange="javascript:this.value=this.value.toUpperCase();" value="<?php echo $nombre; ?>"  autocomplete="off" required>
+								<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="nombre" name="nombre" onChange="javascript:this.value=this.value.toUpperCase();" autocomplete="off" required>
 							</div>
 						</div>
 
-							<!-- <div class="col-md-4">
-								<div class="input-group">
-									<span class="input-group-addon">Codigo</span>
-									<input type="text" class="form-control" id="codigo" name="codigo" autocomplete="off" onChange="javascript:this.value=this.value.toUpperCase();" placeholder="05-ADMIN-MADRID" value="<?php echo $codigo; ?>" <?php if($sw==1){ echo 'readonly="false"';} ?> required>
-								</div>
-
-								<input type="hidden" name="idccosto" id="idccosto" value="<?php echo $_POST['idccosto']; ?>">
-								<input type="hidden" name="idccostob" id="idccostob">
-								<input type="hidden" name="idccostoa" id="idccostoa">
-								<input type="hidden" name="idccostoe" id="idccostoe">
-							</div> 
-
-							<div class="col-md-8">
-							<div class="input-group">
-								<span class="input-group-addon">Nombre</span>
-								<input type="text" class="form-control" id="nombre" name="nombre" onChange="javascript:this.value=this.value.toUpperCase();" value="<?php echo $nombre; ?>"  autocomplete="off" required>
-							</div> -->
 					</div>
 				</div>
 
-				
-					
-					
 			</form>
 		</div>
 
@@ -266,40 +202,38 @@
 									<tr>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Codigo</th>
 										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" width="1%"></th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" width="1%"></th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" width="1%"></th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" width="1%">Acciones</th>
 									</tr>
 								</thead>
 								<tbody id="myTable">
 									<?php 
-										$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-										$SQL="SELECT * FROM CTCCosto WHERE estado<>'X' AND rutempresa='".$_SESSION['RUTEMPRESA']."' ORDER BY nombre";
+										// $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
+										// $SQL="SELECT * FROM CTCCosto WHERE estado<>'X' AND rutempresa='".$_SESSION['RUTEMPRESA']."' ORDER BY nombre";
 
-										$resultados = $mysqli->query($SQL);
-										while ($registro = $resultados->fetch_assoc()) {
-											echo '
-												<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out">
-												<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$registro["codigo"].'</td>
-												<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$registro["nombre"].'</td>
-											';
+										// $resultados = $mysqli->query($SQL);
+										// while ($registro = $resultados->fetch_assoc()) {
+										// 	echo '
+										// 		<tr class="bg-white hover:bg-gray-50 transition duration-150 ease-in-out">
+										// 		<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$registro["codigo"].'</td>
+										// 		<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">'.$registro["nombre"].'</td>
+										// 	';
 
-												echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-warning-700 bg-warning-100 hover:bg-warning-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning-500 transition duration-200" onclick="Modifi('.$registro["id"].')">Modificar</button></td>';
+										// 		echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-warning-700 bg-warning-100 hover:bg-warning-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning-500 transition duration-200" onclick="Modifi('.$registro["id"].')">Modificar</button></td>';
 
-												if($registro["estado"]=="B"){
-													echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="Alta('.$registro["id"].')">Alta</button></td>';
-												}else{
-													echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="Baja('.$registro["id"].')">Baja</button></td>';
-												}
+										// 		if($registro["estado"]=="B"){
+										// 			echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-success-700 bg-success-100 hover:bg-success-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-500 transition duration-200" onclick="Alta('.$registro["id"].')">Alta</button></td>';
+										// 		}else{
+										// 			echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200" onclick="Baja('.$registro["id"].')">Baja</button></td>';
+										// 		}
 
-												echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger-500 transition duration-200" onclick="Elimi('.$registro["id"].')">Eliminar</button></td>';
+										// 		echo '<td><button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger-500 transition duration-200" onclick="Elimi('.$registro["id"].')">Eliminar</button></td>';
 
 
-											echo '
-												</tr>
-											';
-										}       
-										$mysqli->close();
+										// 	echo '
+										// 		</tr>
+										// 	';
+										// }       
+										// $mysqli->close();
 									?>
 								</tbody>
 							</table>
@@ -337,6 +271,211 @@
 	</script>
 	<?php include '../footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+	<script src="../js/alertas.js"></script>
+	
+	<script>
+
+		function handleFetchErrors(response) {
+			if (!response.ok) {
+				throw Error(response.statusText);
+			}
+			return response.json();
+		}
+
+		function ingresarCCosto(e) {
+			e.preventDefault();
+			
+			const codigo = document.getElementById("codigo").value;
+			const nombre = document.getElementById("nombre").value;
+
+			const ccostoData = {
+				codigo: codigo,
+				nombre: nombre
+			};
+
+			const idccosto = document.getElementById("idccosto").value;
+			if(idccosto !== "") ccostoData.idccosto = idccosto;
+
+			const action = idccosto === "" ? "ingresarCCosto" : "modificarCCosto";
+
+			fetch(`router/router.php?action=${action}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(ccostoData)
+			})
+			.then(handleFetchErrors)
+			.then(data => {
+				console.log(data);
+				mostrarMensaje(data.message, "success");
+				limpiarFormulario();
+			})
+			.catch(error => {
+				console.error("Error:", error);
+			});
+		}
+
+		function cargarCCostos(buscar = "") {
+
+			const myInput = document.getElementById("myInput");
+			let url;
+
+			if(buscar) {
+				url = "router/router.php?action=cargarCCostos&buscar=" + buscar;
+			} else {
+				url = "router/router.php?action=cargarCCostos";
+			}
+
+			fetch(url, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+			.then(handleFetchErrors)
+			.then(data => {
+				console.log(data);
+
+				if(data.success) {
+					if(data.ccostos.length === 0) {
+						return;
+					}else{
+						const tabla = document.getElementById("myTable");
+						tabla.innerHTML = "";
+						const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
+						data.ccostos.forEach(ccosto => {
+							const tr = document.createElement("tr");
+							tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+							tabla.appendChild(tr);
+							
+							const tdCodigo = document.createElement("td");
+							tdCodigo.className = clase;
+							tdCodigo.textContent = ccosto.codigo;
+							tr.appendChild(tdCodigo);
+
+							const tdNombre = document.createElement("td");
+							tdNombre.className = clase;
+							tdNombre.textContent = ccosto.nombre;
+							tr.appendChild(tdNombre);
+							
+							const tdAcciones = document.createElement("td");
+							tdAcciones.className = clase;
+							tr.appendChild(tdAcciones);
+
+							const divAcciones = document.createElement("div");
+							divAcciones.className = "flex space-x-2";
+							tdAcciones.appendChild(divAcciones);
+							
+							const btnModificar = document.createElement("button");
+							btnModificar.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							btnModificar.innerHTML = `<i class="fa fa-edit mr-1"></i>Modificar`;
+							btnModificar.addEventListener("click", function() {
+								document.getElementById("idccosto").value = ccosto.id;
+
+								const codigo = document.getElementById("codigo");
+								codigo.value = ccosto.codigo;
+								codigo.readOnly = true;
+								document.getElementById("nombre").value = ccosto.nombre;
+								document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Modificar";
+
+								const closeButton = document.querySelector("[data-modal-hide='default-modal']");
+								if (closeButton) closeButton.click();
+
+								const btnEliminar = document.getElementById("btnEliminar");
+								btnEliminar.hidden = false;
+
+								btnEliminar.addEventListener("click", function() {
+									eliminarCCosto(ccosto.id);
+								});
+								
+							});
+
+							divAcciones.appendChild(btnModificar);
+
+							const btnEstado = document.createElement("button");
+							btnEstado.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							
+							const estadoTexto = ccosto.estado === "A" ? "Activa" : "Inactiva";
+							const estadoIcono = ccosto.estado === "A" ? "fa-check" : "fa-ban";
+							
+							btnEstado.innerHTML = `<i class="fa ${estadoIcono} mr-1"></i>${estadoTexto}`;
+							btnEstado.addEventListener("click", function() {
+								estadoCCosto(ccosto.id);
+							});
+							divAcciones.appendChild(btnEstado);
+
+						});
+					}
+				}
+			})
+			.catch(error => {
+				console.error("Error:", error);
+			});
+		
+		}
+
+		function eliminarCCosto(id) {
+			fetch(`router/router.php?action=eliminarCCosto`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ id: id })
+			})
+			.then(handleFetchErrors)
+			.then(data => {
+				console.log(data);
+				if(data.success) {
+					mostrarMensaje(data.message, "success");
+					limpiarFormulario();
+				}else if(data.error) {
+					mostrarMensaje(data.message, "error");
+				}
+			})
+			.catch(error => {
+				console.error("Error:", error);
+			});
+		}
+
+		function estadoCCosto(id) {
+			fetch(`router/router.php?action=estadoCCosto`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ id: id })
+			})
+			.then(handleFetchErrors)
+			.then(data => {
+				cargarCCostos();
+			})
+			.catch(error => {
+				console.error("Error:", error);
+			});
+		}
+
+		document.addEventListener("DOMContentLoaded", function() {
+
+			const btnBuscar = document.getElementById("btnBuscar");
+			const myInput = document.getElementById("myInput");
+			
+			btnBuscar.addEventListener("click", function() {
+				cargarCCostos();
+
+				setTimeout(() => {
+					myInput.focus();
+				}, 100);
+					
+				myInput.addEventListener("input", function() {
+					cargarCCostos(myInput.value);
+				});
+			});
+			
+			document.getElementById("form1").addEventListener("submit", ingresarCCosto);
+		});
+
+	</script>
 </body>
 </html>
 

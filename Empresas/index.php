@@ -180,7 +180,7 @@
 							<i class="fa fa-plus mr-2"></i>Nueva
 						</button>
 						
-						<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="15" '.$BloqueBtn.'>
+						<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" tabindex="15">
 							<i class="fa fa-save mr-2"></i>Grabar
 						</button>
 							
@@ -189,7 +189,7 @@
 							<i class="fa fa-trash mr-2"></i>Eliminar
 						</button>
 
-						<button type="button" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+						<button type="button" id="btnBuscar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
 								data-modal-target="searchModal" 
 								data-modal-toggle="searchModal">
 							<i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
@@ -747,8 +747,21 @@
 				});
 			}
 
-			function cargarEmpresas() {
-				fetch("router/router.php?action=cargarEmpresas", {
+			function cargarEmpresas(buscar = "") {
+
+				const myInput = document.getElementById("myInput");
+
+				let url;
+
+				if(buscar) {
+					url = "router/router.php?action=cargarEmpresas&buscar=" + buscar;
+				} else {
+					url = "router/router.php?action=cargarEmpresas";
+				}
+				
+				const tabla = document.getElementById("myTable");
+
+				fetch(url, {
 					method: "GET",
 					headers: {
 						'Content-Type': 'application/json',
@@ -756,19 +769,17 @@
 				})
 				.then(handleFetchErrors)
 				.then(data => {
-					console.log(data);
-					const tabla = document.getElementById("myTable");
-					tabla.innerHTML = "";
-					
+					const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
 					if(data.empresas.length === 0) {
+						tabla.innerHTML = "";
 						const tr = document.createElement("tr");
 						tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
 						tr.innerHTML = `
-							<td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">No hay empresas creadas</td>
+							<td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">No se encontraron empresas</td>
 						`;
 						tabla.appendChild(tr);
 					} else {
-						const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
+						tabla.innerHTML = "";
 						let contador = 1;
 						document.getElementById("msgEmpresa").textContent = data.msgEmpresa;
 						data.empresas.forEach(empresa => {
@@ -957,7 +968,6 @@
 				})
 				.then(handleFetchErrors)
 				.then(data => {
-					console.log(data.permiso);
 					return data.permiso;
 				});
 			}
@@ -989,8 +999,24 @@
 			}
 
 			document.addEventListener("DOMContentLoaded", function() {
-				cargarEmpresas();
-				verificarPermisos();
+
+				const btnBuscar = document.getElementById("btnBuscar");
+				btnBuscar.addEventListener("click", function() {
+					cargarEmpresas();
+					
+					const myInput = document.getElementById("myInput");
+					
+					setTimeout(() => {
+						myInput.focus();
+					}, 100);
+					
+					myInput.addEventListener("input", function() {
+						cargarEmpresas(myInput.value);
+					});
+					
+					
+				});
+
 				document.getElementById("form1").addEventListener("submit", ingresarEmpresa);
 
 			});

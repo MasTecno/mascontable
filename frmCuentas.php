@@ -49,6 +49,7 @@
 			$xnumero=$registro["numero"];
 			$xdetalle=strtoupper($registro["detalle"]);
 			$xidcategoria=$registro["id_categoria"];
+			echo $xidcategoria;
 			$xauxiliar=$registro["auxiliar"];
 			if ($registro["ingreso"]=="S"){
 				$sw1=1;
@@ -312,7 +313,7 @@
 									</label>
 									<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="SelCat" name="SelCat" onchange="CtaCont()" required>
 										<option value="">Seleccione</option>
-										<?php 
+										<?php
 											$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 											$SQL="SELECT * FROM CTCategoria WHERE estado<>'X'";
 											$resultados = $mysqli->query($SQL);

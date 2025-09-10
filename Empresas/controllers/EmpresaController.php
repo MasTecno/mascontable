@@ -4,8 +4,7 @@
     include '../../js/funciones.php';
     include '../../conexion/secciones.php';
 
-class EmpresaController
-{
+class EmpresaController {
     private $mysqli;
     
     public function __construct() {
@@ -35,11 +34,26 @@ class EmpresaController
     public function cargarEmpresas() {
 
         try {
-            $sql = "SELECT * FROM CTEmpresas WHERE estado <> 'X' ORDER BY razonsocial";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->execute();
-            $resultados = $stmt->get_result();
-            $empresas = $resultados->fetch_all(MYSQLI_ASSOC);
+
+            $buscar = self::sanitizar($_GET["buscar"]);
+
+            if($buscar) {
+                $buscar = "%".$buscar."%";
+                $sql = "SELECT * FROM CTEmpresas WHERE estado <> 'X' AND (razonsocial LIKE ? OR rut LIKE ?) ORDER BY razonsocial";
+                $stmt = $this->mysqli->prepare($sql);
+                $stmt->bind_param("ss", $buscar, $buscar);
+                $stmt->execute();
+                $resultados = $stmt->get_result();
+                $empresas = $resultados->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $sql = "SELECT * FROM CTEmpresas WHERE estado <> 'X' ORDER BY razonsocial";
+                $stmt = $this->mysqli->prepare($sql);
+                $stmt->execute();
+                $resultados = $stmt->get_result();
+                $empresas = $resultados->fetch_all(MYSQLI_ASSOC);
+            }
+
+
 
             $sqlCount = "SELECT count(razonsocial) AS CantEmp FROM CTEmpresas WHERE estado<>'X' ORDER BY razonsocial";
             $stmtCount = $this->mysqli->prepare($sqlCount);
@@ -571,7 +585,7 @@ class EmpresaController
             $stmt->fetch(); //* Asignar el resultado
             $stmt->close();
 
-            $nuevoEstado = ($estado == "A") ? "I" : "A";
+            $nuevoEstado = ($estado == "A") ? "B" : "A";
 
             $sqlUpdate = "UPDATE CTEmpresas SET estado = ? WHERE id = ?";
             $stmtUpdate = $this->mysqli->prepare($sqlUpdate);

@@ -1,15 +1,15 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 
-    $Periodo=$_SESSION['PERIODO'];
+	$Periodo=$_SESSION['PERIODO'];
     $RazonSocial=$_SESSION['RAZONSOCIAL'];
     $RutEmpresa=$_SESSION['RUTEMPRESA'];
-
-
+	
 	if($RutEmpresa==""){
 		header('Location: frmMain.php');
+		exit;
 	}
 
 	$sw=0;
@@ -41,23 +41,6 @@
 		// $mysqli->close();
 	}
 
-	if (isset($_POST['idempb']) && $_POST['idempb']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTCliPro SET estado='B' WHERE id='".$_POST['idempb']."'");
-		// $mysqli->close();
-	}
-
-	if (isset($_POST['idempa']) && $_POST['idempa']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("UPDATE CTCliPro SET estado='A' WHERE id='".$_POST['idempa']."'");
-		// $mysqli->close();
-	}
-
-	if (isset($_POST['ideli']) && $_POST['ideli']!="") {
-		$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
-		$mysqli->query("DELETE FROM CTCliPro WHERE id='".$_POST['ideli']."'");
-		// $mysqli->close();
-	}
 
 
 	$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
@@ -122,33 +105,6 @@
 	// 	}
 	// }
 
-	// $SQL="SELECT * FROM CTCliPro;";
-	// $resultados = $mysqli->query($SQL);
-	// while ($registro = $resultados->fetch_assoc()) {
-	// 	$RSocial=$registro['razonsocial'];
-	// 	$RSocial=str_replace("GONZ?LEZ", "GONZÁLEZ", $RSocial);
-	// 	$RSocial=str_replace("G?MEZ", "GÓMEZ", $RSocial);
-	// 	$RSocial=str_replace("VALD?S", "VALDÉS", $RSocial);
-	// 	$RSocial=str_replace("AVIL?S", "AVILÉS", $RSocial);
-
-	// 	$RSocial=str_replace("COMPA?IA", "COMPAÑIA", $RSocial); 
-	// 	$RSocial=str_replace("?LVAREZ", "ÁLVAREZ", $RSocial); 
-	// 	$RSocial=str_replace("ENSE?ANZAS", "ENSEÑANZAS", $RSocial); 
-	// 	$RSocial=str_replace("INVESTIGACI?N", "INVESTIGACIÓN", $RSocial); 
-	// 	$RSocial=str_replace("B?BLICA", "BÍBLICA", $RSocial); 
-	// 	$RSocial=str_replace("A?REA", "ÁREA", $RSocial); 
-	// 	$RSocial=str_replace("MAR?A", "MARÍA", $RSocial); 
-	// 	$RSocial=str_replace("ASESOR?AS", "ASESORÍAS", $RSocial); 
-	// 	$RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-
-	// 	$RSocial=str_replace("GESTI?N", "GESTIÓN", $RSocial); 
-	// 	$RSocial=str_replace("ZU?IGA", "ZUÑIGA", $RSocial); 
-	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-	// 	// $RSocial=str_replace("MU?OZ", "MUÑOZ", $RSocial); 
-
-	// 	$mysqli->query("UPDATE CTCliPro SET razonsocial='$RSocial' WHERE id='".$registro['id']."'");
-	// }
 
 	// Determinar el título según el tipo de formulario
 	if ($_GET['nomfrm']=="C") {
@@ -160,22 +116,24 @@
 		$icono="fa-truck";
 		$color="green";
 	}
+	
+	$MsjEmpresa="Selecciona un ".strtolower($titulo)." de la lista";
 ?>
 <!DOCTYPE html>
-<html > 
+<html lang="es"> 
 	<head>
 		<title>MasContable</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="images/MC.ico" type="favicon/ico" />
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
-		<script src="js/jquery.Rut.js" type="text/javascript"></script>
-		<script src="js/jquery.validate.js" type="text/javascript"></script>	
+		<script src="../js/jquery.Rut.js" type="text/javascript"></script>
+		<script src="../js/jquery.validate.js" type="text/javascript"></script>	
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,30 +141,10 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type="text/javascript">
-			function Modifi(valor){
-				form1.idemp.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
-			function Baja(valor){
-				form1.idempb.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
-			function Alta(valor){
-				form1.idempa.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
-			function Elimin(valor){
-				form1.ideli.value=valor;
-				form1.action="#";
-				form1.submit();
-			}
 			function OrdeCli(){
 				if(form1.orden.value==1){
 					form1.orden.value=0;
@@ -216,25 +154,24 @@
 				form1.action="";
 				form1.submit();
 			}
+
 			function Volver(){
 				form1.action="frmMain.php";
 				form1.submit();
 			}
+
 			function data(valor){
 				console.log('Elemento seleccionado:', valor);
 				
 				form1.cuenta.value=valor;
 
 				const modal = document.getElementById('searchModal');
-				console.log(modal);
 				
-				modal.classList.add('hidden');
-				
-				const overlay = document.querySelector('.bg-gray-900\\/50, .dark\\:bg-gray-900\\/80');
-				if (overlay) {
-					overlay.style.display = 'none';
-					console.log('Overlay del modal ocultado');
+				const closeButton = document.querySelector('[data-modal-hide="searchModal"]');
+				if (closeButton) {
+					closeButton.click();
 				}
+
 			}
 
 			$(document).ready(function(){
@@ -242,19 +179,6 @@
 					on_error: function(){alert('Rut incorrecto'); $('#rut').val(""); $('#rut').focus();} 
 				});
 			});
-
-			function Grilla(){
-				var url= "frmCliProGrilla.php";
-				$.ajax({
-				type: "POST",
-				url: url,
-				data: $('#form1').serialize(),
-				success:function(resp){
-					// $('#TableCliPro').html(resp);
-					$("#contenidoTablaModal").html(resp);
-				}
-				});				
-			}
 
 			function GenLibro(){
 				form1.method="POST";
@@ -265,24 +189,6 @@
 				form1.action="#";
 			}
 
-			function limpiarFormulario() {
-				document.getElementById("rut").value = "";
-				document.getElementById("rsocial").value = "";
-				document.getElementById("direccion").value = "";
-				document.getElementById("giro").value = "";
-				document.getElementById("ciudad").value = "";
-				document.getElementById("correo").value = "";
-				document.getElementById("cuenta").value = "";
-
-				document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
-				document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
-
-				document.getElementById("idempb").value = "";
-				document.getElementById("idempa").value = "";
-				document.getElementById("ideli").value = "";
-
-				// window.location.href = "frmCliPro.php?nomfrm=<?php echo $_GET['nomfrm']; ?>";
-			}
 
 			jQuery(document).ready(function(e) {
 				$('#myModal').on('shown.bs.modal', function() {
@@ -294,16 +200,16 @@
 
 	</head>
 
-	<body onload="Grilla()">
+	<body>
 	<?php 
-		include 'nav.php';
+		include '../nav.php';
 	?>
 
 		<div class="min-h-screen bg-gray-50">
 			<div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 				<div class="space-y-8">
 
-				<form action="xfrmCliPro.php" method="POST" name="form1" id="form1" class="space-y-8">
+				<form method="POST" name="form1" id="form1" class="space-y-8">
 
 					<!-- Barra de botones -->
 					<div class="flex flex-wrap justify-start items-center gap-2 border-2 border-gray-300 rounded-md p-2">
@@ -312,23 +218,20 @@
 								onclick="limpiarFormulario()">
 							<i class="fa fa-plus mr-2"></i>Nuevo
 						</button>
-						
-						<?php if ($sw==1): ?>
-							<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-								<i class="fa fa-edit mr-2"></i>Modificar
-							</button>
-						<?php else: ?>
-							<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-								<i class="fa fa-save mr-2"></i>Grabar
-							</button>
-						<?php endif; ?>
-						
+							
+						<button type="submit" id="btnGrabar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+							<i class="fa fa-save mr-2"></i>Grabar
+						</button>
+
+						<button type="button" hidden id="btnEliminar" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+							<i class="fa fa-trash mr-2"></i>Eliminar
+						</button>
 
 						<button type="button" onclick="GenLibro()" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
 							<i class="fa-solid fa-file-excel text-gray-600 mr-2"></i>Exportar Excel
 						</button>
 
-						<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
+						<button id="btnBuscar" data-modal-target="default-modal" data-modal-toggle="default-modal" class="bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" type="button">
 							<i class="fa-solid fa-magnifying-glass text-gray-600 mr-2"></i>Buscar
 						</button>
 
@@ -363,6 +266,8 @@
 							<input type="hidden" name="nomfrm" id="nomfrm" value="<?php echo $_GET['nomfrm']; ?>">
 							<input type="hidden" name="orden" id="orden" value="<?php if ($_POST['orden']!="") { echo $_POST['orden'];}else{echo "0";}?>">
 
+							<div id="divAlertas"></div>
+
 							<!-- Primera fila: RUT y Razón Social -->
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div>
@@ -376,8 +281,8 @@
 										   autocomplete="off" 
 										   placeholder="Ej: 13520300-5" 
 										   value="<?php echo $rut; ?>" 
-										   <?php if($sw==1){ echo 'readonly="false"';} ?> 
-										   required>
+										   <?php if($sw==1){ echo 'readonly="false"';} ?>
+										   >
 								</div>
 
 								<div>
@@ -390,8 +295,7 @@
 										   name="rsocial" 
 										   onChange="javascript:this.value=this.value.toUpperCase();" 
 										   value="<?php echo $razonsocial; ?>" 
-										   autocomplete="off" 
-										   required>
+										   autocomplete="off">
 								</div>
 							</div>
 
@@ -474,7 +378,7 @@
 							</div>
 
 							<!-- Atributos especiales para tipo X -->
-							<?php if ($_GET['nomfrm']=="X"): ?>
+							<!-- <?php if ($_GET['nomfrm']=="X"): ?>
 							<div class="border-t border-gray-200 pt-6">
 								<div class="bg-gray-50 rounded-lg p-4">
 									<h4 class="text-sm font-medium text-gray-700 mb-3">
@@ -506,7 +410,7 @@
 									</div>
 								</div>
 							</div>
-							<?php endif; ?>
+							<?php endif; ?> -->
 
 						</div>
 					</div>
@@ -575,9 +479,9 @@
 
 											echo '
 												<tr onclick="data(\''.$registro["numero"].'\')" class="bg-white border-b hover:bg-gray-50 cursor-pointer">
-												<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">'.$registro["numero"].'</td>
-												<td class="px-6 py-4">'.strtoupper($registro["detalle"]).'</td>
-												<td class="px-6 py-4">'.$tcuenta.'</td>
+												<td class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap">'.$registro["numero"].'</td>
+												<td class="px-6 py-2">'.strtoupper($registro["detalle"]).'</td>
+												<td class="px-6 py-2">'.$tcuenta.'</td>
 												</tr>
 											';
 										}
@@ -634,7 +538,23 @@
 						</div>
 						<div class="overflow-x-auto max-h-96">
 							<div id="contenidoTablaModal">
-								<!-- El contenido de la tabla se carga aquí dinámicamente -->
+								<table class="min-w-full divide-y divide-gray-200">
+									<thead class="bg-gray-50">
+										<tr>
+											<th class="px-6 py-2 text-xs font-medium text-gray-700 text-center uppercase tracking-wider" align="right" width="10%">Rut</th>
+											<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Razon Social</th>
+											<th class="px-6 py-2 text-xs font-medium text-gray-700 text-center uppercase tracking-wider">Direccion</th>
+											<th class="px-6 py-2 text-xs font-medium text-gray-700 text-center uppercase tracking-wider">Giro</th>
+											<th class="px-6 py-2 text-xs font-medium text-gray-700 text-center uppercase tracking-wider">Correo</th>
+											<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" align="right">Numero</th>
+											<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cuenta</th>
+											<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="3">Acciones</th>
+										</tr>
+									</thead>
+									<tbody id="myTable">
+								
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -672,29 +592,314 @@
 					});
 				});
 
-				// Manejar el cierre del modal
-				$('[data-modal-hide="tablaModal"]').on('click', function() {
-					const modal = document.getElementById('tablaModal');
-					modal.classList.add('hidden');
-					
-					// Remover el overlay
-					const overlay = document.getElementById('tablaModalOverlay');
-					if (overlay) {
-						overlay.remove();
-					}
-				});
-
-				// Cerrar modal al hacer clic en el overlay
-				$(document).on('click', '#tablaModalOverlay', function() {
-					const modal = document.getElementById('tablaModal');
-					modal.classList.add('hidden');
-					$(this).remove();
-				});
+				
 			});
 		</script>
 
-		<?php include 'footer.php'; ?>
+		<?php include '../footer.php'; ?>
 		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+		<script src="../js/alertas.js"></script>
+
+		<script>
+
+			function handleFetchErrors(response) {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			}
+
+			function ingresarClientePro(e) {
+				e.preventDefault();
+				
+				const rut = document.getElementById("rut").value;
+				const rsocial = document.getElementById("rsocial").value;
+				const direccion = document.getElementById("direccion").value;
+				const giro = document.getElementById("giro").value;
+				const ciudad = document.getElementById("ciudad").value;
+				const correo = document.getElementById("correo").value;
+				const cuenta = document.getElementById("cuenta").value;
+				const nomfrm = document.getElementById("nomfrm").value;
+
+				const campos = ["rut", "rsocial", "cuenta"];
+
+				const camposVacios = campos.some(campo => !document.getElementById(campo).value);
+				
+				if (camposVacios) {
+					mostrarMensaje("Faltan datos", "info");
+					return;
+				}
+
+				const clienteProData = {
+					rut: rut,
+					rsocial: rsocial,
+					direccion: direccion,
+					giro: giro,
+					ciudad: ciudad,
+					correo: correo,
+					cuenta: cuenta,
+					nomfrm: nomfrm
+				};
+
+				const idemp = document.getElementById("idemp").value;
+				if(idemp !== "") clienteProData.idemp = idemp;
+
+				const action = idemp === "" ? "ingresarClientePro" : "modificarClientePro";
+
+				fetch(`router/router.php?action=${action}`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(clienteProData),
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data);
+					
+					if(data.success) {
+						mostrarMensaje(data.mensaje, "success");
+					}else if(data.error) {
+						mostrarMensaje(data.mensaje, "error");
+					}else {
+						mostrarMensaje("Error al procesar los datos: " + data.mensaje, "error");
+					}
+				}).catch(error => {
+					console.log(error.message);
+				});
+
+			}
+
+			function cargarClientePro(buscar = "") {
+				console.log(buscar);
+				const myInput = document.getElementById("myInput");
+				const nomfrm = document.getElementById("nomfrm").value;
+				const nombre = nomfrm === "C" ? "clientes" : "proveedores";
+				
+				let url;
+
+				if(buscar) {
+					url = `router/router.php?action=cargarClientePro&nomfrm=${nomfrm}&buscar=${buscar}`;
+				} else {
+					url = `router/router.php?action=cargarClientePro&nomfrm=${nomfrm}`;
+				}
+
+				const tabla = document.getElementById("myTable");
+				
+
+				fetch(url)
+				.then(handleFetchErrors)
+				.then(data => {
+					console.log(data);
+					const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
+					if(data.clientesProveedores.length === 0) {
+						// tabla.innerHTML = "";
+						// const tr = document.createElement("tr");
+						// tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+						// tr.innerHTML = `
+						// 	<td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
+						// `;
+						// tabla.appendChild(tr);
+						return;
+					} else {
+						tabla.innerHTML = "";
+						data.clientesProveedores.forEach(cliPro => {
+							const tr = document.createElement("tr");
+							tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+							tabla.appendChild(tr);
+							
+							const tdRut = document.createElement("td");
+							tdRut.className = clase;
+							tdRut.align = "center";
+							tdRut.textContent = cliPro.rut;
+							tr.appendChild(tdRut);
+
+							const tdRazonSocial = document.createElement("td");
+							tdRazonSocial.className = clase;
+							tdRazonSocial.textContent = cliPro.razonsocial;
+							tr.appendChild(tdRazonSocial);
+
+							const tdDireccion = document.createElement("td");
+							tdDireccion.className = clase;
+							tdDireccion.textContent = cliPro.direccion;
+							tr.appendChild(tdDireccion);
+
+							const tdGiro = document.createElement("td");
+							tdGiro.className = clase;
+							tdGiro.textContent = cliPro.giro;
+							tr.appendChild(tdGiro);
+
+							const tdCorreo = document.createElement("td");
+							tdCorreo.className = clase;
+							tdCorreo.textContent = cliPro.correo;
+							tr.appendChild(tdCorreo);
+
+							const tdNumero = document.createElement("td");
+							tdNumero.className = clase;
+							tdNumero.textContent = cliPro.nuCuenta;
+							tr.appendChild(tdNumero);
+
+							const tdCuenta = document.createElement("td");
+							tdCuenta.className = clase;
+							tdCuenta.textContent = cliPro.nCuenta;
+							tr.appendChild(tdCuenta);
+
+							const tdAcciones = document.createElement("td");
+							tdAcciones.className = clase;
+							tr.appendChild(tdAcciones);
+
+							const divAcciones = document.createElement("div");
+							divAcciones.className = "flex space-x-2";
+							tdAcciones.appendChild(divAcciones);
+
+							const btnModificar = document.createElement("button");
+							btnModificar.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							btnModificar.innerHTML = `<i class="fa fa-edit mr-1"></i>Modificar`;
+							btnModificar.addEventListener("click", function() {
+								document.getElementById("idemp").value = cliPro.id;
+								document.getElementById("rut").value = cliPro.rut;
+								document.getElementById("rsocial").value = cliPro.razonsocial;
+								document.getElementById("direccion").value = cliPro.direccion;
+								document.getElementById("giro").value = cliPro.giro;
+								document.getElementById("correo").value = cliPro.correo;
+								document.getElementById("cuenta").value = cliPro.nuCuenta;
+								document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Modificar";
+
+								const btnEliminar = document.getElementById("btnEliminar");
+								btnEliminar.hidden = false;
+
+								btnEliminar.addEventListener("click", function() {
+									eliminarClientePro(cliPro.id, nombre);
+								});
+
+								const closeButton = document.querySelector("[data-modal-hide='default-modal']");
+								if (closeButton) closeButton.click();
+							});
+							divAcciones.appendChild(btnModificar);
+
+							const btnEstado = document.createElement("button");
+							btnEstado.className = "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200";
+							
+							const estadoTexto = cliPro.estado === "A" ? "Activa" : "Inactiva";
+							const estadoIcono = cliPro.estado === "A" ? "fa-check" : "fa-ban";
+
+							btnEstado.innerHTML = `<i class="fa ${estadoIcono} mr-1"></i>${estadoTexto}`;
+							btnEstado.addEventListener("click", function() {
+								cambiarEstado(cliPro.id);
+							});
+							divAcciones.appendChild(btnEstado);
+							
+						});
+						
+						
+
+
+					}
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+			}
+
+			function eliminarClientePro(id, nombre) {
+				
+				fetch(`router/router.php?action=eliminarClientePro`, {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ id: id, nombre: nombre })
+				})
+				.then(handleFetchErrors)
+				.then(data => {
+					if(data.success) {
+						mostrarMensaje(data.mensaje, "success");
+					} else if(data.warning) {
+						mostrarMensaje(data.mensaje, "info");
+					} else {
+						console.log(data.mensaje);
+						mostrarMensaje(data.mensaje, "error");
+					}
+				})
+				.catch(error => {
+					console.error("Error:", error);
+					console.log("Error al eliminar la empresa: " + error.message);
+				});
+
+			}
+
+			function cambiarEstado(id) {
+				fetch(`router/router.php?action=estadoClientePro`, { 
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ id: id })
+				})
+					.then(handleFetchErrors)
+					.then(data => {
+						if (data.success) {
+							const closeButton = document.querySelector("[data-modal-hide='default-modal']");
+							if (closeButton) closeButton.click();
+						} else if (data.error) {
+							throw new Error(data.mensaje);
+						}
+					})
+					.catch(error => {
+						console.error("Error:", error.mensaje);
+					});
+			}
+
+			function deshabilitarBoton(buttonId) {
+				const button = document.getElementById(buttonId);
+				if (button) {
+					button.disabled = true;
+					button.className = "bg-gray-100 cursor-not-allowed opacity-50 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
+				}
+			}
+
+			function limpiarFormulario() {
+				document.getElementById("rut").value = "";
+				document.getElementById("rsocial").value = "";
+				document.getElementById("direccion").value = "";
+				document.getElementById("giro").value = "";
+				document.getElementById("ciudad").value = "";
+				document.getElementById("correo").value = "";
+				document.getElementById("cuenta").value = "";
+
+				document.getElementById("btnGrabar").className = "bg-gray-100 hover:bg-gray-300 text-sm text-black font-medium py-1 px-2 border-2 border-gray-600 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2";
+				document.getElementById("btnGrabar").innerHTML = "<i class='fa fa-save mr-2'></i>Grabar";
+
+				const btnEliminar = document.getElementById("btnEliminar");
+				btnEliminar.hidden = true;
+				btnEliminar.onclick = null;
+
+				document.getElementById("idemp").value = "";
+				document.getElementById("idempb").value = "";
+				document.getElementById("idempa").value = "";
+				document.getElementById("ideli").value = "";
+			}
+
+			document.addEventListener("DOMContentLoaded", function() {
+				const btnBuscar = document.getElementById("btnBuscar");
+				btnBuscar.addEventListener("click", function() {
+					cargarClientePro();
+
+					const myInput = document.getElementById("myInput");
+					
+					setTimeout(() => {
+						myInput.focus();
+					}, 100);
+					
+					myInput.addEventListener("input", function() {
+						cargarClientePro(myInput.value);
+					});
+				});
+
+				document.getElementById("form1").addEventListener("submit", ingresarClientePro);
+			});
+
+		</script>
 	</body>
 </html>
 

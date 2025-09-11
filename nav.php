@@ -10,23 +10,17 @@
 	$_SESSION['ESTADOPERIODO']=$SwPeriodo;
 
 	$RutOrg=$_SERVER['PHP_SELF'];
+
 	$ExtArc=explode('/', $_SERVER['PHP_SELF']);
+
 	$ExtArc=array_pop($ExtArc);
+
 	$strfinal=str_replace($ExtArc, '', $RutOrg);
 
 	$nivel="";
-	if ($strfinal!="/") {
+	if ($strfinal!="/mascontable/") {
 		$nivel="../";
 	}
-
-    $carpeta = "/" . basename(__DIR__) . "/";
-    $dirname2 = str_replace($carpeta, '', dirname($RutOrg));
-
-    // echo $nivel . basename(__DIR__) . $dirname2;
-
-    $dirname = str_replace("/", "", dirname($RutOrg));
-
-    // echo $dirname;
 ?>
 
 <!-- Tailwind CSS CDN -->
@@ -62,7 +56,7 @@
 		});
 
 		function ConsulMini(){
-			var url= "<?php echo $nivel . $dirname ?>/ConSaldoMini.php";
+			var url= "<?php echo $nivel; ?>ConSaldoMini.php";
 			
 			$.ajax({
 			type: "POST",
@@ -109,7 +103,7 @@
         <div class="flex justify-start items-center h-16">
             <!-- Logo and Brand -->
             <div class="flex items-center">
-                <a href="<?php echo $nivel . $dirname; ?>/frmMain.php" class="flex-shrink-0 flex items-center">
+                <a href="<?php echo $nivel; ?>frmMain.php" class="flex-shrink-0 flex items-center">
                     <span class="text-white text-xl font-bold tracking-wide">MasContable</span>
                 </a>
             </div>
@@ -117,7 +111,7 @@
             <!-- Desktop Navigation -->
             <div class="hidden lg:block flex items-center">
                 <div class="ml-10 flex items-center space-x-4">
-                    <a href="<?php echo $nivel . $dirname; ?>/frmMain.php" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+                    <a href="<?php echo $nivel; ?>frmMain.php" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
                         Inicio
                     </a>
 
@@ -138,23 +132,23 @@
                                     $row_cnt = $resultados1->num_rows;
                                         if ($row_cnt==0) {
                                     ?>
-                                        <a href="<?php echo $nivel . $dirname ?>/Empresas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Empresas</a>
+                                        <a href="<?php echo $nivel; ?>Empresas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Empresas</a>
                                     <?php
                                         }
                                         $mysqli->close();
                                     ?>
-                                <a href="<?php echo $nivel . $dirname ?>/CliPro/index.php?nomfrm=C" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clientes</a>
-                                <a href="<?php echo $nivel . $dirname ?>/CliPro/index.php?nomfrm=P" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Proveedores</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmCuentas/frmCuentas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cuentas</a>
-                                <a href="<?php echo $nivel . $dirname ?>/TipoDocumento/frmTipoDocumento.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tipo de Documentos</a>
+                                <a href="<?php echo $nivel; ?>CliPro/index.php?nomfrm=C" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clientes</a>
+                                <a href="<?php echo $nivel; ?>CliPro/index.php?nomfrm=P" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Proveedores</a>
+                                <a href="<?php echo $nivel; ?>frmCuentas/frmCuentas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cuentas</a>
+                                <a href="<?php echo $nivel; ?>TipoDocumento/frmTipoDocumento.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tipo de Documentos</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/CCostos/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centros de Costos</a>
-                                <a href="<?php echo $nivel . $dirname ?>/Contadores/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Contadores</a>
+                                <a href="<?php echo $nivel; ?>CCostos/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centros de Costos</a>
+                                <a href="<?php echo $nivel; ?>Contadores/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Contadores</a>
                                 <?php if ($_SESSION['ROL']=="A"): ?>
                                     <div class="border-t border-gray-100 my-1"></div>
-                                    <a href="<?php echo $nivel . $dirname ?>/frmUsuarios.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Usuarios</a>
-                                    <a href="<?php echo $nivel . $dirname ?>/frmAsignaEmpresa.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Asignador de Empresas</a>
-                                    <a href="<?php echo $nivel . $dirname ?>/frmPeriodos.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Administrar Periodo</a>
+                                    <a href="<?php echo $nivel; ?>frmUsuarios.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Usuarios</a>
+                                    <a href="<?php echo $nivel; ?>frmAsignaEmpresa.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Asignador de Empresas</a>
+                                    <a href="<?php echo $nivel; ?>frmPeriodos.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Administrar Periodo</a>
                                 <?php endif ?>
                             </div>
                         </div>
@@ -171,21 +165,21 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-72 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/RVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Voucher</a>
-                                <a href="<?php echo $nivel . $dirname ?>/RVoucherPlantilla/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Plantillas de Voucher</a>
+                                <a href="<?php echo $nivel; ?>RVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Voucher</a>
+                                <a href="<?php echo $nivel; ?>RVoucherPlantilla/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Plantillas de Voucher</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/RGestionDoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gestión Documentos Electronicos</a>
+                                <a href="<?php echo $nivel; ?>RGestionDoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gestión Documentos Electronicos</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/RComVen/index.php?Doc=1" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Compras</a>
-                                <a href="<?php echo $nivel . $dirname ?>/RComVen/index.php?Doc=2" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Ventas</a>
+                                <a href="<?php echo $nivel; ?>RComVen/index.php?Doc=1" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Compras</a>
+                                <a href="<?php echo $nivel; ?>RComVen/index.php?Doc=2" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Ventas</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/NCredito/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gestión Nota de Crédito</a>
-                                <a href="<?php echo $nivel . $dirname ?>/GVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Generador de Pagos</a>
+                                <a href="<?php echo $nivel; ?>NCredito/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gestión Nota de Crédito</a>
+                                <a href="<?php echo $nivel; ?>GVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Generador de Pagos</a>
                                 <?php if($_SESSION['NomServer']=="Server99" || $_SESSION['NomServer']=="Server48"): ?>
-                                    <a href="<?php echo $nivel . $dirname ?>/Anticipos/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Generador de Anticipos</a>
+                                    <a href="<?php echo $nivel; ?>Anticipos/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Generador de Anticipos</a>
                                 <?php endif ?>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/Conciliacion/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Conciliación Bancaria</a>
+                                <a href="<?php echo $nivel; ?>Conciliacion/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Conciliación Bancaria</a>
                             </div>
                         </div>
                     </div>
@@ -202,11 +196,11 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/Honorarios/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Honorarios</a>
+                                <a href="<?php echo $nivel; ?>Honorarios/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Honorarios</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/DJ/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Procesar Honorarios DJ</a>
-                                <a href="<?php echo $nivel . $dirname ?>/DJ/frmInfHonorarios.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Certificados de Honorarios DJ</a>
-                                <a href="<?php echo $nivel . $dirname ?>/DJ/frmInfHonorariosRes.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Resumen de Honorarios DJ</a>
+                                <a href="<?php echo $nivel; ?>DJ/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Procesar Honorarios DJ</a>
+                                <a href="<?php echo $nivel; ?>DJ/frmInfHonorarios.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Certificados de Honorarios DJ</a>
+                                <a href="<?php echo $nivel; ?>DJ/frmInfHonorariosRes.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Resumen de Honorarios DJ</a>
                             </div>
                         </div>
                     </div>
@@ -222,10 +216,10 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/14D/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">14(D3/D8)</a>
+                                <a href="<?php echo $nivel; ?>14D/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">14(D3/D8)</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/14Ter/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Caja 14Ter</a>
-                                <a href="<?php echo $nivel . $dirname ?>/14Ter/LIngresoEgreso.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Ingreso/Egreso 14Ter</a>
+                                <a href="<?php echo $nivel; ?>14Ter/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Caja 14Ter</a>
+                                <a href="<?php echo $nivel; ?>14Ter/LIngresoEgreso.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Ingreso/Egreso 14Ter</a>
                             </div>
                         </div>
                     </div>
@@ -240,19 +234,19 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-72 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/RLDiario/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Diario / Voucher</a>
-                                <a href="<?php echo $nivel . $dirname ?>/RLComprasVentas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Compras y Ventas</a>
-                                <a href="<?php echo $nivel . $dirname ?>/Mayor/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Mayor</a>
-                                <a href="<?php echo $nivel . $dirname ?>/HonorariosReport/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro de Honorarios</a>          
-                                <a href="<?php echo $nivel . $dirname ?>/Boletas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro de Boletas Electronicas</a>          
+                                <a href="<?php echo $nivel; ?>RLDiario/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Diario / Voucher</a>
+                                <a href="<?php echo $nivel; ?>RLComprasVentas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Compras y Ventas</a>
+                                <a href="<?php echo $nivel; ?>Mayor/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro Mayor</a>
+                                <a href="<?php echo $nivel; ?>HonorariosReport/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro de Honorarios</a>          
+                                <a href="<?php echo $nivel; ?>Boletas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Libro de Boletas Electronicas</a>          
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/Report/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informes Analíticos</a>
-                                <a href="<?php echo $nivel . $dirname ?>/CCostoReport/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centro de Costo</a>
+                                <a href="<?php echo $nivel; ?>Report/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informes Analíticos</a>
+                                <a href="<?php echo $nivel; ?>CCostoReport/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centro de Costo</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/EResultado/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Estado de Resultado</a>
-                                <a href="<?php echo $nivel . $dirname ?>/BalanceClasi/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance Clasificado</a>
+                                <a href="<?php echo $nivel; ?>EResultado/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Estado de Resultado</a>
+                                <a href="<?php echo $nivel; ?>BalanceClasi/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance Clasificado</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/Balance/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance General</a>
+                                <a href="<?php echo $nivel; ?>Balance/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance General</a>
                             </div>
                         </div>
                     </div>
@@ -268,21 +262,21 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/SincSII" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sincronizador SII</a>
+                                <a href="<?php echo $nivel; ?>SincSII" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sincronizador SII</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/frmImportLibro.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Compras/Ventas</a>
-                                <a href="<?php echo $nivel . $dirname ?>/Honorarios/frmImportLibroHono.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Honorarios</a>
-                                <a href="<?php echo $nivel . $dirname ?>/Boletas/Procesar.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Boletas Electronicas</a>
+                                <a href="<?php echo $nivel; ?>frmImportLibro.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Compras/Ventas</a>
+                                <a href="<?php echo $nivel; ?>Honorarios/frmImportLibroHono.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Honorarios</a>
+                                <a href="<?php echo $nivel; ?>Boletas/Procesar.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Libro Boletas Electronicas</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/ImportaVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Voucher Masivo</a>
+                                <a href="<?php echo $nivel; ?>ImportaVoucher/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Voucher Masivo</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/Apertura/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Utilitario de Apertura</a>			
-                                <a href="<?php echo $nivel . $dirname ?>/Utilitario/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Reordenamiento de Comprobantes</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmFolioSII.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Foliador de Hojas</a>
+                                <a href="<?php echo $nivel; ?>Apertura/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Utilitario de Apertura</a>			
+                                <a href="<?php echo $nivel; ?>Utilitario/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Reordenamiento de Comprobantes</a>
+                                <a href="<?php echo $nivel; ?>frmFolioSII.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Foliador de Hojas</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/PlanCtaClonar/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clonar Plan de Cuenta</a>
-                                <a href="<?php echo $nivel . $dirname ?>/PlanCtaImporta/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Plan de Cuenta</a>
-                                <a href="<?php echo $nivel . $dirname ?>/PlanCliProImporta/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Cuentas Clientes/Proveedores</a>
+                                <a href="<?php echo $nivel; ?>PlanCtaClonar/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clonar Plan de Cuenta</a>
+                                <a href="<?php echo $nivel; ?>PlanCtaImporta/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Plan de Cuenta</a>
+                                <a href="<?php echo $nivel; ?>PlanCliProImporta/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Importar Cuentas Clientes/Proveedores</a>
                                 <?php
                                     if($_SESSION['NomServer']=="Server154"){
                                         echo '<a href="'.$nivel.'Report/UltiServer154.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Utilitario Server154</a>';
@@ -304,16 +298,16 @@
                         </button>
                         <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div class="py-1">
-                                <a href="<?php echo $nivel . $dirname ?>/frmParGlobales.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parametros Globales</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmFactores.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Factores</a>
+                                <a href="<?php echo $nivel; ?>frmParGlobales.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parametros Globales</a>
+                                <a href="<?php echo $nivel; ?>frmFactores.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Registro de Factores</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/frmPlantillas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Plantillas de Importación</a>
-                                <a href="<?php echo $nivel . $dirname ?>/EResultado/frmResultadoConf.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Estado de Resultado</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmConfFacturas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización de Facturas</a>
-                                <a href="<?php echo $nivel . $dirname ?>/frmConfHonorario.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización de Honorarios</a>
-                                <a href="<?php echo $nivel . $dirname ?>/Boletas/frmAsientoBolEle.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización Boletas Electronicas</a>
+                                <a href="<?php echo $nivel; ?>frmPlantillas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Plantillas de Importación</a>
+                                <a href="<?php echo $nivel; ?>EResultado/frmResultadoConf.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Estado de Resultado</a>
+                                <a href="<?php echo $nivel; ?>frmConfFacturas.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización de Facturas</a>
+                                <a href="<?php echo $nivel; ?>frmConfHonorario.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización de Honorarios</a>
+                                <a href="<?php echo $nivel; ?>Boletas/frmAsientoBolEle.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Centralización Boletas Electronicas</a>
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="<?php echo $nivel . $dirname ?>/Facturas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Datos Empresa</a>
+                                <a href="<?php echo $nivel; ?>Facturas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Datos Empresa</a>
                             </div>
                         </div>
                     </div>
@@ -324,7 +318,7 @@
             <!-- Right side - Logout -->
             <div class="hidden lg:block ml-auto">
                 <div class="ml-4 flex items-center md:ml-6">
-                    <a href="<?php echo $nivel . $dirname ?>/./xvalidar.php?destroy=S" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out flex items-center">
+                    <a href="<?php echo $nivel; ?>./xvalidar.php?destroy=S" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out flex items-center">
                         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                         </svg>
@@ -347,7 +341,7 @@
     <!-- Mobile menu -->
     <div class="lg:hidden hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white bg-opacity-10">
-            <a href="<?php echo $nivel . $dirname ?>/frmMain.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+            <a href="<?php echo $nivel; ?>frmMain.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
             
             <!-- Mantenedores Mobile -->
             <div class="mobile-dropdown">
@@ -365,21 +359,21 @@
                         $row_cnt = $resultados1->num_rows;
                             if ($row_cnt==0) {
                         ?>
-                            <a href="<?php echo $nivel . $dirname ?>/Empresas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Empresas</a>
+                            <a href="<?php echo $nivel; ?>Empresas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Empresas</a>
                         <?php
                             }
                             $mysqli->close();
                         ?>
-                    <a href="<?php echo $nivel . $dirname ?>/frmCliPro.php?nomfrm=C" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Clientes</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmCliPro.php?nomfrm=P" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Proveedores</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmCuentas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Cuentas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmTipoDocumento.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Tipo de Documentos</a>
-                    <a href="<?php echo $nivel . $dirname ?>/CCostos/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centros de Costos</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Contadores/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Contadores</a>
+                    <a href="<?php echo $nivel; ?>frmCliPro.php?nomfrm=C" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Clientes</a>
+                    <a href="<?php echo $nivel; ?>frmCliPro.php?nomfrm=P" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Proveedores</a>
+                    <a href="<?php echo $nivel; ?>frmCuentas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Cuentas</a>
+                    <a href="<?php echo $nivel; ?>frmTipoDocumento.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Tipo de Documentos</a>
+                    <a href="<?php echo $nivel; ?>CCostos/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centros de Costos</a>
+                    <a href="<?php echo $nivel; ?>Contadores/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Contadores</a>
                     <?php if ($_SESSION['ROL']=="A"): ?>
-                        <a href="<?php echo $nivel . $dirname ?>/frmUsuarios.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Usuarios</a>
-                        <a href="<?php echo $nivel . $dirname ?>/frmAsignaEmpresa.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Asignador de Empresas</a>
-                        <a href="<?php echo $nivel . $dirname ?>/frmPeriodos.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Administrar Periodo</a>
+                        <a href="<?php echo $nivel; ?>frmUsuarios.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Usuarios</a>
+                        <a href="<?php echo $nivel; ?>frmAsignaEmpresa.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Asignador de Empresas</a>
+                        <a href="<?php echo $nivel; ?>frmPeriodos.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Administrar Periodo</a>
                     <?php endif ?>
                 </div>
             </div>
@@ -394,17 +388,17 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/RVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Voucher</a>
-                    <a href="<?php echo $nivel . $dirname ?>/RVoucherPlantilla/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Plantillas de Voucher</a>
-                    <a href="<?php echo $nivel . $dirname ?>/RGestionDoc/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Gestión Documentos</a>
-                    <a href="<?php echo $nivel . $dirname ?>/RComVen/index.php?Doc=1" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Compras</a>
-                    <a href="<?php echo $nivel . $dirname ?>/RComVen/index.php?Doc=2" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Ventas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/NCredito/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Gestión Nota de Crédito</a>
-                    <a href="<?php echo $nivel . $dirname ?>/GVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Generador de Pagos</a>
+                    <a href="<?php echo $nivel; ?>RVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Voucher</a>
+                    <a href="<?php echo $nivel; ?>RVoucherPlantilla/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Plantillas de Voucher</a>
+                    <a href="<?php echo $nivel; ?>RGestionDoc/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Gestión Documentos</a>
+                    <a href="<?php echo $nivel; ?>RComVen/index.php?Doc=1" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Compras</a>
+                    <a href="<?php echo $nivel; ?>RComVen/index.php?Doc=2" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Ventas</a>
+                    <a href="<?php echo $nivel; ?>NCredito/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Gestión Nota de Crédito</a>
+                    <a href="<?php echo $nivel; ?>GVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Generador de Pagos</a>
                     <?php if($_SESSION['NomServer']=="Server99" || $_SESSION['NomServer']=="Server48"): ?>
-                        <a href="<?php echo $nivel . $dirname ?>/Anticipos/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Generador de Anticipos</a>
+                        <a href="<?php echo $nivel; ?>Anticipos/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Generador de Anticipos</a>
                     <?php endif ?>
-                    <a href="<?php echo $nivel . $dirname ?>/Conciliacion/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Conciliación Bancaria</a>
+                    <a href="<?php echo $nivel; ?>Conciliacion/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Conciliación Bancaria</a>
                 </div>
             </div>
             <?php endif ?>
@@ -419,10 +413,10 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/Honorarios/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Honorarios</a>
-                    <a href="<?php echo $nivel . $dirname ?>/DJ/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Procesar Honorarios DJ</a>
-                    <a href="<?php echo $nivel . $dirname ?>/DJ/frmInfHonorarios.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Certificados de Honorarios DJ</a>
-                    <a href="<?php echo $nivel . $dirname ?>/DJ/frmInfHonorariosRes.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Resumen de Honorarios DJ</a>
+                    <a href="<?php echo $nivel; ?>Honorarios/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Honorarios</a>
+                    <a href="<?php echo $nivel; ?>DJ/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Procesar Honorarios DJ</a>
+                    <a href="<?php echo $nivel; ?>DJ/frmInfHonorarios.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Certificados de Honorarios DJ</a>
+                    <a href="<?php echo $nivel; ?>DJ/frmInfHonorariosRes.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Resumen de Honorarios DJ</a>
                 </div>
             </div>
             <?php endif ?>
@@ -436,9 +430,9 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/14D/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">14(D3/D8)</a>
-                    <a href="<?php echo $nivel . $dirname ?>/14Ter/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Caja 14Ter</a>
-                    <a href="<?php echo $nivel . $dirname ?>/14Ter/LIngresoEgreso.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Ingreso/Egreso 14Ter</a>
+                    <a href="<?php echo $nivel; ?>14D/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">14(D3/D8)</a>
+                    <a href="<?php echo $nivel; ?>14Ter/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Caja 14Ter</a>
+                    <a href="<?php echo $nivel; ?>14Ter/LIngresoEgreso.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Ingreso/Egreso 14Ter</a>
                 </div>
             </div>
 
@@ -451,16 +445,16 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/RLDiario/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Diario / Voucher</a>
-                    <a href="<?php echo $nivel . $dirname ?>/RLComprasVentas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Compras y Ventas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Mayor/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Mayor</a>
-                    <a href="<?php echo $nivel . $dirname ?>/HonorariosReport/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro de Honorarios</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Boletas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro de Boletas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Report/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Informes Analíticos</a>
-                    <a href="<?php echo $nivel . $dirname ?>/CCostoReport/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centro de Costo</a>
-                    <a href="<?php echo $nivel . $dirname ?>/EResultado/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Estado de Resultado</a>
-                    <a href="<?php echo $nivel . $dirname ?>/BalanceClasi/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Balance Clasificado</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Balance/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Balance General</a>
+                    <a href="<?php echo $nivel; ?>RLDiario/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Diario / Voucher</a>
+                    <a href="<?php echo $nivel; ?>RLComprasVentas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Compras y Ventas</a>
+                    <a href="<?php echo $nivel; ?>Mayor/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro Mayor</a>
+                    <a href="<?php echo $nivel; ?>HonorariosReport/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro de Honorarios</a>
+                    <a href="<?php echo $nivel; ?>Boletas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Libro de Boletas</a>
+                    <a href="<?php echo $nivel; ?>Report/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Informes Analíticos</a>
+                    <a href="<?php echo $nivel; ?>CCostoReport/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centro de Costo</a>
+                    <a href="<?php echo $nivel; ?>EResultado/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Estado de Resultado</a>
+                    <a href="<?php echo $nivel; ?>BalanceClasi/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Balance Clasificado</a>
+                    <a href="<?php echo $nivel; ?>Balance/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Balance General</a>
                 </div>
             </div>
 
@@ -474,17 +468,17 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/SincSII" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Sincronizador SII</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmImportLibro.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Compras/Ventas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Honorarios/frmImportLibroHono.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Honorarios</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Boletas/Procesar.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Boletas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/ImportaVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Voucher Masivo</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Apertura/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Utilitario de Apertura</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Utilitario/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Reordenamiento de Comprobantes</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmFolioSII.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Foliador de Hojas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/PlanCtaClonar/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Clonar Plan de Cuenta</a>
-                    <a href="<?php echo $nivel . $dirname ?>/PlanCtaImporta/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Plan de Cuenta</a>
-                    <a href="<?php echo $nivel . $dirname ?>/PlanCliProImporta/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Cuentas Clientes/Proveedores</a>
+                    <a href="<?php echo $nivel; ?>SincSII" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Sincronizador SII</a>
+                    <a href="<?php echo $nivel; ?>frmImportLibro.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Compras/Ventas</a>
+                    <a href="<?php echo $nivel; ?>Honorarios/frmImportLibroHono.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Honorarios</a>
+                    <a href="<?php echo $nivel; ?>Boletas/Procesar.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Libro Boletas</a>
+                    <a href="<?php echo $nivel; ?>ImportaVoucher/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Voucher Masivo</a>
+                    <a href="<?php echo $nivel; ?>Apertura/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Utilitario de Apertura</a>
+                    <a href="<?php echo $nivel; ?>Utilitario/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Reordenamiento de Comprobantes</a>
+                    <a href="<?php echo $nivel; ?>frmFolioSII.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Foliador de Hojas</a>
+                    <a href="<?php echo $nivel; ?>PlanCtaClonar/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Clonar Plan de Cuenta</a>
+                    <a href="<?php echo $nivel; ?>PlanCtaImporta/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Plan de Cuenta</a>
+                    <a href="<?php echo $nivel; ?>PlanCliProImporta/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Importar Cuentas Clientes/Proveedores</a>
                     <?php
                         if($_SESSION['NomServer']=="Server154"){
                             echo '<a href="'.$nivel.'Report/UltiServer154.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Utilitario Server154</a>';
@@ -504,20 +498,20 @@
                     </svg>
                 </button>
                 <div class="mobile-dropdown-content hidden pl-4 space-y-1">
-                    <a href="<?php echo $nivel . $dirname ?>/frmParGlobales.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Parametros Globales</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmFactores.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Factores</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmPlantillas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Plantillas de Importación</a>
-                    <a href="<?php echo $nivel . $dirname ?>/EResultado/frmResultadoConf.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Estado de Resultado</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmConfFacturas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización de Facturas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/frmConfHonorario.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización de Honorarios</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Boletas/frmAsientoBolEle.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización Boletas</a>
-                    <a href="<?php echo $nivel . $dirname ?>/Facturas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Datos Empresa</a>
+                    <a href="<?php echo $nivel; ?>frmParGlobales.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Parametros Globales</a>
+                    <a href="<?php echo $nivel; ?>frmFactores.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Registro de Factores</a>
+                    <a href="<?php echo $nivel; ?>frmPlantillas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Plantillas de Importación</a>
+                    <a href="<?php echo $nivel; ?>EResultado/frmResultadoConf.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Estado de Resultado</a>
+                    <a href="<?php echo $nivel; ?>frmConfFacturas.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización de Facturas</a>
+                    <a href="<?php echo $nivel; ?>frmConfHonorario.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización de Honorarios</a>
+                    <a href="<?php echo $nivel; ?>Boletas/frmAsientoBolEle.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Centralización Boletas</a>
+                    <a href="<?php echo $nivel; ?>Facturas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Datos Empresa</a>
                 </div>
             </div>
             <?php endif ?>
 
             <!-- Logout Mobile -->
-            <a href="<?php echo $nivel . $dirname ?>/./xvalidar.php?destroy=S" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium flex items-center">
+            <a href="<?php echo $nivel; ?>./xvalidar.php?destroy=S" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium flex items-center">
                 <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                 </svg>
@@ -553,13 +547,13 @@
             <form action="#" method="POST" name="formperiodo" id="formperiodo" class="flex flex-row gap-3 items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <script type="text/javascript">
                     function UpPeriodo(){
-                        var url= "<?php echo $nivel . $dirname ?>/MoviPeriodo.php";
+                        var url= "<?php echo $nivel; ?>MoviPeriodo.php";
                         $.ajax({
                             type: "POST",
                             url: url,
                             data: $('#formperiodo').serialize(),
                             success:function(resp){
-                                form1.action="<?php echo $nivel . $dirname ?>/frmMain.php";
+                                form1.action="<?php echo $nivel; ?>frmMain.php";
                                 form1.submit();
                             }
                         });

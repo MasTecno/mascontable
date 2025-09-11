@@ -686,6 +686,19 @@
 
 				const tabla = document.getElementById("myTable");
 				
+				// Mostrar indicador de carga
+				tabla.innerHTML = "";
+				const trCargando = document.createElement("tr");
+				trCargando.className = "bg-white";
+				trCargando.innerHTML = `
+					<td colspan="8" class="px-6 py-8 whitespace-nowrap text-center">
+						<div class="flex items-center justify-center">
+							<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-3"></div>
+							<span class="text-gray-600">Cargando...</span>
+						</div>
+					</td>
+				`;
+				tabla.appendChild(trCargando);
 
 				fetch(url)
 				.then(handleFetchErrors)
@@ -693,13 +706,13 @@
 					console.log(data);
 					const clase = "px-6 py-2 whitespace-nowrap text-sm text-gray-900";
 					if(data.clientesProveedores.length === 0) {
-						// tabla.innerHTML = "";
-						// const tr = document.createElement("tr");
-						// tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
-						// tr.innerHTML = `
-						// 	<td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
-						// `;
-						// tabla.appendChild(tr);
+						tabla.innerHTML = "";
+						const tr = document.createElement("tr");
+						tr.className = "bg-white hover:bg-gray-50 transition duration-150 ease-in-out";
+						tr.innerHTML = `
+							<td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">No hay registros</td>
+						`;
+						tabla.appendChild(tr);
 						return;
 					} else {
 						tabla.innerHTML = "";

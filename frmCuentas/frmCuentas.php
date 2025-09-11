@@ -134,7 +134,7 @@
 			}
 
 			function Volver(){
-				form1.action="frmMain.php";
+				form1.action="../frmMain.php";
 				form1.submit();
 			}
 			function GenLibro(){

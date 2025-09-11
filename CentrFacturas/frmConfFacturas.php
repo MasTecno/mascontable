@@ -1,10 +1,10 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 
 	if(!isset($_SESSION['NOMBRE']) || $_SESSION['NOMBRE']==""){
-		header("location:index.php?Msj=95");
+		header("location:../index.php?Msj=95");
 		exit;
 	}
 	
@@ -192,10 +192,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link rel="shortcut icon" href="images/MC.ico" type="favicon/ico" />
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,8 +203,8 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
-		<script src="js/propio.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
+		<script src="../js/propio.js"></script>
 
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -214,7 +214,7 @@
 		<script type="text/javascript">
 
 			function BuscaCuenta(vall){
-			      var url= "buscacuenta.php";
+			      var url= "../buscacuenta.php";
 			      var x1=$('#'+vall).val();
 			      $.ajax({
 			        type: "POST",
@@ -240,7 +240,7 @@
 
 
 			function BuscaCuentaV(vall){
-			      var url= "buscacuenta.php";
+			      var url= "../buscacuenta.php";
 			      var x1=$('#'+vall).val();
 			      $.ajax({
 			        type: "POST",
@@ -313,7 +313,7 @@
 
 
 		function Volver(){
-			form1.action="frmMain.php";
+			form1.action="../frmMain.php";
 			form1.submit();
 		}
 
@@ -341,7 +341,7 @@
 	<body>
 
 
-	<?php include 'nav.php'; ?>
+	<?php include '../nav.php'; ?>
 
 	<div class="min-h-screen bg-gray-50">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

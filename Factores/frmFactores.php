@@ -1,10 +1,10 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 
 	if(!isset($_SESSION['NOMBRE']) || $_SESSION['NOMBRE']==""){
-		header("location:index.php?Msj=95");
+		header("location:../index.php?Msj=95");
 		exit;
 	}
 
@@ -16,12 +16,12 @@
         if ($row_cnt>0) {
 			$mysqli->query("UPDATE CTFactores SET mes1='".$_POST['d01']."', mes2='".$_POST['d02']."', mes3='".$_POST['d03']."', mes4='".$_POST['d04']."', mes5='".$_POST['d05']."', mes6='".$_POST['d06']."', mes7='".$_POST['d07']."', mes8='".$_POST['d08']."', mes9='".$_POST['d09']."', mes10='".$_POST['d10']."', mes11='".$_POST['d11']."', mes12='".$_POST['d12']."' WHERE periodo='".$_POST['ano']."'");
 			$mysqli->close();
-			header("location:frmMain.php");
+			header("location:../frmMain.php");
 			exit;
 		}else{
 			$mysqli->query("INSERT INTO CTFactores VALUE('','".$_POST['ano']."','".$_POST['d01']."','".$_POST['d02']."','".$_POST['d03']."','".$_POST['d04']."','".$_POST['d05']."','".$_POST['d06']."','".$_POST['d07']."','".$_POST['d08']."','".$_POST['d09']."','".$_POST['d10']."','".$_POST['d11']."','".$_POST['d12']."','A')");
 			$mysqli->close();
-			header("location:frmMain.php");
+			header("location:../frmMain.php");
 			exit;
 		}
 
@@ -39,18 +39,18 @@
 		<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 
 		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
-		<script type='text/javascript' src="js/select2.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/select2.css">
+		<script type='text/javascript' src="../js/select2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/select2.css">
 
 		<script type="text/javascript">
 			function CargGrilla(){
@@ -77,7 +77,7 @@
 	<body onload="CargGrilla()">
 
 
-	<?php include 'nav.php'; ?>
+	<?php include '../nav.php'; ?>
 
 	<div class="min-h-screen bg-gray-50">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -141,7 +141,7 @@
 	<div class="clearfix"> </div>
 
 
-	<?php include 'footer.php'; ?>
+	<?php include '../footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

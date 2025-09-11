@@ -1,7 +1,7 @@
 <?php
-    include 'conexion/conexionmysqli.php';
-    include 'js/funciones.php';
-    include 'conexion/secciones.php';
+    include '../conexion/conexionmysqli.php';
+    include '../js/funciones.php';
+    include '../conexion/secciones.php';
 
     $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 
@@ -95,11 +95,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="images/MC.ico" type="favicon/ico" />
 		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -107,7 +107,7 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
@@ -213,7 +213,7 @@
 
 
 		function Volver(){
-			form1.action="frmMain.php";
+			form1.action="../frmMain.php";
 			form1.submit();
 		}
 
@@ -259,7 +259,7 @@
 	<body>
 
 
-	<?php include 'nav.php'; ?>
+	<?php include '../nav.php'; ?>
 
 	<div class="min-h-screen bg-gray-50">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -463,7 +463,7 @@
 	<script>
 		<?php 
 			if(isset($_GET['Exito'])){
-				echo 'alert("Configuraci\u00F3n grabado con Exito")';
+				echo 'alert("Configuraci\u00F3n grabada con Exito")';
 			}
 		?>
 	</script>

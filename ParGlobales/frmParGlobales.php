@@ -1,7 +1,7 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 	
     $mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 	$SQL="SELECT * FROM CTParametros WHERE estado='A'";
@@ -72,11 +72,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
 		<!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
-		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,7 +92,7 @@
 
 		<script type="text/javascript">
 			function Volver(){
-				form1.action="frmMain.php";
+				form1.action="../frmMain.php";
 				form1.submit();
 			}
 
@@ -126,7 +126,7 @@
 	<body>
 
 
-	<?php include 'nav.php'; ?>
+	<?php include '../nav.php'; ?>
 
 		<div class="min-h-screen bg-gray-50">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -483,7 +483,7 @@
 	<div class="clearfix"> </div>
 
 
-	<?php include 'footer.php'; ?>
+	<?php include '../footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

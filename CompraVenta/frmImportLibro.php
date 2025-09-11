@@ -1,12 +1,12 @@
 <?php
-    include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+    include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 
     $Periodo=$_SESSION['PERIODO'];
 
     if($Periodo==""){
-      header("location:frmMain.php");
+      header("location:../frmMain.php");
       exit;
     }
 
@@ -252,7 +252,7 @@
 						}
 
 						if ($IDDoc==0) {
-							$ListError=$ListError.'<div class="alert alert-danger"><strong>Advertencia!</strong> Error documento en el documento <strong>'.$data[$LNumero].'</strong>, el tipo de documento no es valido o no esta cargado como documento SII, revisar mantenedor. <br>Operaci&oacute;n Cancelada</div><br>';
+							$ListError=$ListError.'<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa-solid fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>Error documento en el documento <strong>'.$data[$LNumero].'</strong>, el tipo de documento no es valido o no esta cargado como documento SII, revisar mantenedor.</p><p class="mt-1">Operación Cancelada</p></div></div></div></div>';
 							break;
 						}
 
@@ -272,7 +272,7 @@
 								}
 
 								$NFacturasError .=$data[$LNumero].' -> '.$PerDocumento."<br> ";
-								$ListError='<div class="alert alert-danger"><strong>Advertencia!</strong> El o los siguientes documento ya estan ingresados <br> <strong>'.$NFacturasError.'</strong>. <br>Operaci&oacute;n Cancelada.</div><br>';
+								$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa-solid fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>El o los siguientes documento ya estan ingresados:</p><p class="mt-1"><strong>'.$NFacturasError.'</strong></p><p class="mt-1">Operación Cancelada.</p></div></div></div></div>';
 							}
 						}
 
@@ -316,10 +316,10 @@
 
 			    $xfecha=$ano."-".$mes."-".$dia;
 
-			    /// Valido formato de fecha
+				/// Valido formato de fecha
 				if (checkdate($mes,$dia,$ano)==1) {
 				}else{
-					$ListError=$ListError.'<div class="alert alert-danger"><strong>Advertencia!</strong> El formato fecha del documento no es compatible.<br>Operaci&oacute;n Cancelada</div><br>';
+					$ListError=$ListError.'<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa-solid fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Advertencia!</h3><div class="mt-2 text-sm text-red-700"><p>El formato fecha del documento no es compatible.</p><p class="mt-1">Operación Cancelada</p></div></div></div></div>';
 					break;
 				}
 
@@ -559,7 +559,7 @@
 // exit;
 
 		if (!$resultado = $mysqli->query($STRSQL)) {
-			$ListError='<div class="alert alert-danger"><strong>Informativo</strong> Error al intentar procesar el archivo; <br>* Puede ser que no contenga datos. <br>* Si utilizo "Solo registrar diferencial", puede no existan diferencias. <br>Verifique la estructura del mismo y vuelva a procesar.<br> Si el Error persiste Contacte al administrador del Sistema...</div><br>';
+			$ListError='<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa-solid fa-exclamation-triangle text-red-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">Informativo</h3><div class="mt-2 text-sm text-red-700"><p>Error al intentar procesar el archivo:</p><ul class="list-disc list-inside mt-2 space-y-1"><li>Puede ser que no contenga datos.</li><li>Si utilizo "Solo registrar diferencial", puede no existan diferencias.</li><li>Verifique la estructura del mismo y vuelva a procesar.</li><li>Si el Error persiste Contacte al administrador del Sistema.</li></ul></div></div></div></div>';
 		}
        	$SQL="SELECT COUNT(numero) as cfact, numero, id_tipodocumento, rut FROM CTRegDocumentos WHERE periodo= '$LPeriodo' AND rutempresa='".$_SESSION['RUTEMPRESA']."' AND tipo='$LTipo' AND fechareg='$LFechaReg' GROUP by numero, id_tipodocumento, rut";
 // echo $SQL;
@@ -599,7 +599,7 @@
 
 						}
 						if ($ListError=="") {
-          		$ListError='<div class="alert alert-success"><strong>Informativo</strong> El archivo fue procesado con Exito. <br> Se han cargado '.$NewRSocial.', Razon(es) Social(es) nueva(s)...</div><br>';
+          		$ListError='<div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md mb-4"><div class="flex"><div class="flex-shrink-0"><i class="fa-solid fa-check-circle text-green-400"></i></div><div class="ml-3"><h3 class="text-sm font-medium text-green-800">Informativo</h3><div class="mt-2 text-sm text-green-700"><p>El archivo fue procesado con Éxito.</p><p class="mt-1">Se han cargado '.$NewRSocial.' Razon(es) Social(es) nueva(s)...</p></div></div></div></div>';
           	}
 
 	   	}
@@ -616,16 +616,20 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="../js/propio.js"></script>
+
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type='text/javascript' src="../js/select2.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/select2.css">
@@ -649,25 +653,31 @@
 
 	<body>
 
+	<?php include '../nav.php'; ?>
 
-	<?php include 'nav.php'; ?>
-
-	<div class="container-fluid text-left">
-	<div class="row content">
-		<br>
-		<form name="importar" method="post" action="<?php echo $PHP_SELF; ?>" enctype="multipart/form-data" class="form-horizontal">
-			<!-- <div class="col-md-2">
-			</div> -->
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<div class="panel panel-default" style="background-color: hsl(0, 0%, 0%, 0);">
-				<div class="panel-heading text-center">Importar Libros</div>
-				<div class="panel-body">
-						<div class="col-md-12">
-						<div class="input-group">
-							<span class="input-group-addon">Plantilla</span>
-							<select class="form-control" id="plantilla" name="plantilla" required>
-							<option value="">Selecciones</option>
+	<div class="min-h-screen bg-gray-50">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+		<div class="space-y-8">
+		<form name="importar" method="post" action="<?php echo $PHP_SELF; ?>" enctype="multipart/form-data">
+			<div class="bg-white rounded-lg shadow-sm border border-gray-200">            
+				<div class="flex justify-start items-center px-6 pt-3 pb-3 bg-gray-100 w-full shadow">
+					<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+						<i class="fa-solid fa-file-import text-lg text-blue-600"></i>
+					</div>
+					<div>
+						<h3 class="text-lg font-semibold text-gray-800">
+							Importar Libros
+						</h3>
+						<p class="text-sm text-gray-600">Cargar documentos desde archivo CSV</p>
+					</div>
+				</div> 
+					
+				<div class="p-6 pt-1 space-y-6">
+					<div class="space-y-4">
+						<div class="mt-3">
+							<label for="plantilla" class="block text-sm font-medium text-gray-700 mb-2">Plantilla</label>
+							<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="plantilla" name="plantilla" required>
+								<option value="">Seleccione una plantilla</option>
 							<?php 
 								$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 								
@@ -685,14 +695,11 @@
 							?>
 							</select>
 						</div>
-						</div>
-						<div class="clearfix"></div>
-						<br>
 
-						<div class="col-md-6 text-right">
-						<div class="input-group">
-							<span class="input-group-addon">Mes</span>
-							<select class="form-control" id="messelect" name="messelect" required>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div>
+								<label for="messelect" class="block text-sm font-medium text-gray-700 mb-2">Mes</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="messelect" name="messelect" required>
 							<?php 
 								$Meses=array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 								$i=1;
@@ -709,12 +716,10 @@
 							?>
 							</select>
 						</div>
-						</div>
 
-						<div class="col-md-6">
-						<div class="input-group">
-							<span class="input-group-addon">A&ntilde;o</span>
-							<select class="form-control" id="anoselect" name="anoselect" required>
+							<div>
+								<label for="anoselect" class="block text-sm font-medium text-gray-700 mb-2">Año</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="anoselect" name="anoselect" required>
 							<?php 
 								$yoano=date('Y');
 								$tano="2010";
@@ -732,82 +737,53 @@
 						</div>
 						</div>
 
-						<div class="clearfix"></div>
-						<br>
+						<div class="flex items-center">
+							<input type="checkbox" id="check2" name="check2" class="h-4 w-4 border-2 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+							<label for="check2" class="ml-2 block text-sm text-gray-700">
+								Solo registrar diferencial
+							</label>
+						</div>
 
-						<div class="col-md-12">
-							<div class="input-group">
-								<input type="checkbox" id="check2" name="check2"> Solo registrar diferencial
+						<div>
+							<label for="file" class="block text-sm font-medium text-gray-700 mb-2">Seleccionar Archivo</label>
+							<div class="flex items-center gap-2">
+								<input type="file" name="file" id="file" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-l-md file:border-5 file:text-sm file:font-medium border border-gray-300 rounded-md file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-200" required>
 							</div>
-						</div>
-
-						<div class="clearfix"></div>
-						<br>
-
-
-
-						<div class="col-md-12">
-						<div class="input-group">
-							<span class="input-group-addon">Seleccionar Archivo</span>
-							<input type="file" class="form-control-file" id="file" name="file" aria-describedby="fileHelp" required>
-								
 							<input type="hidden" value="upload" name="action" />
-						</div>
-						<small id="fileHelp" class="form-text text-muted">* Solo archivo CSV.</small><br>
 						</div> 
 
-						<div class="clearfix"></div>
-						<br>
-
-						<div class="col-md-12">
-						<div class="input-group">
-							<span class="input-group-addon">Separador</span>
-								<input type="text" name="separador" value="<?php echo $DLIST; ?>" id="separador" required>
-						</div>
+						<div>
+							<label for="separador" class="block text-sm font-medium text-gray-700 mb-2">Separador</label>
+							<input type="text" name="separador" value="<?php echo $DLIST; ?>" id="separador" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
 						</div>
 
-						<div class="clearfix"></div>
-						<br>
-
-						<div class="col-md-12">
-						<div class="input-group">
-								<button type="submit" class="btn btn-grabar btn-block">Procesar</button>
-						</div>
+						<div class="flex justify-center items-center pt-4">
+							<button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+								<i class="fa-solid fa-upload mr-2"></i>
+								Procesar Archivo
+							</button>
 						</div>
 
-						<div class="form-group">
-							<label class="control-label col-md-12" for="file"></label>
-							<div class="col-md-12">
 							<?PHP
 								if ($ListError!="") {
 									echo $ListError;
-									// echo "<br>";
-									// echo $ListDocDuplicados;
 								}
 
 								if (isset($_POST['check2']) && $ListError1!="") {
-									// $NFacturasError1 .=$data[$LNumero].'<br> ';
 									echo $ListError1;
 								}
-
 							?>
-							</div>
-						</div> 
 				</div>
 				</div>
 			</div>
-
-			<!-- <div class="col-md-2">
-			</div> -->
 		</form>
-
+		</div>
 	</div>
 	</div>
 
 	<div class="clearfix"> </div>
 
-
-	<?php include 'footer.php'; ?>
-
+	<?php include '../footer.php'; ?>
+	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

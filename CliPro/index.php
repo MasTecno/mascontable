@@ -156,7 +156,7 @@
 			}
 
 			function Volver(){
-				form1.action="frmMain.php";
+				form1.action="../frmMain.php";
 				form1.submit();
 			}
 
@@ -206,7 +206,7 @@
 	?>
 
 		<div class="min-h-screen bg-gray-50">
-			<div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 				<div class="space-y-8">
 
 				<form method="POST" name="form1" id="form1" class="space-y-8">

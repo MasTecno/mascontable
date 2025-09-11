@@ -69,9 +69,10 @@
 			}
 
 			function Volver(){
-				form1.action="frmMain.php";
+				form1.action="../frmMain.php";
 				form1.submit();
 			}
+
 			$(document).ready(function(){
 				$('#rut').Rut({ 
 					on_error: function(){alert('Rut incorrecto'); $('#rut').val(""); $('#rut').focus();} 

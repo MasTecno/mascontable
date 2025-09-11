@@ -1,10 +1,10 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 
 	if(!isset($_SESSION['NOMBRE']) || $_SESSION['NOMBRE']==""){
-		header("location:index.php?Msj=95");
+		header("location:../index.php?Msj=95");
 		exit;
 	}
 	

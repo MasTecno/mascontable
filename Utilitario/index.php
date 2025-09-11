@@ -86,15 +86,15 @@
 						data: $('#form1').serialize(),
 						success:function(resp){
 
-							document.getElementById("BtrProce").style.display = 'inline';
+							document.getElementById("BtrProce").style.display = 'block';
 							document.getElementById("Mensa1").style.display = 'none';
 
 							if (resp=="exito") {
-								document.getElementById("Mensa3").style.display = 'inline';
+								document.getElementById("Mensa3").style.display = 'block';
 								resp="&Eacute;xito en el proceso, no se registraron errores, Saludos.";
 								$('#Msjexito').html(resp);
 							}else{
-								document.getElementById("Mensa2").style.display = 'inline';
+								document.getElementById("Mensa2").style.display = 'block';
 								$('#Msjerror').html(resp);
 							}
 
@@ -134,7 +134,7 @@
 					</div> 
 					
 					<div class="p-6 pt-1 space-y-6">
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+						<div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-3">
 							<div>
 								<label class="block text-sm font-medium text-gray-700 mb-2">A&ntilde;o que se ejecutara el proceso</label>
 								<input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100" id="PApertura" name="PApertura" readonly value="<?php echo substr($Periodo, 3, 4);; ?>">

@@ -1,7 +1,7 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,26 +9,26 @@
 		<title>MasContable</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="images/MC.ico" type="favicon/ico" />
+		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
 		
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="js/tailwind.js"></script>
+		<script src="../js/tailwind.js"></script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Saira&display=swap" rel="stylesheet">
 
 		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
-	</head>
+	</head>	
 
 	<body>
 
 
-	<?php include 'nav.php'; ?>
+	<?php include '../nav.php'; ?>
 
 	<div class="min-h-screen bg-gray-50">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -74,7 +74,7 @@
 
 	<div class="clearfix"> </div>
 
-	<?php include 'footer.php'; ?>
+	<?php include '../footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

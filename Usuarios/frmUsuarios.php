@@ -1,7 +1,7 @@
 <?php
-	include 'conexion/conexionmysqli.php';
-	include 'js/funciones.php';
-	include 'conexion/secciones.php';
+	include '../conexion/conexionmysqli.php';
+	include '../js/funciones.php';
+	include '../conexion/secciones.php';
 	
 	$sw=0;
 
@@ -67,7 +67,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="images/MC.ico" type="favicon/ico" />
 		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 
 		<script src="https://cdn.tailwindcss.com"></script>
@@ -79,7 +79,7 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-		<link rel="stylesheet" type="text/css" href="css/StConta.css">
+		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 
 		<script type="text/javascript">
@@ -114,7 +114,7 @@
 				form1.submit();
 			}
 			function Volver(){
-				form1.action="frmMain.php";
+				form1.action="../frmMain.php";
 				form1.submit();
 			}    
 		</script>  
@@ -122,7 +122,7 @@
 	</head>
 	<body>
 		<?php 
-			include 'nav.php';
+			include '../nav.php';
 		?>
 
 		<div class="min-h-screen bg-gray-50">
@@ -351,7 +351,7 @@
 			</div>
 		</div>
 		</div>
-		<?php include 'footer.php'; ?>
+		<?php include '../footer.php'; ?>
 		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 </html>

@@ -132,9 +132,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../images/MC.ico" type="favicon/ico" />
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="../js/tailwind.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,6 +142,8 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/StConta.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+		<script src="https://kit.fontawesome.com/b8e5063394.js" crossorigin="anonymous"></script>
 		
 		
 		<script type="text/javascript">
@@ -206,15 +208,15 @@
 
 			function ProcesarC(){
 				return new Promise((resolve, reject) => {
-					document.getElementById("C03").style.display = 'none';
-					document.getElementById("V03").style.display = 'none';
-					document.getElementById("H03").style.display = 'none';
-					document.getElementById("HT03").style.display = 'none';
+					document.getElementById("C03").classList.add('hidden');
+					document.getElementById("V03").classList.add('hidden');
+					document.getElementById("H03").classList.add('hidden');
+					document.getElementById("HT03").classList.add('hidden');
 
 					form1.SWOperacion.value="COMPRA";
 					var url= "DTE.php";
 					$("#C01").html('0');
-					document.getElementById("C02").style.display = 'inline';
+					document.getElementById("C02").classList.remove('hidden');
 					
 					$.ajax({
 						type: "POST",
@@ -228,7 +230,7 @@
 
 							if(logCompraX != "\"NoXML\""){
 								$("#logCompra").val(logCompraX);
-								document.getElementById("btnLogCompra").style.display = 'inline';
+								document.getElementById("btnLogCompra").classList.remove('hidden');
 							}
 
 							if(resp.dato1=="S\/IServer error: `POST http:\/\/200.73.113.41:8000\/api\/sync_sii` resulted in a `500 Internal Server Error` response:\nInternal Server Error\n"){
@@ -242,8 +244,8 @@
 								}
 							}
 
-							document.getElementById("C03").style.display = 'inline';
-							document.getElementById("C02").style.display = 'none';
+							document.getElementById("C03").classList.remove('hidden');
+							document.getElementById("C02").classList.add('hidden');
 
 							resolve();
 						},
@@ -260,7 +262,7 @@
 					form1.SWOperacion.value="VENTA";
 					var url= "DTE.php";
 					$("#V01").html('0');
-					document.getElementById("V02").style.display = 'inline';
+					document.getElementById("V02").classList.remove('hidden');
 
 					$.ajax({
 						type: "POST",
@@ -274,7 +276,7 @@
 
 							if(logVentaX != "\"NoXML\""){
 								$("#logVenta").val(logVentaX);
-								document.getElementById("btnLogVenta").style.display = 'inline';
+								document.getElementById("btnLogVenta").classList.remove('hidden');
 							}
 
 							if(resp1.dato1=="S\/IServer error: `POST http:\/\/200.73.113.41:8000\/api\/sync_sii` resulted in a `500 Internal Server Error` response:\nInternal Server Error\n"){
@@ -288,8 +290,8 @@
 								}
 							}
 
-							document.getElementById("V03").style.display = 'inline';
-							document.getElementById("V02").style.display = 'none';
+							document.getElementById("V03").classList.remove('hidden');
+							document.getElementById("V02").classList.add('hidden');
 
 							resolve();
 						},
@@ -305,7 +307,7 @@
 				return new Promise((resolve, reject) => {
 					var url= "DTEHonorarioRecibidas.php";
 					$("#H01").html('0');
-					document.getElementById("H02").style.display = 'inline';
+					document.getElementById("H02").classList.remove('hidden');
 
 					$.ajax({
 						type: "POST",
@@ -315,8 +317,8 @@
 						success:function(resp2){
 							$("#H01").html(resp2.dato4);
 							$("#H03").html(resp2.dato1);
-							document.getElementById("H03").style.display = 'inline';
-							document.getElementById("H02").style.display = 'none';
+							document.getElementById("H03").classList.remove('hidden');
+							document.getElementById("H02").classList.add('hidden');
 							resolve();
 						},
 						error: function(error) {
@@ -330,7 +332,7 @@
 				return new Promise((resolve, reject) => {
 					var url= "DTEHonorarioTerceros.php";
 					$("#HT01").html('0');
-					document.getElementById("HT02").style.display = 'inline';
+					document.getElementById("HT02").classList.remove('hidden');
 
 					$.ajax({
 						type: "POST",
@@ -340,8 +342,8 @@
 						success:function(resp3){
 							$("#HT01").html(resp3.dato4);
 							$("#HT03").html(resp3.dato1);
-							document.getElementById("HT03").style.display = 'inline';
-							document.getElementById("HT02").style.display = 'none';
+							document.getElementById("HT03").classList.remove('hidden');
+							document.getElementById("HT02").classList.add('hidden');
 							resolve();
 						},
 						error: function(error) {
@@ -355,7 +357,7 @@
 				return new Promise((resolve, reject) => {
 					var url= "DTEHonorarioTercerosBTE.php";
 					$("#HTB01").html('0');
-					document.getElementById("HTB02").style.display = 'inline';
+					document.getElementById("HTB02").classList.remove('hidden');
 
 					$.ajax({
 						type: "POST",
@@ -365,8 +367,8 @@
 						success:function(resp3){
 							$("#HTB01").html(resp3.dato4);
 							$("#HTB03").html(resp3.dato1);
-							document.getElementById("HTB03").style.display = 'inline';
-							document.getElementById("HTB02").style.display = 'none';
+							document.getElementById("HTB03").classList.remove('hidden');
+							document.getElementById("HTB02").classList.add('hidden');
 							resolve();
 						},
 						error: function(error) {
@@ -394,287 +396,329 @@
 			}			
 		</style>
 	</head>
-	<body>
+	<body class="bg-gray-50">
 		<?php 
 			include '../nav.php';
 		?>
 
-		<div class="container-fluid">
-		<div class="row content">
+		<div class="min-h-screen bg-gray-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 		<form action="#" name="form1" id="form1" method="POST">
-			<br>
-			<div class="col-sm-12">
+			<div class="space-y-8">
 				<?php
 					if($SwBaja=="SI"){
 						echo '
-							<div class="col-sm-12 text-center" style="font-size: 16px;">
-								<br><br><br><br>
-								SII esta presentando problema con el Sincronizador, lo que está provocando que nuestros sistemas se han ralentizado, por el momento hemos decidido desactivar.<br> 
-								Cuando detectemos que se estabilizo el SII, volveremos a activar.<br>
-								Disculpe las molestias.<br><br>
+							<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+								<div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+									<i class="fas fa-exclamation-triangle text-2xl text-yellow-600"></i>
+								</div>
+								<h2 class="text-xl font-semibold text-gray-800 mb-4">Servicio Temporalmente Desactivado</h2>
+								<p class="text-gray-600 mb-6">
+									SII está presentando problemas con el Sincronizador, lo que está provocando que nuestros sistemas se han ralentizado, por el momento hemos decidido desactivar.<br><br>
+									Cuando detectemos que se estabilizó el SII, volveremos a activar.<br><br>
+									Disculpe las molestias.
+								</p>
+								<a href="https://youtu.be/cqquKBsGa9Q" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" target="_blank">
+									<i class="fas fa-play mr-2"></i>
+									Tutorial Importación mediante Archivo
+								</a>
 							</div>
-
-							<div class="col-md-12 text-center">
-								<a href="https://youtu.be/cqquKBsGa9Q" style="font-size: 30px;" class="btn btn-success" target="_blank" role="button">Tutorial Importación mediante Archivo</a>
-							</div>
-			</div>
-		</form>
-		</div>
-		</div>
-
 						';
 						include '../footer.php';
 						exit;
 					}
 				?>
 
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
+				<!-- Formulario Principal -->
+				<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+					<div class="flex justify-start items-center px-6 pt-4 pb-4 bg-gray-100 w-full shadow">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex justify-center items-center mr-4">
+							<i class="fas fa-sync-alt text-lg text-blue-600"></i>
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-gray-800">
+								Sincronización SII
+							</h3>
+							<p class="text-sm text-gray-600">Configuración de parámetros para la sincronización</p>
+						</div>
+					</div>
 
-					<input type="hidden" name="SWOperacion" id="SWOperacion" value="">
-					<input type="hidden" name="swData" id="swData">
-					<div class="col-md-4 text-right">
-						<div class="input-group">
-							<span class="input-group-addon">Mes</span>
-							<select class="form-control" id="messelect" name="messelect" required>
-							<?php 
-								$Meses=array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-								$i=1;
-								$dmes=$dmes*1;
-								while($i<=12){
+					<div class="p-6 space-y-6">
+						<input type="hidden" name="SWOperacion" id="SWOperacion" value="">
+						<input type="hidden" name="swData" id="swData">
 
-									if ($i==$dmes) {
-										echo "<option value ='".$i."' selected>".$Meses[($i-1)]."</option>";
-									}else{
-										echo "<option value ='".$i."'>".$Meses[($i-1)]."</option>";
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+							<div>
+								<label for="messelect" class="block text-sm font-medium text-gray-700 mb-2">Mes</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="messelect" name="messelect" required>
+								<?php 
+									$Meses=array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+									$i=1;
+									$dmes=$dmes*1;
+									while($i<=12){
+										if ($i==$dmes) {
+											echo "<option value ='".$i."' selected>".$Meses[($i-1)]."</option>";
+										}else{
+											echo "<option value ='".$i."'>".$Meses[($i-1)]."</option>";
+										}
+										$i++;
 									}
-									$i++;
-								}
-							?>
-							</select>
-						</div>
-					</div>
+								?>
+								</select>
+							</div>
 
-					<div class="col-md-4">
-						<div class="input-group">
-							<span class="input-group-addon">A&ntilde;o</span>
-							<select class="form-control" id="anoselect" name="anoselect" required>
-							<?php 
-								$yoano=date('Y');
-								$tano="2017";
-
-								while($tano<=($yoano+1)){
-									if ($dano==$tano) {
-										echo "<option value ='".$tano."' selected>".$tano."</option>";
-									}else{
-										echo "<option value ='".$tano."'>".$tano."</option>";
+							<div>
+								<label for="anoselect" class="block text-sm font-medium text-gray-700 mb-2">Año</label>
+								<select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="anoselect" name="anoselect" required>
+								<?php 
+									$yoano=date('Y');
+									$tano="2017";
+									while($tano<=($yoano+1)){
+										if ($dano==$tano) {
+											echo "<option value ='".$tano."' selected>".$tano."</option>";
+										}else{
+											echo "<option value ='".$tano."'>".$tano."</option>";
+										}
+										$tano=$tano+1;
 									}
-									$tano=$tano+1;
-								}
-							?>
-							</select>
+								?>
+								</select>
+							</div>
+
+							<div>
+								<label for="CSiiCrip" class="block text-sm font-medium text-gray-700 mb-2">Clave SII</label>
+								<input class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" type="password" name="CSiiCrip" id="CSiiCrip" value="<?php echo $ValCSII; ?>" required>
+								<p class="text-xs text-gray-500 mt-1">* La primera vez que se utilice se grabará de forma automática</p>
+							</div>
+						</div>
+
+						<div class="flex flex-wrap items-center gap-4">
+							<button type="button" id="BtrProce" name="BtrProce" onclick="Procesar()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+								<i class="fas fa-play mr-2"></i>
+								Procesar
+							</button>
+
+							<label class="flex items-center space-x-2 cursor-pointer">
+								<input type="checkbox" name="EmpExt" id="EmpExt" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+								<span class="text-sm text-gray-700">Empresa exenta, los impuestos debe ser considerado como parte del valor neto</span>
+							</label>
+						</div>
+
+						<div class="hidden">
+							<input type="text" class="form-control" id="rutsii" name="rutsii" autocomplete="off" maxlength="10" placeholder="Ej: 13520300-5" value="<?php echo $ValRSII; ?>" required>
 						</div>
 					</div>
-					<div class="clearfix"></div>
-					<br>
-
-					<div class="col-md-4">
-						<div class="input-group">
-							<span class="input-group-addon">Clave</span>
-							<input class="form-control" type="password" name="CSiiCrip" id="CSiiCrip" value="<?php echo $ValCSII; ?>" required>
-						</div>
-						<span>* La primera vez que se utilice se grabara de forma automatica</span>
-					</div>
-
-					<div class="col-md-2">
-						<div class="input-group">
-							<button type="button" id="BtrProce" name="BtrProce" onclick="Procesar()" class="btn btn-grabar btn-block">Procesar</button>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="input-group">
-							<label class="checkbox-inline"><input type="checkbox" name="EmpExt" id="EmpExt" value="">Empresa exenta, los impuestos debe ser considerado como parte del valor neto.</label>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-					<br>
-
-					<div class="col-md-4" style="visibility: hidden;">
-						<div class="input-group">
-						<span class="input-group-addon">Rut</span>
-						<input type="text" class="form-control" id="rutsii" name="rutsii" autocomplete="off" maxlength="10" placeholder="Ej: 13520300-5" value="<?php echo $ValRSII; ?>" required>
-						</div>
-					</div> 
-
 				</div>
-				<div class="clearfix"></div>
-				<br>
-				<div class="col-md-2"></div>
-				<div class="col-md-8 text-center" style="font-size: 16px;">
-					<?php
-						if($Msj=="SI"){
-						}else{
-							echo $Msj;
-						}
-					?>
+				<!-- Mensaje de estado -->
+				<?php if($Msj!="SI" && $Msj!=""): ?>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+					<p class="text-blue-800"><?php echo $Msj; ?></p>
 				</div>
-
-				<div class="clearfix"></div>
-				<br>
+				<?php endif; ?>
 
 				<style>
 					.glyphicon-refresh-animate {
-						-animation: spin .7s infinite linear;
+						animation: spin .7s infinite linear;
 						-webkit-animation: spin2 .7s infinite linear;
-					}
-
-					@-webkit-keyframes spin2 {
-						from { -webkit-transform: rotate(0deg);}
-						to { -webkit-transform: rotate(360deg);}
 					}
 
 					@keyframes spin {
 						from { transform: scale(1) rotate(0deg);}
 						to { transform: scale(1) rotate(360deg);}
+					}
+
+					@-webkit-keyframes spin2 {
+						from { -webkit-transform: rotate(0deg);}
+						to { -webkit-transform: rotate(360deg);}
 					}								
 				</style>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="text-align: center;">
-							<div class="checkbox">
-								<label><input type="checkbox" value="" id="CkCompra" checked>Documentos de Compra</label>
-							</div>				
+				<!-- Paneles de Documentos -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					<!-- Documentos de Compra -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+						<div class="p-4 border-b border-gray-200">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" value="" id="CkCompra" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+									<label for="CkCompra" class="ml-2 text-sm font-medium text-gray-700">Documentos de Compra</label>
+								</div>
+								<div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+									<i class="fas fa-shopping-cart text-green-600 text-sm"></i>
+								</div>
+							</div>
 						</div>
-						<div class="panel-body" style="text-align: center;">
-							<l id="C01" style="font-size: 30px;">0</l>
-							<br>
-							<l id="C02" class="btn btn-xs btn-warning" style="display: none;">
-								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Procesando...
-							</l>
-							<l id="C03"></l>
-							<button type="button" class="btn btn-mastecno btn-xs" onclick="CsvData('C')" style="display: none;" id="btnLogCompra">Log XML</button>
+						<div class="p-6 text-center">
+							<div id="C01" class="text-4xl font-bold text-gray-800 mb-2">0</div>
+							<div id="C02" class="hidden">
+								<div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+									<i class="fas fa-spinner fa-spin mr-2"></i>
+									Procesando...
+								</div>
+							</div>
+							<div id="C03" class="text-sm text-gray-600 mt-2"></div>
+							<button type="button" class="hidden mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-3 rounded transition duration-200" onclick="CsvData('C')" id="btnLogCompra">
+								<i class="fas fa-file-code mr-1"></i>
+								Log XML
+							</button>
 						</div>
-					</div>					
-				</div>
+					</div>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="text-align: center;">
-							<div class="checkbox">
-								<label><input type="checkbox" value="" id="CkVenta" checked>Documentos de Venta</label>
-							</div>				
+					<!-- Documentos de Venta -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+						<div class="p-4 border-b border-gray-200">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" value="" id="CkVenta" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+									<label for="CkVenta" class="ml-2 text-sm font-medium text-gray-700">Documentos de Venta</label>
+								</div>
+								<div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+									<i class="fas fa-chart-line text-blue-600 text-sm"></i>
+								</div>
+							</div>
 						</div>
-						<div class="panel-body" style="text-align: center;">
-							<l id="V01" style="font-size: 30px;">0</l>
-							<br>
-							<l id="V02" class="btn btn-xs btn-warning" style="display: none;">
-								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Procesando...
-							</l>
-							<l id="V03"></l>
-							<button type="button" class="btn btn-mastecno btn-xs" onclick="CsvData('V')" style="display: none;" id="btnLogVenta">Log XML</button>
+						<div class="p-6 text-center">
+							<div id="V01" class="text-4xl font-bold text-gray-800 mb-2">0</div>
+							<div id="V02" class="hidden">
+								<div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+									<i class="fas fa-spinner fa-spin mr-2"></i>
+									Procesando...
+								</div>
+							</div>
+							<div id="V03" class="text-sm text-gray-600 mt-2"></div>
+							<button type="button" class="hidden mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-3 rounded transition duration-200" onclick="CsvData('V')" id="btnLogVenta">
+								<i class="fas fa-file-code mr-1"></i>
+								Log XML
+							</button>
 						</div>
-					</div>					
-				</div>
-				<div class="clearfix"></div>
-				<br>
+					</div>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="text-align: center;">
-							<div class="checkbox">
-								<label><input type="checkbox" value="" id="CkHonorario" checked>Honorarios Recibidos</label>
-							</div>				
+					<!-- Honorarios Recibidos -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+						<div class="p-4 border-b border-gray-200">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" value="" id="CkHonorario" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+									<label for="CkHonorario" class="ml-2 text-sm font-medium text-gray-700">Honorarios Recibidos</label>
+								</div>
+								<div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+									<i class="fas fa-user-tie text-purple-600 text-sm"></i>
+								</div>
+							</div>
 						</div>
-						<div class="panel-body" style="text-align: center;">
-							<l id="H01" style="font-size: 30px;">0</l>
-							<br>
-							<l id="H02" class="btn btn-xs btn-warning" style="display: none;">
-								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Procesando...
-							</l>
-							<l id="H03"></l>
+						<div class="p-6 text-center">
+							<div id="H01" class="text-4xl font-bold text-gray-800 mb-2">0</div>
+							<div id="H02" class="hidden">
+								<div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+									<i class="fas fa-spinner fa-spin mr-2"></i>
+									Procesando...
+								</div>
+							</div>
+							<div id="H03" class="text-sm text-gray-600 mt-2"></div>
 						</div>
-					</div>					
-				</div>
+					</div>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="text-align: center;" >
-							<div class="checkbox">
-								<label><input type="checkbox" value="" id="CkTerceroSII" checked>Emitidos a Terceros SII</label>
-							</div>				
+					<!-- Emitidos a Terceros SII -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+						<div class="p-4 border-b border-gray-200">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" value="" id="CkTerceroSII" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+									<label for="CkTerceroSII" class="ml-2 text-sm font-medium text-gray-700">Emitidos a Terceros SII</label>
+								</div>
+								<div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+									<i class="fas fa-file-invoice text-orange-600 text-sm"></i>
+								</div>
+							</div>
 						</div>
-						<div class="panel-body" style="text-align: center;">
-							<l id="HT01" style="font-size: 30px;">0</l>
-							<br>
-							<l id="HT02" class="btn btn-xs btn-warning" style="display: none;">
-								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Procesando...
-							</l>
-							<l id="HT03"></l>
+						<div class="p-6 text-center">
+							<div id="HT01" class="text-4xl font-bold text-gray-800 mb-2">0</div>
+							<div id="HT02" class="hidden">
+								<div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+									<i class="fas fa-spinner fa-spin mr-2"></i>
+									Procesando...
+								</div>
+							</div>
+							<div id="HT03" class="text-sm text-gray-600 mt-2"></div>
+						</div>
+					</div>
+
+					<!-- Emitidos a Terceros BTE's -->
+					<div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+						<div class="p-4 border-b border-gray-200">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center">
+									<input type="checkbox" value="" id="CkTerceroBTE" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+									<label for="CkTerceroBTE" class="ml-2 text-sm font-medium text-gray-700">Emitidos a Terceros BTE's</label>
+								</div>
+								<div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+									<i class="fas fa-file-alt text-red-600 text-sm"></i>
+								</div>
+							</div>
+						</div>
+						<div class="p-6 text-center">
+							<div id="HTB01" class="text-4xl font-bold text-gray-800 mb-2">0</div>
+							<div id="HTB02" class="hidden">
+								<div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+									<i class="fas fa-spinner fa-spin mr-2"></i>
+									Procesando...
+								</div>
+							</div>
+							<div id="HTB03" class="text-sm text-gray-600 mt-2"></div>
 						</div>
 					</div>
 				</div>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="text-align: center;" >
-							<div class="checkbox">
-								<label><input type="checkbox" value="" id="CkTerceroBTE" checked>Emitidos a Terceros BTE's</label>
-							</div>				
+				<!-- Visor de resultados -->
+				<div id="Visor" class="mt-6"></div>
+
+				<!-- Textareas ocultas para logs -->
+				<div class="hidden">
+					<textarea class="form-control" rows="50" id="logCompra" name="logCompra"><?php echo $_POST['logCompra']; ?></textarea>
+					<textarea class="form-control" rows="50" id="logVenta" name="logVenta"><?php echo $_POST['logVenta']; ?></textarea>
+				</div>
+
+				<!-- Información Importante -->
+				<div class="bg-amber-50 border border-amber-200 rounded-lg p-6 mt-3">
+					<div class="flex items-start">
+						<div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+							<i class="fas fa-exclamation-triangle text-amber-600"></i>
 						</div>
-						<div class="panel-body" style="text-align: center;">
-							<l id="HTB01" style="font-size: 30px;">0</l>
-							<br>
-							<l id="HTB02" class="btn btn-xs btn-warning" style="display: none;">
-								<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Procesando...
-							</l>
-							<l id="HTB03"></l>
+						<div>
+							<h3 class="text-lg font-semibold text-amber-800 mb-4">Información Importante</h3>
+							<div class="space-y-3 text-sm text-amber-700">
+								<div class="flex items-start">
+									<span class="font-semibold mr-2">•</span>
+									<span><strong>Los procesos de Boleta de Honorarios a Terceros y BTE's</strong> están en proceso de validación, por lo cual puede presentar intermitencia en la sincronización.</span>
+								</div>
+								<div class="flex items-start">
+									<span class="font-semibold mr-2">•</span>
+									<span>El SII restringe descarga de documentos con más de 900 registros, por lo que se entrega un resumen comprimido que debe ser descargado de forma directa, y procesado con el importador destinado para ello.</span>
+								</div>
+								<div class="flex items-start">
+									<span class="font-semibold mr-2">•</span>
+									<span>Si cuentas con menos de la cantidad indicada por tipo de documentos, no presentarás problemas en las descargas, pero siempre debe estar atento.</span>
+								</div>
+								<div class="flex items-start">
+									<span class="font-semibold mr-2">•</span>
+									<span>La descarga de documentos de honorarios y terceros puede tomar un tiempo más prolongado, en caso que eso suceda, se sugiere sincronizar de manera independiente cada tipo de documento.</span>
+								</div>
+								<div class="flex items-start">
+									<span class="font-semibold mr-2">•</span>
+									<span>La descarga de documentos de terceros están disponibles desde el 01 de Enero 2020, en adelante.</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-12">
-					<p id="Visor"></p>
-
-						<div class="form-group">
-							<textarea class="form-control" style="display: none;" rows="50" id="logCompra" name="logCompra"><?php echo $_POST['logCompra']; ?></textarea>
-						</div>
-
-						<div class="form-group">
-							<textarea class="form-control" style="display: none;" rows="50" id="logVenta" name="logVenta"><?php echo $_POST['logVenta']; ?></textarea>
-						</div>
-
-					<br>
-					<div class="col-md-1"></div>
-					<div class="col-md-10">	
-						<strong>Importante</strong><br>
-						<br>
-						<strong>* Los procesos de Boleta de Honorarios a Terceros y BTE's, estan en proceso de validación, por lo cual puede presentar intermitencia en la sincronización.</strong><br>
-						<br>
-						* El SII restringe descarga de documentos con más de 900 registros, por lo que se entrega un resumen comprimido que debe ser descargado de forma directa, y procesado con el importador destinado para ello.<br>
-						* Si cuentas con menos de la cantidad indicada por tipo de documentos, no presentarás problemas en las descargas, pero siempre debe estar atento.<br>
-						* La descarga de documentos de honorarios y terceros puede tomar un tiempo más prolongado, en caso que eso suceda, se sugiere sincronizar de manera independiente cada tipo de documento.<br>
-						* La descarga de documentos de tercerros, estan disponibles desde el 01 de Enero 2020, en adelante.
-						<br>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-				<br>
 			
-				<div class="col-md-12 text-center">
-					<div class="input-group">
-						<div class="alert alert-warning" id="Mensa" style="background-color: #fbc7c7; border-color: #b35c5c; display:none;">
-							<strong>Generando!</strong> El proceso tomara un tiempo, dependiendo de la cantidad de registro.
-						</div>					
+				<!-- Alerta de proceso -->
+				<div id="Mensa" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+					<div class="flex items-center justify-center">
+						<i class="fas fa-spinner fa-spin text-red-600 mr-3"></i>
+						<span class="text-red-800 font-medium">Generando! El proceso tomará un tiempo, dependiendo de la cantidad de registros.</span>
 					</div>
 				</div>
-				<div class="clearfix"></div>
-				<br>
-
-				<!-- <div class="col-md-12 text-center">
-					<a href="https://youtu.be/cqquKBsGa9Q" target="_blank" style="font-size: 25px; color: white; background-color: red; border-style: inset;">Tutorial Importación mediante Archivo</a>
-				</div> -->
 
 			</div>
 		</form>
@@ -689,7 +733,7 @@
 		</div>
 
 		<?php include '../footer.php'; ?>
-
+		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 	</body>
 
 </html>

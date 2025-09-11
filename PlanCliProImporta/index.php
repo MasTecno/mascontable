@@ -2,6 +2,9 @@
 	include '../conexion/conexionmysqli.php';
 	include '../js/funciones.php';
 	include '../conexion/secciones.php';
+	include '../vendor/autoload.php';
+
+	use PhpOffice\PhpSpreadsheet\IOFactory;
 
 	$NomCont=$_SESSION['NOMBRE'];
 	$Periodo=$_SESSION['PERIODO'];
@@ -24,6 +27,9 @@
 			//cargamos el fichero
 			$archivo = $_FILES['excel']['name'];
 			$tipo = $_FILES['excel']['type'];
+
+			// echo $archivo . "<br>";
+			// print_r($_FILES);
 			// exit;
 			$destino = "Temp_".$archivo;//Le agregamos un prefijo para identificarlo el archivo cargado
 			if (copy($_FILES['excel']['tmp_name'],$destino)){
@@ -35,39 +41,80 @@
 			if (file_exists ("Temp_".$archivo)){
 				$mysqli=xconectar($_SESSION['UsuariaSV'],descript($_SESSION['PassSV']),$_SESSION['BaseSV']);
 				/** Llamamos las clases necesarias PHPEcel */
-				require_once('../Classes/PHPExcel.php');
-				require_once('../Classes/PHPExcel/Reader/Excel2007.php');                  
-				// Cargando la hoja de excel
-				$objReader = new PHPExcel_Reader_Excel2007();
-				$objPHPExcel = $objReader->load("Temp_".$archivo);
-				$objFecha = new PHPExcel_Shared_Date();       
-				// Asignamon la hoja de excel activa
-				$objPHPExcel->setActiveSheetIndex(0);
 
+				$objPHPExcel = IOFactory::load($destino);
+				$objPHPExcel->setActiveSheetIndex(0);
 				$columnas = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 				$filas = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
 
-				for ($i=2;$i<=$filas;$i++){
+				// echo "columnas: ".$columnas."<br>";
+				// echo "filas: ".$filas."<br>";
+
+				$STRInsert = ""; // Initialize the variable
+				for ($i = 2; $i <= $filas; $i++){
 					$_DATOS_EXCEL[$i]['RutImp'] = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
 					$_DATOS_EXCEL[$i]['Numero'] = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
 					
-					if ($_DATOS_EXCEL[$i]['Numero']!=0) {
-						$STRInseert=$STRInseert."INSERT INTO CTCliProCuenta VALUES('','$RutEmpresa','".$_DATOS_EXCEL[$i]['RutImp']."','".$_DATOS_EXCEL[$i]['Numero']."','".$_POST['SelCliPro']."','A'); ";
+					$ccosto = "";
+					$estado = "A";
+
+					//* Crear cuenta
+					if ($_DATOS_EXCEL[$i]['Numero'] != 0) {
+						$STRInsert = $STRInsert . "INSERT INTO CTCliProCuenta VALUES('','$RutEmpresa','".$_DATOS_EXCEL[$i]['RutImp']."','".$_DATOS_EXCEL[$i]['Numero']."','$ccosto','".$_POST['SelCliPro']."','A'); ";
+						
 					}
 				}
-				// $errores=0;
 
 				if ($Msj=="") {
-					$mysqli->query("DELETE FROM CTCliProCuenta WHERE rutempresa='$RutEmpresa' AND tipo='".$_POST['SelCliPro']."'");
+					$sql = "DELETE FROM CTCliProCuenta WHERE rutempresa = ? AND tipo = ?";
+					$stmt = $mysqli->prepare($sql);
 
-					// $mysqli->query("UPDATE CTEmpresas SET ccosto='S', plan='S' WHERE rut='$RutEmpresa'");
-					// echo $STRInseert;
-					// exit;
-					// mysqli_multi_query($mysqliX, $StrSql)
-					$mysqli->multi_query($STRInseert);
+					$stmt->bind_param("ss", $RutEmpresa, $_POST['SelCliPro']);
+					$stmt->execute();
+					$stmt->close();
+
+
+					$mysqli->multi_query($STRInsert);
 					// $mysqli->query($STRInseert);
 					$SwMes="S";
 				}
+
+				// exit;
+				// require_once('../Classes/PHPExcel.php');
+				// require_once('../Classes/PHPExcel/Reader/Excel2007.php');                  
+				// // Cargando la hoja de excel
+				// $objReader = new PHPExcel_Reader_Excel2007();
+				// $objPHPExcel = $objReader->load("Temp_".$archivo);
+				// $objFecha = new PHPExcel_Shared_Date();       
+				// // Asignamon la hoja de excel activa
+				// $objPHPExcel->setActiveSheetIndex(0);
+
+				// $columnas = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+				// $filas = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+
+				// // //* Obtengo rut y numero, A y F
+				// for ($i=2;$i<=$filas;$i++){
+				// 	$_DATOS_EXCEL[$i]['RutImp'] = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+				// 	$_DATOS_EXCEL[$i]['Numero'] = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+					
+				// 	//* Crear cuenta
+				// 	if ($_DATOS_EXCEL[$i]['Numero']!=0) {
+				// 		$STRInseert=$STRInseert."INSERT INTO CTCliProCuenta VALUES('','$RutEmpresa','".$_DATOS_EXCEL[$i]['RutImp']."','".$_DATOS_EXCEL[$i]['Numero']."','".$_POST['SelCliPro']."','A'); ";
+				// 	}
+				// }
+				// // $errores=0;
+
+				// if ($Msj=="") {
+				// 	$mysqli->query("DELETE FROM CTCliProCuenta WHERE rutempresa='$RutEmpresa' AND tipo='".$_POST['SelCliPro']."'");
+
+				// 	// $mysqli->query("UPDATE CTEmpresas SET ccosto='S', plan='S' WHERE rut='$RutEmpresa'");
+				// 	// echo $STRInseert;
+				// 	// exit;
+				// 	// mysqli_multi_query($mysqliX, $StrSql)
+				// 	$mysqli->multi_query($STRInseert);
+				// 	// $mysqli->query($STRInseert);
+				// 	$SwMes="S";
+				// }
 
 				unlink($destino);
 				$mysqli->close();

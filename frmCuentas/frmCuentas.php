@@ -397,7 +397,7 @@
 
 		<?php include 'footer.php'; ?>
 		<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-		<script src="../js/alertas.js"></script>
+		<script src="../js/funciones.js"></script>
 
 		<script>
 

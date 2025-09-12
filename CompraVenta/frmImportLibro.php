@@ -485,7 +485,7 @@
 				$resultados = $mysqli->query($SQL);
 				$row_cnt = $resultados->num_rows;
 				if ($row_cnt==0) {
-			        $mysqli->query("INSERT INTO CTCliPro VALUES('','$data[$LRut]','".utf8_decode(strtoupper($data[$LRSocial]))."','','','','','','$TCliPro','A')");
+			        $mysqli->query("INSERT INTO CTCliPro VALUES('','$data[$LRut]','".mb_convert_encoding(strtoupper($data[$LRSocial]), 'ISO-8859-1', 'UTF-8')."','','','','','','$TCliPro','A')");
 			        $NewRSocial=$NewRSocial+1;
 				}				
 

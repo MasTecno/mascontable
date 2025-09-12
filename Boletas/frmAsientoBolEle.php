@@ -29,11 +29,16 @@
 
     if ($XC1!="") {
     	if ($_SESSION["PLAN"]=="S"){
-			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XC1' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+			$SQL = "SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XC1, $_SESSION['RUTEMPRESA']);
     	}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XC1'";
+			$SQL = "SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XC1);
     	}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnC1=$registro["detalle"];
 		}
@@ -41,11 +46,16 @@
 
     if ($XC2!="") {
     	if ($_SESSION["PLAN"]=="S"){
- 			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XC2' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+ 			$SQL = "SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XC2, $_SESSION['RUTEMPRESA']);
 	   	}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XC2'";
+			$SQL = "SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XC2);
     	}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnC2=$registro["detalle"];
 		}
@@ -53,11 +63,16 @@
 
     if ($XC3!="") {
     	if ($_SESSION["PLAN"]=="S"){
-			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XC3' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XC3, $_SESSION['RUTEMPRESA']);
     	}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XC3'";
+			$SQL="SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XC3);
     	}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnC3=$registro["detalle"];
 		}
@@ -66,11 +81,16 @@
 
     if ($XV1!="") {
     	if ($_SESSION["PLAN"]=="S"){
-			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XV1' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XV1, $_SESSION['RUTEMPRESA']);
     	}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XV1'";
+			$SQL="SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XV1);
     	}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnV1=$registro["detalle"];
 		}
@@ -78,11 +98,16 @@
 
     if ($XV2!="") {
     	if ($_SESSION["PLAN"]=="S"){
- 			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XV2' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+ 			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XV2, $_SESSION['RUTEMPRESA']);
 	   	}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XV2'";
+			$SQL="SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XV2);
     	}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnV2=$registro["detalle"];
 		}
@@ -90,11 +115,16 @@
 
 	if ($XV3!="") {
 		if ($_SESSION["PLAN"]=="S"){
-			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XV3' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XV3, $_SESSION['RUTEMPRESA']);
 		}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XV3'";
+			$SQL="SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XV3);
 		}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnV3=$registro["detalle"];
 		}
@@ -102,11 +132,16 @@
 
 	if ($XPago!="") {
 		if ($_SESSION["PLAN"]=="S"){
-			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero='$XPago' AND rut_empresa='".$_SESSION['RUTEMPRESA']."'";
+			$SQL="SELECT * FROM CTCuentasEmpresa WHERE numero = ? AND rut_empresa = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("ss", $XPago, $_SESSION['RUTEMPRESA']);
 		}else{
-			$SQL="SELECT * FROM CTCuentas WHERE numero='$XPago'";
+			$SQL="SELECT * FROM CTCuentas WHERE numero = ?";
+			$stmt = $mysqli->prepare($SQL);
+			$stmt->bind_param("s", $XPago);
 		}
-		$resultados = $mysqli->query($SQL);
+		$stmt->execute();
+		$resultados = $stmt->get_result();
 		while ($registro = $resultados->fetch_assoc()) {
 			$XnPago=$registro["detalle"];
 		}
@@ -185,7 +220,8 @@
 			          var r='DVenta'+r;
 
 			          if(resp==""){
-			            alert("No se encontro cuenta");
+			            // alert("No se encontro cuenta");
+						mostrarMensaje("No se encontro cuenta", "info");
 			            $('#'+vall).focus(); 
 			            $('#'+vall).select();
 			            document.getElementById(r).value="";
@@ -346,15 +382,22 @@
 
 													$mysqli=xconectar($_SESSION['UsuariaSV'],descriptSV($_SESSION['PassSV']),$_SESSION['BaseSV']);
 													if ($_SESSION["PLAN"]=="S"){
-														$SQL="SELECT * FROM CTCuentasEmpresa WHERE estado='A' AND rut_empresa='".$_SESSION['RUTEMPRESA']."' ORDER BY detalle";
+														$SQL="SELECT * FROM CTCuentasEmpresa WHERE estado = 'A' AND rut_empresa = ? ORDER BY detalle";
+														$stmt = $mysqli->prepare($SQL);
+														$stmt->bind_param("s", $_SESSION['RUTEMPRESA']);
 													}else{
-														$SQL="SELECT * FROM CTCuentas WHERE estado='A' ORDER BY detalle";
+														$SQL="SELECT * FROM CTCuentas WHERE estado = 'A' ORDER BY detalle";
+														$stmt = $mysqli->prepare($SQL);
 													}
-													$resultados = $mysqli->query($SQL);
+													$stmt->execute();
+													$resultados = $stmt->get_result();
 													while ($registro = $resultados->fetch_assoc()) {
 
-														$SQL1="SELECT * FROM CTCategoria WHERE id='".$registro["id_categoria"]."'";
-														$res = $mysqli->query($SQL1);
+														$SQL1="SELECT * FROM CTCategoria WHERE id = ?";
+														$stmt = $mysqli->prepare($SQL1);
+														$stmt->bind_param("i", $registro["id_categoria"]);
+														$stmt->execute();
+														$res = $stmt->get_result();
 														while ($reg = $res->fetch_assoc()) {
 															$tcuenta=$reg["nombre"];
 														}
@@ -526,5 +569,6 @@
 
 	<?php include '../footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+	<script src="../js/funciones.js"></script>
 	</body>
 </html>

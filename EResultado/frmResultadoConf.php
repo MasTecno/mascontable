@@ -503,7 +503,7 @@
 			<div class="bg-white rounded-lg shadow-sm border border-gray-200 mt-6">
 				<div class="p-6">
 					<div class="flex items-center">
-						<input type="checkbox" id="DefeAsie" name="DefeAsie" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" onclick="javascript:form1.submit();">
+						<input type="checkbox" id="DefeAsie" name="DefeAsie" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-2 border-gray-300 rounded" onclick="javascript:form1.submit();">
 						<label for="DefeAsie" class="ml-2 block text-sm text-gray-900">
 							Dejar esta Configuraci&oacute;n por defecto
 						</label>

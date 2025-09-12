@@ -40,7 +40,6 @@
 
 			if (file_exists ("Temp_".$archivo)){
 				$mysqli=xconectar($_SESSION['UsuariaSV'],descript($_SESSION['PassSV']),$_SESSION['BaseSV']);
-				/** Llamamos las clases necesarias PHPEcel */
 
 				$objPHPExcel = IOFactory::load($destino);
 				$objPHPExcel->setActiveSheetIndex(0);

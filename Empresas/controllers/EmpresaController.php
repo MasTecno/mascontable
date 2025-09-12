@@ -633,4 +633,131 @@ class EmpresaController {
         echo json_encode($response);
 
     }
+
+    public function ingresarRepresentante() {
+        try {
+            $input = file_get_contents("php://input");
+            $data = json_decode($input, true);
+
+            $rut = self::sanitizar($data["rut"]);
+            $nombre = self::sanitizar($data["nombre"]);
+            $correo = self::sanitizar($data["correo"]);
+            $idEmpresa = self::sanitizar($data["selectEmpresa"]);
+            $estado = "A";
+            $created_at = date("Y-m-d H:i:s");
+            $updated_at = date("Y-m-d H:i:s");
+
+            $sql = "INSERT INTO CTRepresentantes (id_empresa, rut_repre, nombre_repre, correo, estado, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("sssssss", $idEmpresa, $rut, $nombre, $correo, $estado, $created_at, $updated_at);
+            
+            if($stmt->execute()) {
+                $response = [
+                    "success" => true,
+                    "mensaje" => "Se ingresó un representante"
+                ];
+
+                echo json_encode($response);
+            } else {
+                throw new Exception($stmt->error);
+            }
+        }catch (Exception $e) {
+            $response = [
+                "error" => true,
+                "mensaje" => "Error: " . $e->getMessage()
+            ];
+            
+            echo json_encode($response);
+        }
+    }
+
+    public function cargarRepresentantes() {
+        
+        try {
+
+            if(isset($_GET["buscar"])) {
+                $buscar = self::sanitizar($_GET["buscar"]);
+                $buscar = "%".$buscar."%";
+                
+                $sql = "SELECT rep.id, rep.rut_repre, rep.nombre_repre, rep.correo, emp.id as id_empresa, emp.razonsocial FROM CTRepresentantes rep 
+                JOIN CTEmpresas emp ON rep.id_empresa = emp.id WHERE rep.estado = 'A' AND (rep.rut_repre LIKE ? OR rep.nombre_repre LIKE ? OR emp.razonsocial LIKE ?)";
+                $stmt = $this->mysqli->prepare($sql);
+                $stmt->bind_param("sss", $buscar, $buscar, $buscar);
+            } else {
+                $sql = "SELECT rep.id, rep.rut_repre, rep.nombre_repre, rep.correo, emp.id as id_empresa, emp.razonsocial FROM CTRepresentantes rep 
+                JOIN CTEmpresas emp ON rep.id_empresa = emp.id WHERE rep.estado = 'A'";
+                $stmt = $this->mysqli->prepare($sql);
+            }
+
+            $stmt->execute();
+            $resultados = $stmt->get_result();
+            $representantes = $resultados->fetch_all(MYSQLI_ASSOC);
+
+            $response = [
+                "success" => true,
+                "representantes" => $representantes
+            ];
+            
+            echo json_encode($response);
+        }catch (Exception $e) {
+            $response = [
+                "error" => true,
+                "mensaje" => "Error: " . $e->getMessage()
+            ];
+            
+            echo json_encode($response);
+        }
+    }
+
+    public function modificarRepresentante() {
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+
+        if(isset($data["idrep"])) {
+            $id = self::sanitizar($data["idrep"]);
+        }
+
+        $rut = self::sanitizar($data["rut"]);
+        $nombre = self::sanitizar($data["nombre"]);
+        $correo = self::sanitizar($data["correo"]);
+        $idEmpresa = self::sanitizar($data["selectEmpresa"]);
+        $estado = "A";
+        $updated_at = date("Y-m-d H:i:s");
+
+        $sql = "UPDATE CTRepresentantes SET rut_repre = ?, nombre_repre = ?, correo = ?, id_empresa = ?, estado = ?, updated_at = ? WHERE id = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("ssssssi", $rut, $nombre, $correo, $idEmpresa, $estado, $updated_at, $id);
+        
+
+        if($stmt->execute()) {
+            $response = [
+                "success" => true,
+                "mensaje" => "Se actualizó el representante"
+            ];
+            echo json_encode($response);
+        } else {
+            throw new Exception($stmt->error);
+        }
+    }
+
+    public function eliminarRepresentante() {
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+
+        $id = self::sanitizar($data["id"]);
+        
+        $sql = "DELETE FROM CTRepresentantes WHERE id = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i", $id);
+        
+        if($stmt->execute()) {
+            $response = [
+                "success" => true,
+                "mensaje" => "Se eliminó el representante"
+            ];
+            echo json_encode($response);
+        } else {
+            throw new Exception($stmt->error);
+        }
+    }
 }

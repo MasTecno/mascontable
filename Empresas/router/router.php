@@ -31,4 +31,20 @@
         case "verificarPermisos":
             $controller->verificarPermisos();
         break;
+
+        case "ingresarRepresentante":
+            $controller->ingresarRepresentante();
+        break;
+
+        case "cargarRepresentantes":
+            $controller->cargarRepresentantes();
+        break;
+
+        case "modificarRepresentante":
+            $controller->modificarRepresentante();
+        break;
+
+        case "eliminarRepresentante":
+            $controller->eliminarRepresentante();
+        break;
     }

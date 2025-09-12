@@ -32,4 +32,4 @@
 		$mysqli->query("UPDATE CTParametros SET valor='".$_POST['TFOLIO']."' WHERE tipo='TEXT_FOLI'");
     $mysqli->close();   	
 
-	header("location:frmMain.php?msg=ParametrosOK");
+	header("location:../frmMain.php?msg=ParametrosOK");

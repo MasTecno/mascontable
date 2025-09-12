@@ -131,7 +131,22 @@
                                     $row_cnt = $resultados1->num_rows;
                                         if ($row_cnt==0) {
                                     ?>
-                                        <a href="<?php echo $nivel; ?>Empresas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Empresas</a>
+                                        <!-- Empresas Dropdown -->
+                                        <div class="relative dropdown">
+                                            <button onclick="toggleEmpresasDropdown()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between">
+                                                Empresas
+                                                <svg id="empresas-arrow" class="ml-1 h-3 w-3 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            </button>
+                                            <div id="empresas-dropdown" class="absolute left-full top-0 ml-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible transition-all duration-200 z-50">
+                                                <div class="py-1">
+                                                    <a href="<?php echo $nivel; ?>Empresas/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nueva Empresa</a>
+                                                    <a href="<?php echo $nivel; ?>Empresas/representantes.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Representantes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     <?php
                                         }
                                         $mysqli->close();
@@ -358,7 +373,19 @@
                         $row_cnt = $resultados1->num_rows;
                             if ($row_cnt==0) {
                         ?>
-                            <a href="<?php echo $nivel; ?>Empresas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-sm">Empresas</a>
+                            <!-- Empresas Mobile Dropdown -->
+                            <div class="mobile-sub-dropdown">
+                                <button class="mobile-sub-dropdown-btn text-white hover:bg-white hover:bg-opacity-20 w-full text-left px-3 py-2 rounded-md text-sm flex justify-between items-center">
+                                    Empresas
+                                    <svg class="h-3 w-3 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                                <div class="mobile-sub-dropdown-content bg-gray-600 border border-gray-400 shadow rounded-md hidden pl-4 space-y-1">
+                                    <a href="<?php echo $nivel; ?>Empresas/" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-xs">Nueva Empresa</a>
+                                    <a href="<?php echo $nivel; ?>Empresas/representantes.php" class="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-xs">Representantes</a>
+                                </div>
+                            </div>
                         <?php
                             }
                             $mysqli->close();
@@ -648,5 +675,55 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Mobile sub-dropdown functionality (for nested dropdowns like Empresas)
+    const mobileSubDropdowns = document.querySelectorAll('.mobile-sub-dropdown-btn');
+    
+    mobileSubDropdowns.forEach(button => {
+        button.addEventListener('click', function() {
+            const dropdownContent = this.nextElementSibling;
+            const icon = this.querySelector('svg');
+            
+            // Toggle dropdown content
+            dropdownContent.classList.toggle('hidden');
+            
+            // Rotate icon
+            if (dropdownContent.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(90deg)';
+            }
+        });
+    });
+});
+
+// Empresas dropdown functionality
+function toggleEmpresasDropdown() {
+    const dropdown = document.getElementById('empresas-dropdown');
+    const arrow = document.getElementById('empresas-arrow');
+    
+    if (dropdown.classList.contains('opacity-0')) {
+        // Show dropdown
+        dropdown.classList.remove('opacity-0', 'invisible');
+        dropdown.classList.add('opacity-100', 'visible');
+        arrow.style.transform = 'rotate(90deg)';
+    } else {
+        // Hide dropdown
+        dropdown.classList.remove('opacity-100', 'visible');
+        dropdown.classList.add('opacity-0', 'invisible');
+        arrow.style.transform = 'rotate(0deg)';
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('empresas-dropdown');
+    const button = event.target.closest('[onclick="toggleEmpresasDropdown()"]');
+    
+    if (dropdown && !dropdown.contains(event.target) && !button) {
+        dropdown.classList.remove('opacity-100', 'visible');
+        dropdown.classList.add('opacity-0', 'invisible');
+        document.getElementById('empresas-arrow').style.transform = 'rotate(0deg)';
+    }
 });
 </script>
